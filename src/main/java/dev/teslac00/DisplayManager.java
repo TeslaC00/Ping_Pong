@@ -2,6 +2,7 @@ package dev.teslac00;
 
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.glfw.GLFWVidMode;
+import org.lwjgl.opengl.GL;
 import org.lwjgl.system.MemoryStack;
 
 import java.nio.IntBuffer;
@@ -9,6 +10,7 @@ import java.util.Objects;
 
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.*;
+import static org.lwjgl.opengl.GL11C.glViewport;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
 public class DisplayManager {
@@ -79,6 +81,14 @@ public class DisplayManager {
 
 //        Make the window visible
         glfwShowWindow(window);
+
+//        This line is critical for LWJGL's interoperation with GLFW's
+//        OpenGL context, or any context that is managed externally.
+//        LWJGL detects the context that is current in the current thread,
+//        create the GLCapabilities instance and makes the OpenGL bindings available for use.
+        GL.createCapabilities();
+
+        glViewport(0, 0, width, height);
 
         return window;
     }
