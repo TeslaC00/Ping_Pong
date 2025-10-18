@@ -39,12 +39,17 @@ public class Main {
 
         renderer.loadModel(vertices, indices);
 
+        StaticShader staticShader = new StaticShader();
+
 //        Run the rendering loop until the user has attempted to close the window or press ESCAPE key.
         while (!glfwWindowShouldClose(window)) {
-
+            staticShader.start();
             renderer.render();
+            staticShader.stop();
             displayManager.update();
         }
+
+        staticShader.destroy();
     }
 
     public static void main(String[] args) {
