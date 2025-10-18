@@ -9,10 +9,11 @@ public class Main {
 
     private long window;
     private Renderer renderer;
+    private DisplayManager displayManager;
 
     public void run() {
         System.out.println("Hello LWJGL " + Version.getVersion() + "!");
-        DisplayManager displayManager = new DisplayManager(1280, 720, "Ping Pong");
+        displayManager = new DisplayManager(1280, 720, "Ping Pong");
         renderer = new Renderer();
 
         window = displayManager.init();
@@ -36,17 +37,13 @@ public class Main {
                 2, 3, 0 // Bottom Right triangle
         };
 
-        renderer.load(vertices, indices);
+        renderer.loadModel(vertices, indices);
 
 //        Run the rendering loop until the user has attempted to close the window or press ESCAPE key.
         while (!glfwWindowShouldClose(window)) {
 
             renderer.render();
-
-            glfwSwapBuffers(window);    // swap the color buffers
-
-//            Poll for window events. The key callback above will only be invoked during this call.
-            glfwPollEvents();
+            displayManager.update();
         }
     }
 

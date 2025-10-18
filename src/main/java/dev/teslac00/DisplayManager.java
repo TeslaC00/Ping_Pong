@@ -6,7 +6,6 @@ import org.lwjgl.opengl.GL;
 import org.lwjgl.system.MemoryStack;
 
 import java.nio.IntBuffer;
-import java.util.Objects;
 
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.*;
@@ -69,9 +68,6 @@ public class DisplayManager {
                     (vidMode.width() - pWidth.get(0)) / 2,
                     (vidMode.height() - pHeight.get(0)) / 2
             );
-
-//            glViewport(0, 0, pWidth.get(0), pHeight.get(0));    // Set GL viewport with dimensions
-
         }   // the stack frame is popped automatically
 
 //        Make the OpenGL context current
@@ -93,6 +89,14 @@ public class DisplayManager {
         return window;
     }
 
+    public void update() {
+
+        glfwSwapBuffers(window);    // swap the color buffers
+
+//            Poll for window events. The key callback above will only be invoked during this call.
+        glfwPollEvents();
+    }
+
     public void destroy() {
 
 //        Free the window callbacks and destroy the window
@@ -101,6 +105,6 @@ public class DisplayManager {
 
 //        Terminate GLFW and free the error callbacks
         glfwTerminate();
-        Objects.requireNonNull(glfwSetErrorCallback(null)).free();
+        glfwSetErrorCallback(null).free();
     }
 }
