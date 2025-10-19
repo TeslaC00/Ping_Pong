@@ -26,10 +26,17 @@ public class Main {
     private void loop() {
 
         float[] vertices = {
-                0.5f, 0.5f,
-                -0.5f, 0.5f,
-                -0.5f, -0.5f,
-                0.5f, -0.5f
+                -0.2f, 0.8f, 0.0f, 1.0f, 0.0f, 1.0f,
+                -0.4f, 0.8f, 0.0f, 1.0f, 0.0f, 1.0f,
+                -0.4f, 0.2f, 0.0f, 1.0f, 0.0f, 1.0f,
+                -0.2f, 0.2f, 0.0f, 1.0f, 0.0f, 1.0f
+        };
+
+        float[] verticesRight = {
+                0.8f, 0.8f, 0.0f, 0.0f, 1.0f, 1.0f,
+                0.2f, 0.8f, 0.0f, 0.0f, 1.0f, 1.0f,
+                0.2f, 0.6f, 0.0f, 0.0f, 1.0f, 1.0f,
+                0.8f, 0.6f, 0.0f, 0.0f, 1.0f, 1.0f
         };
 
         int[] indices = {
@@ -38,6 +45,7 @@ public class Main {
         };
 
         renderer.loadModel(vertices, indices);
+        renderer.loadModel(verticesRight, indices);
 
         StaticShader staticShader = new StaticShader();
 

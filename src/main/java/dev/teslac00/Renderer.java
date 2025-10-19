@@ -37,10 +37,21 @@ public class Renderer {
                 2,  // number of element in attribute
                 GL_FLOAT,   // the data type of attribute
                 false,  // is attribute normalized
-                2 * Float.BYTES,   // the size of the vertex
+                6 * Float.BYTES,   // the size of the vertex
                 0   // the offset of attribute from start of vertex
         );
+
+        glVertexAttribPointer(
+                1,
+                4,
+                GL_FLOAT,
+                false,
+                6 * Float.BYTES,
+                2 * Float.BYTES
+        );
+
         glEnableVertexAttribArray(0);   // Bind the vertex attribute with current vertex
+        glEnableVertexAttribArray(1);
 
         FloatBuffer vertexBuffer = BufferUtils.createFloatBuffer(vertices.length);
         vertexBuffer.put(vertices);   // Put the vertex data in buffer

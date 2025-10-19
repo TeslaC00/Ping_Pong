@@ -1,10 +1,11 @@
 # version 400 core
 
-in vec3 position;
+in vec2 position;
+in vec4 rgba;
 
-out vec3 color;
+out vec4 color;
 
 void main(void){
-    gl_Position = vec4(position, 1.0);
-    color = vec3(position.x+0.5f, 1.0f, position.y-0.5f);
+    gl_Position = vec4(position, 1.0, 1.0);
+    color = rgba;
 }
