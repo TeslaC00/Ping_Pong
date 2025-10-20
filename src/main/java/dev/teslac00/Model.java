@@ -1,4 +1,6 @@
 package dev.teslac00;
 
-public record Model(int vaoId, int vboId, int iboId, int indicesCount) {
+import org.joml.Vector4f;
+
+public record Model(int vaoId, int vboId, int iboId, int indicesCount, Vector4f u_color) {
 }

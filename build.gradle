@@ -106,6 +106,9 @@ dependencies {
     implementation "org.lwjgl:lwjgl-xxhash::$lwjglNatives"
     implementation "org.lwjgl:lwjgl-yoga::$lwjglNatives"
     implementation "org.lwjgl:lwjgl-zstd::$lwjglNatives"
+
+    // https://mvnrepository.com/artifact/org.joml/joml
+    implementation("org.joml:joml:1.9.2")
 }
 
 test {

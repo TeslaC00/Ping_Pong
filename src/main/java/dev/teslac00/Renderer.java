@@ -1,5 +1,6 @@
 package dev.teslac00;
 
+import org.joml.Vector4f;
 import org.lwjgl.BufferUtils;
 
 import java.nio.FloatBuffer;
@@ -14,13 +15,21 @@ import static org.lwjgl.opengl.GL30C.*;
 
 public class Renderer {
     private final ArrayList<Model> models = new ArrayList<>();
+    private ShaderProgram shader;
+    private int uniformLocation;
 
     public void init() {
+
+        shader = new StaticShader();
+
+        uniformLocation = glGetUniformLocation(shader.getProgramId(), "u_color");
+        if (uniformLocation == -1)
+            throw new RuntimeException("Uniform u_color not found in shader");
 
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);   // Set the clear color
     }
 
-    public void loadModel(float[] vertices, int[] indices) {
+    public void loadModel(float[] vertices, int[] indices, Vector4f color) {
 
         int vaoId = glGenVertexArrays();    // Generate a vertex array for VAO (layout)
         glBindVertexArray(vaoId);   // Bind VAO, it will start tracking all VBO and IBO/EBO
@@ -37,21 +46,11 @@ public class Renderer {
                 2,  // number of element in attribute
                 GL_FLOAT,   // the data type of attribute
                 false,  // is attribute normalized
-                6 * Float.BYTES,   // the size of the vertex
+                2 * Float.BYTES,   // the size of the vertex
                 0   // the offset of attribute from start of vertex
         );
 
-        glVertexAttribPointer(
-                1,
-                4,
-                GL_FLOAT,
-                false,
-                6 * Float.BYTES,
-                2 * Float.BYTES
-        );
-
         glEnableVertexAttribArray(0);   // Bind the vertex attribute with current vertex
-        glEnableVertexAttribArray(1);
 
         FloatBuffer vertexBuffer = BufferUtils.createFloatBuffer(vertices.length);
         vertexBuffer.put(vertices);   // Put the vertex data in buffer
@@ -69,18 +68,23 @@ public class Renderer {
         glBindVertexArray(0);   // unbind the VAO for cleanup, it will finalize and will not record more setups
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);    // unbind the indices for cleanup
 
-        models.add(new Model(vaoId, vboId, iboId, indices.length));
+        models.add(new Model(vaoId, vboId, iboId, indices.length, color));
     }
 
     public void render() {
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear the framebuffer
 
+        shader.start();
+
         for (Model model : models) {
+            glUniform4f(uniformLocation, model.u_color().x, model.u_color().y, model.u_color().z, model.u_color().w);
             glBindVertexArray(model.vaoId());   // bind the VAO to use in this frame
             glDrawElements(GL_TRIANGLES, model.indicesCount(), GL_UNSIGNED_INT, 0);   // draw elements using ibo
             glBindVertexArray(0);   // unbind the VAO for cleanup after draw call
         }
+
+        shader.stop();
     }
 
     public void destroy() {
@@ -90,6 +94,8 @@ public class Renderer {
             glDeleteBuffers(model.iboId()); // delete indices buffer after unbinding
             glDeleteVertexArrays(model.vaoId());    // delete the VAO after unbinding
         }
+
+        shader.destroy();
 
         models.clear();
     }

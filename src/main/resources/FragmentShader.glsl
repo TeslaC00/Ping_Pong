@@ -1,9 +1,9 @@
 # version 400 core
 
-in vec4 color;
+layout (location = 0) out vec4 out_color;
 
-out vec4 out_color;
+uniform vec4 u_color;
 
 void main(void){
-    out_color = color;
+    out_color = u_color;
 }

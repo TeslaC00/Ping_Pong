@@ -15,10 +15,10 @@ public abstract class ShaderProgram {
 
         glAttachShader(programId, vertexShaderId);
         glAttachShader(programId, fragmentShaderId);
+        bindAttributes();   // bind all attributes needed by child classes
         glLinkProgram(programId);
         glValidateProgram(programId);
 
-        bindAttributes();   // bind all attributes needed by child classes
     }
 
     protected abstract void bindAttributes();
@@ -57,5 +57,9 @@ public abstract class ShaderProgram {
             throw new RuntimeException(String.format("Could not compile shader: %s, Type: %d ", shaderPath, type));
         }
         return shaderId;
+    }
+
+    public int getProgramId() {
+        return programId;
     }
 }
