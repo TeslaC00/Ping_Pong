@@ -1,0 +1,8 @@
+package dev.teslac00;
+
+public class Rectangle2D extends RenderableObject {
+
+    public Rectangle2D(Mesh mesh, Material material, float x, float y, float scaleX, float scaleY) {
+        super(mesh, material, x, y, scaleX, scaleY);
+    }
+}

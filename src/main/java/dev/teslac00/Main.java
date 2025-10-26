@@ -1,24 +1,17 @@
 package dev.teslac00;
 
 
-import org.joml.Matrix4f;
-import org.joml.Vector4f;
-import org.lwjgl.BufferUtils;
 import org.lwjgl.Version;
 
-import java.nio.FloatBuffer;
-
-import static org.lwjgl.glfw.GLFW.*;
+import static dev.teslac00.Colors.COLOR_BLUE;
+import static dev.teslac00.Colors.COLOR_GREEN;
+import static org.lwjgl.glfw.GLFW.glfwWindowShouldClose;
 
 public class Main {
 
     private long window;
     private Renderer renderer;
     private DisplayManager displayManager;
-
-    final static Vector4f COLOR_RED = new Vector4f(1.0f, 0.0f, 0.0f, 1.0f);
-    final static Vector4f COLOR_GREEN = new Vector4f(0.0f, 1.0f, 0.0f, 1.0f);
-    final static Vector4f COLOR_BLUE = new Vector4f(0.0f, 0.0f, 1.0f, 1.0f);
 
     final static int WIDTH = 1280, HEIGHT = 720;
 
@@ -28,7 +21,7 @@ public class Main {
         renderer = new Renderer();
 
         window = displayManager.init();
-        renderer.init();
+        renderer.init(WIDTH, HEIGHT);
         loop();
         renderer.destroy();
         displayManager.destroy();
@@ -36,37 +29,26 @@ public class Main {
 
     private void loop() {
 
-        float[] vertices = {
-                200f, 100f,
-                500f, 100f,
-                500f, 200f,
-                200f, 200f
-        };
+        StaticShader staticShader = new StaticShader();
+        Material greenMaterial = new Material(staticShader.getProgramId(), COLOR_GREEN);
+        Material blueMaterial = new Material(staticShader.getProgramId(), COLOR_BLUE);
 
-        float[] verticesRight = {
-                600f, 100f,
-                700f, 100f,
-                700f, 300f,
-                600f, 300f
-        };
+        Mesh rectangleMesh = MeshFactory.createRectangle();
 
-        int[] indices = {
-                0, 1, 2,    // Top Left triangle
-                2, 3, 0 // Bottom Right triangle
-        };
+        Rectangle2D greenRect = new Rectangle2D(rectangleMesh, greenMaterial, 100, 100, 100, (float) HEIGHT / 5);
+        Rectangle2D blueRect = new Rectangle2D(rectangleMesh, blueMaterial, WIDTH - 100, 200, 100, (float) HEIGHT / 5);
 
-        Matrix4f proj = new Matrix4f().ortho(0, WIDTH, HEIGHT, 0, -1, 1);
-        FloatBuffer projBuffer = BufferUtils.createFloatBuffer(16);
-        proj.get(projBuffer).rewind();
-
-        renderer.loadModel(vertices, indices, COLOR_GREEN);
-        renderer.loadModel(verticesRight, indices, COLOR_BLUE);
+        renderer.loadModel(greenRect);
+        renderer.loadModel(blueRect);
 
 //        Run the rendering loop until the user has attempted to close the window or press ESCAPE key.
         while (!glfwWindowShouldClose(window)) {
-            renderer.render(projBuffer);
+            renderer.render();
             displayManager.update();
         }
+
+        staticShader.destroy();
+        rectangleMesh.destroy();
 
     }
 
