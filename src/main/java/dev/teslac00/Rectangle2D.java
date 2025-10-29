@@ -1,5 +1,8 @@
 package dev.teslac00;
 
+import static org.lwjgl.glfw.GLFW.GLFW_KEY_S;
+import static org.lwjgl.glfw.GLFW.GLFW_KEY_W;
+
 public class Rectangle2D extends RenderableObject {
 
     private final float MOVE_SPEED = 300.0f;
@@ -13,15 +16,21 @@ public class Rectangle2D extends RenderableObject {
 
     public void update(double deltaTime) {
 
+        if (InputManager.getKeyPressed(GLFW_KEY_W)) {
+            direction = -1;
+        } else if (InputManager.getKeyPressed(GLFW_KEY_S)) {
+            direction = 1;
+        } else {
+            direction = 0;
+        }
+
         float distance = (float) (MOVE_SPEED * deltaTime * direction);
         float nextY = this.position.y + distance;
 
         if (nextY + this.scale.y >= HEIGHT) {
             distance = HEIGHT - this.scale.y - this.position.y;
-            direction *= -1;
         } else if (nextY <= 0) {
             distance = 0 - this.position.y;
-            direction *= -1;
         }
 
         translate(0, distance);

@@ -21,6 +21,7 @@ public class Main {
         renderer = new Renderer();
 
         window = displayManager.init();
+        InputManager.init(window);
         renderer.init(WIDTH, HEIGHT);
         loop();
         renderer.destroy();
@@ -36,7 +37,7 @@ public class Main {
         Mesh rectangleMesh = MeshFactory.createRectangle();
 
         Rectangle2D greenRect = new Rectangle2D(rectangleMesh, greenMaterial,
-                100, 100, 100, (float) HEIGHT / 5);
+                0, 100, 100, (float) HEIGHT / 5);
         Rectangle2D blueRect = new Rectangle2D(rectangleMesh, blueMaterial,
                 WIDTH - 100, 200, 100, (float) HEIGHT / 5);
 
