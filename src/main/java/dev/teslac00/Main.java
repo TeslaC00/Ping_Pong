@@ -35,16 +35,41 @@ public class Main {
 
         Mesh rectangleMesh = MeshFactory.createRectangle();
 
-        Rectangle2D greenRect = new Rectangle2D(rectangleMesh, greenMaterial, 100, 100, 100, (float) HEIGHT / 5);
-        Rectangle2D blueRect = new Rectangle2D(rectangleMesh, blueMaterial, WIDTH - 100, 200, 100, (float) HEIGHT / 5);
+        Rectangle2D greenRect = new Rectangle2D(rectangleMesh, greenMaterial,
+                100, 100, 100, (float) HEIGHT / 5);
+        Rectangle2D blueRect = new Rectangle2D(rectangleMesh, blueMaterial,
+                WIDTH - 100, 200, 100, (float) HEIGHT / 5);
 
         renderer.loadModel(greenRect);
         renderer.loadModel(blueRect);
 
 //        Run the rendering loop until the user has attempted to close the window or press ESCAPE key.
+        long lastFrameTime = System.nanoTime();
+        double timeAccumulator = 0.0;
+        int frames = 0;
+
         while (!glfwWindowShouldClose(window)) {
+//            Delta time
+            long currentFrameTime = System.nanoTime();
+            double deltaTime = (currentFrameTime - lastFrameTime) / 1_000_000_000.0;
+            lastFrameTime = currentFrameTime;
+
+//            Physics
+            greenRect.update(deltaTime);
+            blueRect.update(deltaTime);
+
+//            Rendering
             renderer.render();
             displayManager.update();
+
+//            FPS Counter
+            timeAccumulator += deltaTime;
+            frames++;
+            if (timeAccumulator >= 1.0) {
+                System.out.printf("FPS: %d%n", frames);
+                frames = 0;
+                timeAccumulator -= 1.0f;
+            }
         }
 
         staticShader.destroy();
