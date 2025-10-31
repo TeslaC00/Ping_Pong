@@ -12,7 +12,7 @@ import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11C.glViewport;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
-public class DisplayManager {
+public final class DisplayManager {
 
     private final int width;
     private final int height;

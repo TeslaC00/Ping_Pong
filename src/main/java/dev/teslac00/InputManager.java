@@ -5,7 +5,7 @@ import org.lwjgl.glfw.GLFWKeyCallback;
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.*;
 
-public class InputManager {
+public final class InputManager {
 
     private static long window;
 

@@ -7,22 +7,23 @@ import org.lwjgl.BufferUtils;
 import java.nio.FloatBuffer;
 import java.util.ArrayList;
 
+import static dev.teslac00.Constants.VIEWPORT_HEIGHT;
+import static dev.teslac00.Constants.VIEWPORT_WIDTH;
 import static org.lwjgl.opengl.GL11C.glClearColor;
 import static org.lwjgl.opengl.GL15C.*;
 import static org.lwjgl.opengl.GL20C.*;
 import static org.lwjgl.opengl.GL30C.*;
 
-public class Renderer {
+public final class Renderer {
     private final ArrayList<RenderableObject> models = new ArrayList<>();
     private final FloatBuffer transformBuffer = BufferUtils.createFloatBuffer(16);
     private FloatBuffer projBuffer;
 
-    public void init(int width, int height) {
-
+    public void init() {
         projBuffer = BufferUtils.createFloatBuffer(16);
         Matrix4f proj = new Matrix4f()
-                .ortho(-width / 2.0f, width / 2.0f,
-                        -height / 2.0f, height / 2.0f,
+                .ortho(-VIEWPORT_WIDTH / 2.0f, VIEWPORT_WIDTH / 2.0f,
+                        -VIEWPORT_HEIGHT / 2.0f, VIEWPORT_HEIGHT / 2.0f,
                         -1, 1
                 );
         proj.get(projBuffer).rewind();

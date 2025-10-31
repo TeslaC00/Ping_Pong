@@ -4,26 +4,24 @@ package dev.teslac00;
 import org.lwjgl.Version;
 
 import static dev.teslac00.Colors.*;
+import static dev.teslac00.Constants.*;
 import static org.lwjgl.glfw.GLFW.glfwWindowShouldClose;
 
-public class Main {
+public final class Main {
 
     private long window;
     private Renderer renderer;
     private DisplayManager displayManager;
 
-    final static int WIDTH = 1280, HEIGHT = 720;
-    final static int CIRCLE_MESH_DEFAULT_SEGMENTS = 32;
-
     public void run() {
         System.out.println("Hello LWJGL " + Version.getVersion() + "!");
-        displayManager = new DisplayManager(WIDTH, HEIGHT, "Ping Pong");
+        displayManager = new DisplayManager(VIEWPORT_WIDTH, VIEWPORT_HEIGHT, "Ping Pong");
         window = displayManager.init();
 
         InputManager inputManager = new InputManager(window);
 
         renderer = new Renderer();
-        renderer.init(WIDTH, HEIGHT);
+        renderer.init();
 
         loop();
 
@@ -42,11 +40,11 @@ public class Main {
         Mesh rectangleMesh = MeshFactory.createRectangle();
         Mesh circleMesh = MeshFactory.createCircle(CIRCLE_MESH_DEFAULT_SEGMENTS);
 
-        float rectWidth = 100.0f, rectHeight = HEIGHT / 5.0f;
+        float rectWidth = 100.0f, rectHeight = VIEWPORT_HEIGHT / 5.0f;
         Rectangle2D greenRect = new Rectangle2D(rectangleMesh, greenMaterial,
-                (-WIDTH + rectWidth) / 2, (HEIGHT - rectHeight) / 2, rectWidth, rectHeight);
+                (-VIEWPORT_WIDTH + rectWidth) / 2, (VIEWPORT_HEIGHT - rectHeight) / 2, rectWidth, rectHeight);
         Rectangle2D blueRect = new Rectangle2D(rectangleMesh, blueMaterial,
-                (WIDTH - rectWidth) / 2, 0, rectWidth, rectHeight);
+                (VIEWPORT_WIDTH - rectWidth) / 2, 0, rectWidth, rectHeight);
 
         Circle2D redCircle = new Circle2D(circleMesh, redMaterial, 0, 0, 60);
 

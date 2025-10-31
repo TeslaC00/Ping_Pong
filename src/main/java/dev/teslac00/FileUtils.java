@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 
-public class FileUtils {
+public final class FileUtils {
 
     public static String readFile(String path) {
         try (InputStream inputStream = FileUtils.class.getClassLoader().getResourceAsStream(path)) {

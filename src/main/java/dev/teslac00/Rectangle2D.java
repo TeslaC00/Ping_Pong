@@ -1,5 +1,6 @@
 package dev.teslac00;
 
+import static dev.teslac00.Constants.VIEWPORT_HEIGHT;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_S;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_W;
 
@@ -7,7 +8,6 @@ public class Rectangle2D extends RenderableObject {
 
     private final float MOVE_SPEED = 300.0f;
     private int direction = 1;
-    final static int HEIGHT = 720;
 
     public Rectangle2D(Mesh mesh, Material material, float x, float y, float scaleX, float scaleY) {
         super(mesh, material, x, y, scaleX, scaleY);
@@ -25,7 +25,7 @@ public class Rectangle2D extends RenderableObject {
 
         float distance = (float) (MOVE_SPEED * deltaTime * direction);
         float nextY = this.position.y + distance;
-        float limitY = (HEIGHT - this.scale.y) / 2.0f;
+        float limitY = (VIEWPORT_HEIGHT - this.scale.y) / 2.0f;
 
         if (nextY >= limitY) {   // check top collision
             distance = limitY - this.position.y;
