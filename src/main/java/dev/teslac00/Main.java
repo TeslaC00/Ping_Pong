@@ -9,9 +9,14 @@ import static org.lwjgl.glfw.GLFW.glfwWindowShouldClose;
 
 public final class Main {
 
+    //    Core entities
     private long window;
     private Renderer renderer;
     private DisplayManager displayManager;
+
+    //    Frames
+    private double timeAccumulator = 0.0;
+    private int frames = 0;
 
     public void run() {
         System.out.println("Hello LWJGL " + Version.getVersion() + "!");
@@ -54,8 +59,6 @@ public final class Main {
 
 //        Run the rendering loop until the user has attempted to close the window or press ESCAPE key.
         long lastFrameTime = System.nanoTime();
-        double timeAccumulator = 0.0;
-        int frames = 0;
 
         while (!glfwWindowShouldClose(window)) {
 //            Delta time
@@ -73,18 +76,22 @@ public final class Main {
             displayManager.update();
 
 //            FPS Counter
-            timeAccumulator += deltaTime;
-            frames++;
-            if (timeAccumulator >= 1.0) {
-                System.out.printf("FPS: %d%n", frames);
-                frames = 0;
-                timeAccumulator -= 1.0f;
-            }
+            updateFPS(deltaTime);
         }
 
         staticShader.destroy();
         rectangleMesh.destroy();
         circleMesh.destroy();
+    }
+
+    private void updateFPS(double deltaTime) {
+        timeAccumulator += deltaTime;
+        frames++;
+        if (timeAccumulator >= 1.0) {
+            System.out.printf("FPS: %d%n", frames);
+            frames = 0;
+            timeAccumulator -= 1.0f;
+        }
     }
 
     public static void main(String[] args) {

@@ -19,6 +19,7 @@ public final class InputManager {
         return KeyboardInput.keys[key];
     }
 
+    //    TODO: This is already done in DisplayManager so maybe remove this
     public void destroy() {
         glfwFreeCallbacks(window);
     }

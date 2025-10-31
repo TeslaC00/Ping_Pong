@@ -12,13 +12,11 @@ public class Rectangle2D extends RenderableObject {
 
     public void update(double deltaTime) {
 
-        int direction;
+        int direction = 0;
         if (InputManager.getKeyPressed(GLFW_KEY_W)) {
             direction = 1;
         } else if (InputManager.getKeyPressed(GLFW_KEY_S)) {
             direction = -1;
-        } else {
-            direction = 0;
         }
 
         float MOVE_SPEED = 300.0f;
@@ -26,11 +24,7 @@ public class Rectangle2D extends RenderableObject {
         float nextY = this.position.y + distance;
         float limitY = (VIEWPORT_HEIGHT - this.scale.y) / 2.0f;
 
-        if (nextY >= limitY) {   // check top collision
-            distance = limitY - this.position.y;
-        } else if (nextY <= -limitY) {    // check bottom collision
-            distance = -limitY - this.position.y;
-        }
+        distance = Math.max(Math.min(nextY, limitY), -limitY) - this.position.y;
 
         translate(0, distance);
     }

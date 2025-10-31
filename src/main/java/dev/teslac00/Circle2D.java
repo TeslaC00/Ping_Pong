@@ -17,20 +17,22 @@ public class Circle2D extends RenderableObject {
         float dy = (float) (MOVE_SPEED * deltaTime * dirY);
 
         float nextX = this.position.x + dx;
-        float limitX = (VIEWPORT_WIDTH / 2.0f) - this.scale.x;
         float nextY = this.position.y + dy;
+        float limitX = (VIEWPORT_WIDTH / 2.0f) - this.scale.x;
         float limitY = (VIEWPORT_HEIGHT / 2.0f) - this.scale.y;
 
-        if (nextY >= limitY) {   // check top screen collision
+        if (nextY > limitY) {   // check top screen collision
             dy = limitY - this.position.y;
             dirY *= -1;
-        } else if (nextY <= -limitY) {    // check bottom screen collision
+        } else if (nextY < -limitY) {    // check bottom screen collision
             dy = -limitY - this.position.y;
             dirY *= -1;
-        } else if (nextX >= limitX) {    // check right screen collision
+        }
+
+        if (nextX > limitX) {    // check right screen collision
             dx = limitX - this.position.x;
             dirX *= -1;
-        } else if (nextX <= -limitX) {  // check left screen collision
+        } else if (nextX < -limitX) {  // check left screen collision
             dx = -limitX - this.position.x;
             dirX *= -1;
         }

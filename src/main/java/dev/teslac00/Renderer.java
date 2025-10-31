@@ -64,7 +64,7 @@ public final class Renderer {
     private int getUniformLocation(int shaderId, String uniformName) {
         int uniformLocation = glGetUniformLocation(shaderId, uniformName);
         if (uniformLocation == -1)
-            throw new RuntimeException("Uniform u_color not found in shader");
+            throw new RuntimeException(String.format("Uniform '%s' not found in shader %d", uniformName, shaderId));
         return uniformLocation;
     }
 
