@@ -18,13 +18,17 @@ public class Main {
     public void run() {
         System.out.println("Hello LWJGL " + Version.getVersion() + "!");
         displayManager = new DisplayManager(WIDTH, HEIGHT, "Ping Pong");
-        renderer = new Renderer();
-
         window = displayManager.init();
-        InputManager.init(window);
+
+        InputManager inputManager = new InputManager(window);
+
+        renderer = new Renderer();
         renderer.init(WIDTH, HEIGHT);
+
         loop();
+
         renderer.destroy();
+        inputManager.destroy();
         displayManager.destroy();
     }
 
