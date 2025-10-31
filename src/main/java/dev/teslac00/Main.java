@@ -3,8 +3,7 @@ package dev.teslac00;
 
 import org.lwjgl.Version;
 
-import static dev.teslac00.Colors.COLOR_BLUE;
-import static dev.teslac00.Colors.COLOR_GREEN;
+import static dev.teslac00.Colors.*;
 import static org.lwjgl.glfw.GLFW.glfwWindowShouldClose;
 
 public class Main {
@@ -14,6 +13,7 @@ public class Main {
     private DisplayManager displayManager;
 
     final static int WIDTH = 1280, HEIGHT = 720;
+    final static int CIRCLE_MESH_DEFAULT_SEGMENTS = 32;
 
     public void run() {
         System.out.println("Hello LWJGL " + Version.getVersion() + "!");
@@ -37,16 +37,23 @@ public class Main {
         StaticShader staticShader = new StaticShader();
         Material greenMaterial = new Material(staticShader.getProgramId(), COLOR_GREEN);
         Material blueMaterial = new Material(staticShader.getProgramId(), COLOR_BLUE);
+        Material redMaterial = new Material(staticShader.getProgramId(), COLOR_RED);
 
         Mesh rectangleMesh = MeshFactory.createRectangle();
+        Mesh circleMesh = MeshFactory.createCircle(CIRCLE_MESH_DEFAULT_SEGMENTS);
+
 
         Rectangle2D greenRect = new Rectangle2D(rectangleMesh, greenMaterial,
                 0, 100, 100, (float) HEIGHT / 5);
         Rectangle2D blueRect = new Rectangle2D(rectangleMesh, blueMaterial,
                 WIDTH - 100, 200, 100, (float) HEIGHT / 5);
 
+        Circle2D redCircle = new Circle2D(circleMesh, redMaterial,
+                (WIDTH / 2.0f) - 100, (HEIGHT / 2.0f) - 100, 100);
+
         renderer.loadModel(greenRect);
         renderer.loadModel(blueRect);
+        renderer.loadModel(redCircle);
 
 //        Run the rendering loop until the user has attempted to close the window or press ESCAPE key.
         long lastFrameTime = System.nanoTime();
@@ -79,7 +86,7 @@ public class Main {
 
         staticShader.destroy();
         rectangleMesh.destroy();
-
+        circleMesh.destroy();
     }
 
     public static void main(String[] args) {
