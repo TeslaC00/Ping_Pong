@@ -42,14 +42,13 @@ public class Main {
         Mesh rectangleMesh = MeshFactory.createRectangle();
         Mesh circleMesh = MeshFactory.createCircle(CIRCLE_MESH_DEFAULT_SEGMENTS);
 
-
+        float rectWidth = 100.0f, rectHeight = HEIGHT / 5.0f;
         Rectangle2D greenRect = new Rectangle2D(rectangleMesh, greenMaterial,
-                0, 100, 100, (float) HEIGHT / 5);
+                (-WIDTH + rectWidth) / 2, (HEIGHT - rectHeight) / 2, rectWidth, rectHeight);
         Rectangle2D blueRect = new Rectangle2D(rectangleMesh, blueMaterial,
-                WIDTH - 100, 200, 100, (float) HEIGHT / 5);
+                (WIDTH - rectWidth) / 2, 0, rectWidth, rectHeight);
 
-        Circle2D redCircle = new Circle2D(circleMesh, redMaterial,
-                (WIDTH / 2.0f) - 100, (HEIGHT / 2.0f) - 100, 100);
+        Circle2D redCircle = new Circle2D(circleMesh, redMaterial, 0, 0, 60);
 
         renderer.loadModel(greenRect);
         renderer.loadModel(blueRect);

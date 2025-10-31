@@ -16,20 +16,21 @@ public class Rectangle2D extends RenderableObject {
     public void update(double deltaTime) {
 
         if (InputManager.getKeyPressed(GLFW_KEY_W)) {
-            direction = -1;
-        } else if (InputManager.getKeyPressed(GLFW_KEY_S)) {
             direction = 1;
+        } else if (InputManager.getKeyPressed(GLFW_KEY_S)) {
+            direction = -1;
         } else {
             direction = 0;
         }
 
         float distance = (float) (MOVE_SPEED * deltaTime * direction);
         float nextY = this.position.y + distance;
+        float limitY = (HEIGHT - this.scale.y) / 2.0f;
 
-        if (nextY + this.scale.y >= HEIGHT) {
-            distance = HEIGHT - this.scale.y - this.position.y;
-        } else if (nextY <= 0) {
-            distance = 0 - this.position.y;
+        if (nextY >= limitY) {   // check top collision
+            distance = limitY - this.position.y;
+        } else if (nextY <= -limitY) {    // check bottom collision
+            distance = -limitY - this.position.y;
         }
 
         translate(0, distance);

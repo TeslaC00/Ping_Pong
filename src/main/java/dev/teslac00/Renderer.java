@@ -20,7 +20,11 @@ public class Renderer {
     public void init(int width, int height) {
 
         projBuffer = BufferUtils.createFloatBuffer(16);
-        Matrix4f proj = new Matrix4f().ortho(0, width, height, 0, -1, 1);
+        Matrix4f proj = new Matrix4f()
+                .ortho(-width / 2.0f, width / 2.0f,
+                        -height / 2.0f, height / 2.0f,
+                        -1, 1
+                );
         proj.get(projBuffer).rewind();
 
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);   // Set the clear color
