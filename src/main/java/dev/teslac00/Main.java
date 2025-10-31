@@ -40,13 +40,13 @@ public final class Main {
         Mesh rectangleMesh = MeshFactory.createRectangle();
         Mesh circleMesh = MeshFactory.createCircle(CIRCLE_MESH_DEFAULT_SEGMENTS);
 
-        float rectWidth = 100.0f, rectHeight = VIEWPORT_HEIGHT / 5.0f;
+        float rectWidth = 60.0f, rectHeight = VIEWPORT_HEIGHT / 5.0f;
         Rectangle2D greenRect = new Rectangle2D(rectangleMesh, greenMaterial,
                 (-VIEWPORT_WIDTH + rectWidth) / 2, (VIEWPORT_HEIGHT - rectHeight) / 2, rectWidth, rectHeight);
         Rectangle2D blueRect = new Rectangle2D(rectangleMesh, blueMaterial,
                 (VIEWPORT_WIDTH - rectWidth) / 2, 0, rectWidth, rectHeight);
 
-        Circle2D redCircle = new Circle2D(circleMesh, redMaterial, 0, 0, 60);
+        Circle2D redCircle = new Circle2D(circleMesh, redMaterial, 0, 0, 30);
 
         renderer.loadModel(greenRect);
         renderer.loadModel(blueRect);
@@ -66,6 +66,7 @@ public final class Main {
 //            Physics
             greenRect.update(deltaTime);
             blueRect.update(deltaTime);
+            redCircle.update(deltaTime);
 
 //            Rendering
             renderer.render();
