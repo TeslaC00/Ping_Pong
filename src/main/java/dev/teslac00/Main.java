@@ -12,6 +12,7 @@ public final class Main {
     //    Core entities
     private long window;
     private Renderer renderer;
+    private PhysicsEngine physicsEngine;
     private DisplayManager displayManager;
 
     //    Frames
@@ -25,6 +26,7 @@ public final class Main {
 
         InputManager inputManager = new InputManager(window);
 
+        physicsEngine = new PhysicsEngine();
         renderer = new Renderer();
         renderer.init();
 
@@ -45,17 +47,21 @@ public final class Main {
         Mesh rectangleMesh = MeshFactory.createRectangle();
         Mesh circleMesh = MeshFactory.createCircle(CIRCLE_MESH_DEFAULT_SEGMENTS);
 
-        float rectWidth = 60.0f, rectHeight = VIEWPORT_HEIGHT / 5.0f;
+        float rectWidth = 60.0f, rectHeight = VIEWPORT_HEIGHT / 5.0f, radius = 30f;
         Rectangle2D greenRect = new Rectangle2D(rectangleMesh, greenMaterial,
                 (-VIEWPORT_WIDTH + rectWidth) / 2, (VIEWPORT_HEIGHT - rectHeight) / 2, rectWidth, rectHeight);
         Rectangle2D blueRect = new Rectangle2D(rectangleMesh, blueMaterial,
                 (VIEWPORT_WIDTH - rectWidth) / 2, 0, rectWidth, rectHeight);
 
-        Circle2D redCircle = new Circle2D(circleMesh, redMaterial, 0, 0, 30);
+        Circle2D redCircle = new Circle2D(circleMesh, redMaterial, 0, 0, radius);
 
         renderer.loadModel(greenRect);
         renderer.loadModel(blueRect);
         renderer.loadModel(redCircle);
+
+        physicsEngine.add(new BoxCollider(greenRect, rectWidth, rectHeight));
+        physicsEngine.add(new BoxCollider(blueRect, rectWidth, rectHeight));
+        physicsEngine.add(new CircleCollider(redCircle, radius));
 
 //        Run the rendering loop until the user has attempted to close the window or press ESCAPE key.
         long lastFrameTime = System.nanoTime();
@@ -70,6 +76,7 @@ public final class Main {
             greenRect.update(deltaTime);
             blueRect.update(deltaTime);
             redCircle.update(deltaTime);
+            physicsEngine.update(deltaTime);
 
 //            Rendering
             renderer.render();

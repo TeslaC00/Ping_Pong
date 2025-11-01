@@ -1,6 +1,7 @@
 package dev.teslac00;
 
 import org.joml.Matrix4f;
+import org.joml.Vector2f;
 import org.joml.Vector3f;
 
 public abstract class RenderableObject {
@@ -11,6 +12,8 @@ public abstract class RenderableObject {
     protected Vector3f scale;
     protected float rotation;
     protected final Matrix4f transform;
+
+    protected final Vector2f velocity = new Vector2f(0, 0);
 
     public RenderableObject(Mesh mesh, Material material) {
         this.mesh = mesh;

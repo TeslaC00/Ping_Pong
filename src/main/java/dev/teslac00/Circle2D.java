@@ -5,38 +5,38 @@ import static dev.teslac00.Constants.VIEWPORT_WIDTH;
 
 public class Circle2D extends RenderableObject {
 
-    private int dirX = 1, dirY = 1;
-
     public Circle2D(Mesh mesh, Material material, float x, float y, float radius) {
         super(mesh, material, x, y, radius, radius);
+        float speed = 150.0f;
+        this.velocity.set(1, 1).mul(speed);
     }
 
     public void update(double deltaTime) {
-        float MOVE_SPEED = 150.0f;
-        float dx = (float) (MOVE_SPEED * deltaTime * dirX);
-        float dy = (float) (MOVE_SPEED * deltaTime * dirY);
-
-        float nextX = this.position.x + dx;
-        float nextY = this.position.y + dy;
-        float limitX = (VIEWPORT_WIDTH / 2.0f) - this.scale.x;
-        float limitY = (VIEWPORT_HEIGHT / 2.0f) - this.scale.y;
-
-        if (nextY > limitY) {   // check top screen collision
-            dy = limitY - this.position.y;
-            dirY *= -1;
-        } else if (nextY < -limitY) {    // check bottom screen collision
-            dy = -limitY - this.position.y;
-            dirY *= -1;
-        }
-
-        if (nextX > limitX) {    // check right screen collision
-            dx = limitX - this.position.x;
-            dirX *= -1;
-        } else if (nextX < -limitX) {  // check left screen collision
-            dx = -limitX - this.position.x;
-            dirX *= -1;
-        }
+        float dx = (float) (velocity.x * deltaTime);
+        float dy = (float) (velocity.y * deltaTime);
 
         translate(dx, dy);
+        handleViewportCollision();
+    }
+
+    private void handleViewportCollision() {
+        float limitX = (VIEWPORT_WIDTH / 2.0f) - scale.x;
+        float limitY = (VIEWPORT_HEIGHT / 2.0f) - scale.y;
+
+        if (position.y > limitY) {   // check top screen collision
+            position.y = limitY;
+            velocity.y *= -1;
+        } else if (position.y < -limitY) {    // check bottom screen collision
+            position.y = -limitY;
+            velocity.y *= -1;
+        }
+
+        if (position.x > limitX) {    // check right screen collision
+            position.x = limitX;
+            velocity.x *= -1;
+        } else if (position.x < -limitX) {  // check left screen collision
+            position.x = -limitX;
+            velocity.x *= -1;
+        }
     }
 }

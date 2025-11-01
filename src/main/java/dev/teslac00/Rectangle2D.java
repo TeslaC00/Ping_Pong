@@ -12,11 +12,11 @@ public class Rectangle2D extends RenderableObject {
 
     public void update(double deltaTime) {
 
-        int direction = 0;
+        velocity.x = 0;
         if (InputManager.getKeyPressed(GLFW_KEY_W)) {
-            direction = 1;
+            velocity.x = 1;
         } else if (InputManager.getKeyPressed(GLFW_KEY_S)) {
-            direction = -1;
+            velocity.x = -1;
         }
 
         float MOVE_SPEED = 300.0f;
