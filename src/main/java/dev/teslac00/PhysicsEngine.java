@@ -30,12 +30,31 @@ public final class PhysicsEngine {
         float dx = b.owner.position.x - a.owner.position.x;
         float dy = b.owner.position.y - a.owner.position.y;
 
-        if (Math.abs(dx) > Math.abs(dy)) {
-            a.owner.velocity.x *= -1;
-            b.owner.velocity.x *= -1;
+        if (a instanceof BoxCollider box && b instanceof CircleCollider circle) {
+            separateObjects(box, circle, dx, dy);
+
+        } else if (a instanceof CircleCollider circle && b instanceof BoxCollider box) {
+            separateObjects(box, circle, dx, dy);
+        }
+    }
+
+    private void separateObjects(BoxCollider box, CircleCollider circle, float dx, float dy) {
+        float overlapX = (box.getWidth() / 2) + circle.getRadius() - Math.abs(dx);
+        float overlapY = (box.getHeight() / 2) + circle.getRadius() - Math.abs(dy);
+
+        if (overlapX < overlapY) {
+//            Horizontal Collision
+            float direction = Math.signum(dx);
+
+            circle.owner.position.x += direction * overlapX;
+            circle.owner.velocity.x *= -1;
+
         } else {
-            a.owner.velocity.y *= -1;
-            b.owner.velocity.y *= -1;
+//            Vertical Collision
+            float direction = Math.signum(dy);
+
+            circle.owner.position.y += direction * overlapY;
+            circle.owner.velocity.y *= -1;
         }
     }
 }

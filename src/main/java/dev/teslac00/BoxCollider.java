@@ -19,8 +19,8 @@ public class BoxCollider extends Collider {
 
     @Override
     public boolean intersectsBoxCollider(BoxCollider other) {
-        boolean overlapX = Math.abs(owner.position.x - other.owner.position.x) < width / 2 + other.width / 2;
-        boolean overlapY = Math.abs(owner.position.y - other.owner.position.y) < height / 2 + other.height / 2;
+        boolean overlapX = Math.abs(owner.position.x - other.owner.position.x) < (width + other.width) / 2;
+        boolean overlapY = Math.abs(owner.position.y - other.owner.position.y) < (height + other.height) / 2;
 
         return overlapX && overlapY;
     }

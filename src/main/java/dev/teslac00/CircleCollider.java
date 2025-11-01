@@ -24,10 +24,11 @@ public class CircleCollider extends Collider {
 
     @Override
     public boolean intersectsCircleCollider(CircleCollider other) {
-        boolean overlapX = Math.abs(owner.position.x - other.owner.position.x) < radius + other.radius;
-        boolean overlapY = Math.abs(owner.position.y - other.owner.position.y) < radius + other.radius;
+        float dx = owner.position.x - other.owner.position.x;
+        float dy = owner.position.y - other.owner.position.y;
+        float dst = (float) Math.sqrt(dx * dx + dy * dy);
 
-        return overlapX && overlapY;
+        return dst < radius + other.radius;
     }
 
     public float getRadius() {

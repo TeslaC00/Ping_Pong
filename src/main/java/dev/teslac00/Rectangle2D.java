@@ -12,20 +12,19 @@ public class Rectangle2D extends RenderableObject {
 
     public void update(double deltaTime) {
 
-        velocity.x = 0;
+        velocity.y = 0;
         if (InputManager.getKeyPressed(GLFW_KEY_W)) {
-            velocity.x = 1;
+            velocity.y = 1;
         } else if (InputManager.getKeyPressed(GLFW_KEY_S)) {
-            velocity.x = -1;
+            velocity.y = -1;
         }
 
         float MOVE_SPEED = 300.0f;
-        float distance = (float) (MOVE_SPEED * deltaTime * direction);
-        float nextY = this.position.y + distance;
-        float limitY = (VIEWPORT_HEIGHT - this.scale.y) / 2.0f;
-
-        distance = Math.max(Math.min(nextY, limitY), -limitY) - this.position.y;
+        float nextY = position.y + (float) (MOVE_SPEED * deltaTime * velocity.y);
+        float limitY = (VIEWPORT_HEIGHT - scale.y) / 2.0f;
+        float distance = Math.max(Math.min(nextY, limitY), -limitY) - position.y;   // Snap to limit and stop velocity
 
         translate(0, distance);
     }
+
 }
