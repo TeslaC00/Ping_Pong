@@ -14,6 +14,7 @@ public final class Main {
     private Renderer renderer;
     private PhysicsEngine physicsEngine;
     private DisplayManager displayManager;
+    private Timer timer;
 
     //    Frames
     private double timeAccumulator = 0.0;
@@ -29,6 +30,7 @@ public final class Main {
         physicsEngine = new PhysicsEngine();
         renderer = new Renderer();
         renderer.init();
+        timer.init();
 
         loop();
 
@@ -64,13 +66,10 @@ public final class Main {
         physicsEngine.add(new CircleCollider(redCircle, radius));
 
 //        Run the rendering loop until the user has attempted to close the window or press ESCAPE key.
-        long lastFrameTime = System.nanoTime();
 
         while (!glfwWindowShouldClose(window)) {
 //            Delta time
-            long currentFrameTime = System.nanoTime();
-            double deltaTime = (currentFrameTime - lastFrameTime) / 1_000_000_000.0;
-            lastFrameTime = currentFrameTime;
+            double deltaTime = timer.getDeltaTime();
 
 //            Physics
             greenRect.update(deltaTime);
