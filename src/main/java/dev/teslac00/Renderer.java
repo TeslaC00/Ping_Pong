@@ -15,7 +15,7 @@ import static org.lwjgl.opengl.GL20C.*;
 import static org.lwjgl.opengl.GL30C.*;
 
 public final class Renderer {
-    private final ArrayList<RenderableObject> models = new ArrayList<>();
+    private final ArrayList<RenderableObject> renderQueue = new ArrayList<>();
     private final FloatBuffer transformBuffer = BufferUtils.createFloatBuffer(16);
     private FloatBuffer projBuffer;
 
@@ -31,15 +31,17 @@ public final class Renderer {
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);   // Set the clear color
     }
 
-    public void loadModel(RenderableObject object) {
-        models.add(object);
+    public void renderModel(RenderableObject object) {
+        renderQueue.add(object);
+    }
+
+    public void prepare() {
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear the framebuffer
     }
 
     public void render() {
 
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear the framebuffer
-
-        for (RenderableObject model : models) {
+        for (RenderableObject model : renderQueue) {
             Vector4f color = model.getMaterial().color();
             int shaderId = model.getMaterial().shaderId();
             model.getTransform().get(transformBuffer).rewind();
@@ -55,10 +57,11 @@ public final class Renderer {
             unbindShader(); // unbind the shader program
         }
 
+        renderQueue.clear();
     }
 
     public void destroy() {
-        models.clear();
+        renderQueue.clear();
     }
 
     private int getUniformLocation(int shaderId, String uniformName) {
