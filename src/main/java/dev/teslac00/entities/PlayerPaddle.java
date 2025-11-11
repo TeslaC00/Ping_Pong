@@ -1,5 +1,6 @@
 package dev.teslac00.entities;
 
+import dev.teslac00.core.AssetManager;
 import dev.teslac00.core.Colors;
 import dev.teslac00.graphics.*;
 import dev.teslac00.input.InputManager;
@@ -19,17 +20,15 @@ import static org.lwjgl.glfw.GLFW.GLFW_KEY_W;
  */
 public class PlayerPaddle {
 
-    private final Mesh rectangleMesh;
     private final Rectangle2D rectangle2D;
     private final BoxCollider collider;
 
     public PlayerPaddle(int shaderId) {
         float width = 60;
         float height = VIEWPORT_HEIGHT / 5f;
-        rectangleMesh = MeshFactory.createRectangle();
         Material material = new Material(shaderId, Colors.COLOR_GREEN);
 
-        rectangle2D = new Rectangle2D(rectangleMesh, material,
+        rectangle2D = new Rectangle2D(AssetManager.getRectangleMesh(), material,
                 (-VIEWPORT_WIDTH + width) / 2,
                 (VIEWPORT_HEIGHT - height) / 2, width, height);
 
@@ -51,10 +50,6 @@ public class PlayerPaddle {
         float distance = Math.max(Math.min(nextY, limitY), -limitY) - rectangle2D.getPosition().y;   // Snap to limit and stop velocity
 
         rectangle2D.translate(0, distance);
-    }
-
-    public void destroy() {
-        rectangleMesh.destroy();
     }
 
     public Rectangle2D getRectangle2D() {

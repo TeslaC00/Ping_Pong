@@ -1,17 +1,19 @@
 package dev.teslac00.layers;
 
+import dev.teslac00.core.AssetManager;
 import dev.teslac00.core.Engine;
 import dev.teslac00.core.Renderer;
 import dev.teslac00.entities.AiPaddle;
 import dev.teslac00.entities.PlayerPaddle;
-import dev.teslac00.graphics.*;
+import dev.teslac00.graphics.Circle2D;
+import dev.teslac00.graphics.Material;
+import dev.teslac00.graphics.StaticShader;
 import dev.teslac00.input.Event;
 import dev.teslac00.input.InputManager;
 import dev.teslac00.physics.CircleCollider;
 import dev.teslac00.physics.PhysicsEngine;
 
 import static dev.teslac00.core.Colors.COLOR_RED;
-import static dev.teslac00.core.Constants.CIRCLE_MESH_DEFAULT_SEGMENTS;
 import static org.lwjgl.glfw.GLFW.*;
 
 /**
@@ -41,9 +43,8 @@ import static org.lwjgl.glfw.GLFW.*;
  */
 public class GameLayer extends Layer {
 
-    //    Shader & Meshes
+    //    Shaders
     private final StaticShader staticShader;
-    private final Mesh circleMesh;
 
     //    Entities
     private final PlayerPaddle playerPaddle;
@@ -62,11 +63,10 @@ public class GameLayer extends Layer {
         staticShader = new StaticShader();
 
         Material redMaterial = new Material(staticShader.getProgramId(), COLOR_RED);
-        circleMesh = MeshFactory.createCircle(CIRCLE_MESH_DEFAULT_SEGMENTS);
 
         playerPaddle = new PlayerPaddle(staticShader.getProgramId());
         aiPaddle = new AiPaddle(staticShader.getProgramId());
-        redCircle = new Circle2D(circleMesh, redMaterial, 0, 0, radius);
+        redCircle = new Circle2D(AssetManager.getCircularMesh(), redMaterial, 0, 0, radius);
     }
 
     /**
@@ -120,9 +120,6 @@ public class GameLayer extends Layer {
      */
     @Override
     public void onDetach() {
-        playerPaddle.destroy();
-        aiPaddle.destroy();
-        circleMesh.destroy();
         staticShader.destroy();
         engine.getPhysicsEngine().clearColliders();
     }

@@ -43,6 +43,7 @@ public class Engine {
     private long window;
     private DisplayManager displayManager;
     private InputManager inputManager;
+    private AssetManager assetManager;
     private Renderer renderer;
     private PhysicsEngine physicsEngine;
     private final Timer timer = new Timer();
@@ -72,6 +73,8 @@ public class Engine {
         window = displayManager.init();
 
         inputManager = new InputManager(window);
+        assetManager = new AssetManager();
+        assetManager.init();
 
         renderer = new Renderer();
         renderer.init();
@@ -154,6 +157,7 @@ public class Engine {
         layerStack.clear();
 
         renderer.destroy();
+        assetManager.destroy();
         inputManager.destroy();
         displayManager.destroy();
     }

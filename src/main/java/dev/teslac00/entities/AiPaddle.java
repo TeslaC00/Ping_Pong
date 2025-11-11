@@ -1,5 +1,6 @@
 package dev.teslac00.entities;
 
+import dev.teslac00.core.AssetManager;
 import dev.teslac00.core.Colors;
 import dev.teslac00.graphics.*;
 import dev.teslac00.physics.BoxCollider;
@@ -17,7 +18,6 @@ import static dev.teslac00.core.Constants.VIEWPORT_WIDTH;
  */
 public class AiPaddle {
 
-    private final Mesh rectangleMesh;
     private final Rectangle2D rectangle2D;
     private final BoxCollider collider;
 
@@ -25,10 +25,9 @@ public class AiPaddle {
         float width = 60;
         float height = VIEWPORT_HEIGHT / 5f;
 
-        rectangleMesh = MeshFactory.createRectangle();
         Material material = new Material(shaderId, Colors.COLOR_BLUE);
 
-        rectangle2D = new Rectangle2D(rectangleMesh, material,
+        rectangle2D = new Rectangle2D(AssetManager.getRectangleMesh(), material,
                 (VIEWPORT_WIDTH - width) / 2, 0, width, height);
 
         collider = new BoxCollider(rectangle2D, width, height);
@@ -36,10 +35,6 @@ public class AiPaddle {
 
     public void update(double deltaTime) {
 
-    }
-
-    public void destroy() {
-        rectangleMesh.destroy();
     }
 
     public Rectangle2D getRectangle2D() {
