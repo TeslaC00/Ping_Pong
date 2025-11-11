@@ -4,27 +4,27 @@ import org.joml.Vector4f;
 
 import static dev.teslac00.Constants.VIEWPORT_HEIGHT;
 import static dev.teslac00.Constants.VIEWPORT_WIDTH;
-import static org.lwjgl.glfw.GLFW.GLFW_KEY_TAB;
-import static org.lwjgl.glfw.GLFW.GLFW_PRESS;
+import static org.lwjgl.glfw.GLFW.*;
 
-public class MenuLayer extends Layer {
+public class PauseLayer extends Layer {
 
     private final StaticShader staticShader;
     private final Mesh rectangleMesh;
     private final Rectangle2D background;
 
-    protected MenuLayer(Engine engine) {
+    protected PauseLayer(Engine engine) {
         super(engine);
+
         staticShader = new StaticShader();
         rectangleMesh = MeshFactory.createRectangle();
-        Material backgroundMaterial = new Material(staticShader.getProgramId(), new Vector4f(0, 0, 0, 1));
+        Material backgroundMaterial = new Material(staticShader.getProgramId(), new Vector4f(0, 0, 0, 0.5f));
 
         background = new Rectangle2D(rectangleMesh, backgroundMaterial, 0, 0, VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
     }
 
     @Override
     String name() {
-        return "Menu Layer";
+        return "Pause Layer";
     }
 
     @Override
@@ -50,8 +50,8 @@ public class MenuLayer extends Layer {
 
     @Override
     boolean onEvent(Event event) {
-        if (event.key() == GLFW_KEY_TAB && event.action() == GLFW_PRESS) {
-            engine.pushLayer(new GameLayer(engine));
+        if (event.key() == GLFW_KEY_P && event.action() == GLFW_PRESS) {
+            engine.popLayer();
             return true;
         }
         return false;

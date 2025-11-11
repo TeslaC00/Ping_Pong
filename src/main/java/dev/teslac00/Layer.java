@@ -8,6 +8,8 @@ public abstract class Layer {
         this.engine = engine;
     }
 
+    abstract String name();
+
     abstract void onAttach();
 
     abstract void onUpdate(double deltaTime);

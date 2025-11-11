@@ -102,11 +102,13 @@ public class Engine {
     public void pushLayer(Layer layer) {
         layerStack.add(layer);
         layer.onAttach();
+        System.out.printf("Pushed %s", layer.name());
     }
 
     public void popLayer() {
         if (layerStack.isEmpty()) return;
         layerStack.getLast().onDetach();
+        System.out.printf("Popped %s", layerStack.getLast().name());
         layerStack.removeLast();
     }
 

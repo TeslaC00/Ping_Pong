@@ -4,8 +4,7 @@ import static dev.teslac00.Colors.*;
 import static dev.teslac00.Constants.*;
 import static dev.teslac00.Constants.VIEWPORT_HEIGHT;
 import static dev.teslac00.Constants.VIEWPORT_WIDTH;
-import static org.lwjgl.glfw.GLFW.GLFW_KEY_TAB;
-import static org.lwjgl.glfw.GLFW.GLFW_PRESS;
+import static org.lwjgl.glfw.GLFW.*;
 
 public class GameLayer extends Layer {
 
@@ -37,6 +36,11 @@ public class GameLayer extends Layer {
                 (VIEWPORT_WIDTH - rectWidth) / 2, 0, rectWidth, rectHeight);
 
         redCircle = new Circle2D(circleMesh, redMaterial, 0, 0, radius);
+    }
+
+    @Override
+    String name() {
+        return "Game Layer";
     }
 
     @Override
@@ -72,6 +76,11 @@ public class GameLayer extends Layer {
     boolean onEvent(Event event) {
         if (event.key() == GLFW_KEY_TAB && event.action() == GLFW_PRESS) {
             engine.popLayer();
+            return true;
+        }
+
+        if (event.key() == GLFW_KEY_P && event.action() == GLFW_PRESS) {
+            engine.pushLayer(new PauseLayer(engine));
             return true;
         }
         return false;
