@@ -11,7 +11,7 @@ import static org.lwjgl.glfw.GLFW.glfwWindowShouldClose;
 public class Engine {
 
     //    Core entities
-    private static long window;
+    private long window;
     private DisplayManager displayManager;
     private InputManager inputManager;
     private Renderer renderer;
@@ -39,9 +39,8 @@ public class Engine {
 
         timer.init();
 
-        GameLayer gameLayer = new GameLayer(this);
-        layerStack.add(gameLayer);
-        gameLayer.onAttach();
+//        Push starting menu layer on stack
+        pushLayer(new MenuLayer(this));
     }
 
     public void run() {
@@ -76,8 +75,8 @@ public class Engine {
      *
      * @return True if window close is requested else False
      */
-    public static boolean shouldRun() {
-        return !glfwWindowShouldClose(window);
+    public boolean shouldRun() {
+        return !glfwWindowShouldClose(window) && !layerStack.isEmpty();
     }
 
     private void updateFPS(double deltaTime) {
