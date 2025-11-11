@@ -12,6 +12,22 @@ import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11C.glViewport;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
+/**
+ * Manages the creation, configuration, and lifecycle of a GLFW window and OpenGL context.
+ * <p>
+ * This class is responsible for:
+ * <ul>
+ *   <li>Initializing and terminating GLFW</li>
+ *   <li>Creating and centering the window</li>
+ *   <li>Setting up OpenGL context and viewport</li>
+ *   <li>Handling the display update and buffer swapping per frame</li>
+ * </ul>
+ * </p>
+ * <p>
+ * Typically, an instance of {@code DisplayManager} is created by the {@link Engine}
+ * during initialization and remains active for the lifetime of the application.
+ * </p>
+ */
 public final class DisplayManager {
 
     private final int width;
@@ -19,12 +35,26 @@ public final class DisplayManager {
     private final String title;
     private long window;
 
+    /**
+     * Constructs a new {@code DisplayManager} with the given display settings.
+     *
+     * @param width  The desired window width in pixels.
+     * @param height The desired window height in pixels.
+     * @param title  The title text shown on the window bar.
+     */
     public DisplayManager(int width, int height, String title) {
         this.width = width;
         this.height = height;
         this.title = title;
     }
 
+    /**
+     * Initializes GLFW, creates a window, and sets up the OpenGL context.
+     *
+     * @return The created window handle, required for further GLFW operations.
+     * @throws IllegalStateException if GLFW cannot be initialized.
+     * @throws RuntimeException      if the window creation fails.
+     */
     public long init() {
 //        Setup an error callback. The default implementation will print the error message in System.err
         GLFWErrorCallback.createPrint(System.err).set();
@@ -33,11 +63,11 @@ public final class DisplayManager {
         if (!glfwInit())
             throw new IllegalStateException("Unable to initialize GLFW");
 
-//        Configure GLFW
+//        Configure GLFW default window hints
         glfwDefaultWindowHints();   // optional, current window hints are already default
         glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);    // the window will stay hidden after creation
 //        TODO: understand how to make window resizable first with GLViewport then make it true
-        glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);   // the window will be resizable
+        glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);   // the window is not resizable
 
 //        Create the window
         window = glfwCreateWindow(width, height, title, NULL, NULL);
@@ -47,7 +77,7 @@ public final class DisplayManager {
 //        Setup a key callback. It will be called every time a key is pressed, repeated or released.
         glfwSetKeyCallback(window, (window, key, scancode, action, mods) -> {
             if (key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE)
-                glfwSetWindowShouldClose(window, true); // We will detect this in the rendering loop
+                glfwSetWindowShouldClose(window, true);
         });
 
 //        Get the thread stack and push a new frame
@@ -84,11 +114,18 @@ public final class DisplayManager {
 //        create the GLCapabilities instance and makes the OpenGL bindings available for use.
         GL.createCapabilities();
 
+//        Set initial viewport
         glViewport(0, 0, width, height);
 
         return window;
     }
 
+    /**
+     * Swaps the front and back buffers and polls window events.
+     * <p>
+     * Should be called once per frame after rendering.
+     * </p>
+     */
     public void update() {
 
         glfwSwapBuffers(window);    // swap the color buffers
@@ -97,6 +134,12 @@ public final class DisplayManager {
         glfwPollEvents();
     }
 
+    /**
+     * Destroys the window and terminates GLFW.
+     * <p>
+     * Must be called once before program exit to release native resources.
+     * </p>
+     */
     public void destroy() {
 
 //        Free the window callbacks and destroy the window

@@ -1,10 +1,17 @@
 package dev.teslac00;
 
+/**
+ * An axis-aligned box collider (AABB) for basic 2D collision detection.
+ * <p>
+ * It supports intersection cheks with both BoxCollider and CircleCollider.
+ * </p>
+ *
+ * <p> <b>Coordinate system:</b> Center-based, where {@code owner.position} </p>
+ */
 public class BoxCollider extends Collider {
-    //    uses owner position as its own
+
     private final float width;
     private final float height;
-    // center based coordinate system
 
     public BoxCollider(RenderableObject owner, float width, float height) {
         super(owner);

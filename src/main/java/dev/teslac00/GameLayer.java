@@ -6,6 +6,31 @@ import static dev.teslac00.Constants.VIEWPORT_HEIGHT;
 import static dev.teslac00.Constants.VIEWPORT_WIDTH;
 import static org.lwjgl.glfw.GLFW.*;
 
+/**
+ * Represents the main gameplay layer where core simulation and rendering occur.
+ * <p>
+ * The {@code GameLayer} manages gameplay entities (paddles and ball), updates their
+ * state each frame, and handles simple input-driven layer transitions (pause or exit).
+ * </p>
+ *
+ * <p><b>Responsibilities:</b></p>
+ * <ul>
+ *     <li>Create and manage in-game entities (rectangles and circle)</li>
+ *     <li>Register colliders with the {@link PhysicsEngine}</li>
+ *     <li>Render all entities via the {@link Renderer}</li>
+ *     <li>Handle gameplay-related input events</li>
+ * </ul>
+ *
+ * <p>
+ * This layer demonstrates integration of physics and rendering systems
+ * in the engine, forming a minimal “Pong-style” game example.
+ * </p>
+ *
+ * @see Engine
+ * @see Renderer
+ * @see PhysicsEngine
+ * @see PauseLayer
+ */
 public class GameLayer extends Layer {
 
     //    Shader & Meshes
@@ -18,8 +43,15 @@ public class GameLayer extends Layer {
     private final Rectangle2D blueRect;
     private final Circle2D redCircle;
 
-    private final float rectWidth = 60.0f, rectHeight = VIEWPORT_HEIGHT / 5.0f, radius = 30f;
+    private final float rectWidth = 60.0f;
+    private final float rectHeight = VIEWPORT_HEIGHT / 5.0f;
+    private final float radius = 30f;
 
+    /**
+     * Constructs a new {@code GameLayer} and initializes all game entities.
+     *
+     * @param engine The engine instance providing access to systems like renderer and physics.
+     */
     public GameLayer(Engine engine) {
         super(engine);
         staticShader = new StaticShader();
@@ -38,11 +70,20 @@ public class GameLayer extends Layer {
         redCircle = new Circle2D(circleMesh, redMaterial, 0, 0, radius);
     }
 
+    /**
+     * @return The display name of this layer.
+     */
     @Override
     String name() {
         return "Game Layer";
     }
 
+    /**
+     * Called when the layer becomes active.
+     * <p>
+     * Registers all entity colliders with the physics engine.
+     * </p>
+     */
     @Override
     void onAttach() {
         engine.getPhysicsEngine().add(new BoxCollider(greenRect, rectWidth, rectHeight));
@@ -50,6 +91,11 @@ public class GameLayer extends Layer {
         engine.getPhysicsEngine().add(new CircleCollider(redCircle, radius));
     }
 
+    /**
+     * Called every frame to update entity state.
+     *
+     * @param deltaTime Time elapsed since the last frame, in seconds.
+     */
     @Override
     void onUpdate(double deltaTime) {
         greenRect.update(deltaTime);
@@ -57,6 +103,9 @@ public class GameLayer extends Layer {
         redCircle.update(deltaTime);
     }
 
+    /**
+     * Called each frame to render all entities.
+     */
     @Override
     void onRender() {
         engine.getRenderer().renderModel(greenRect);
@@ -64,6 +113,12 @@ public class GameLayer extends Layer {
         engine.getRenderer().renderModel(redCircle);
     }
 
+    /**
+     * Called when the layer is removed from the stack.
+     * <p>
+     * Clears physics data and frees GPU resources.
+     * </p>
+     */
     @Override
     void onDetach() {
         engine.getPhysicsEngine().clearColliders();
@@ -72,6 +127,16 @@ public class GameLayer extends Layer {
         staticShader.destroy();
     }
 
+    /**
+     * Handles keyboard input events for this layer.
+     * <ul>
+     *     <li><b>Tab</b> → Pop (exit) the current layer</li>
+     *     <li><b>P</b> → Push the {@link PauseLayer}</li>
+     * </ul>
+     *
+     * @param event The input event received from {@link InputManager}.
+     * @return {@code true} if the event was handled; otherwise {@code false}.
+     */
     @Override
     boolean onEvent(Event event) {
         if (event.key() == GLFW_KEY_TAB && event.action() == GLFW_PRESS) {
