@@ -1,4 +1,4 @@
-package dev.teslac00;
+package dev.teslac00.core;
 
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.glfw.GLFWVidMode;

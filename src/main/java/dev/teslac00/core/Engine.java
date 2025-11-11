@@ -1,11 +1,16 @@
-package dev.teslac00;
+package dev.teslac00.core;
 
+import dev.teslac00.input.Event;
+import dev.teslac00.input.InputManager;
+import dev.teslac00.layers.Layer;
+import dev.teslac00.layers.MenuLayer;
+import dev.teslac00.physics.PhysicsEngine;
 import org.lwjgl.Version;
 
 import java.util.ArrayList;
 
-import static dev.teslac00.Constants.VIEWPORT_HEIGHT;
-import static dev.teslac00.Constants.VIEWPORT_WIDTH;
+import static dev.teslac00.core.Constants.VIEWPORT_HEIGHT;
+import static dev.teslac00.core.Constants.VIEWPORT_WIDTH;
 import static org.lwjgl.glfw.GLFW.glfwWindowShouldClose;
 
 /**

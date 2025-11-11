@@ -1,5 +1,6 @@
-package dev.teslac00;
+package dev.teslac00.graphics;
 
+import dev.teslac00.core.Renderer;
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
@@ -31,9 +32,11 @@ public abstract class RenderableObject {
 
     protected final Mesh mesh;
     protected final Material material;
+
     protected Vector3f position;
     protected Vector3f scale;
     protected float rotation;
+
     protected final Matrix4f transform;
 
     protected final Vector2f velocity = new Vector2f(0, 0);
@@ -135,5 +138,19 @@ public abstract class RenderableObject {
      */
     public Matrix4f getTransform() {
         return transform;
+    }
+
+    /**
+     * @return The position used for rendering this object.
+     */
+    public Vector3f getPosition() {
+        return position;
+    }
+
+    /**
+     * @return The object's current velocity.
+     */
+    public Vector2f getVelocity() {
+        return velocity;
     }
 }

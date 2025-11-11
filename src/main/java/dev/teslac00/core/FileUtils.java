@@ -1,4 +1,4 @@
-package dev.teslac00;
+package dev.teslac00.core;
 
 import java.io.IOException;
 import java.io.InputStream;

@@ -1,9 +1,12 @@
-package dev.teslac00;
+package dev.teslac00.layers;
 
+import dev.teslac00.core.Engine;
+import dev.teslac00.graphics.*;
+import dev.teslac00.input.Event;
 import org.joml.Vector4f;
 
-import static dev.teslac00.Constants.VIEWPORT_HEIGHT;
-import static dev.teslac00.Constants.VIEWPORT_WIDTH;
+import static dev.teslac00.core.Constants.VIEWPORT_HEIGHT;
+import static dev.teslac00.core.Constants.VIEWPORT_WIDTH;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_TAB;
 import static org.lwjgl.glfw.GLFW.GLFW_PRESS;
 
@@ -13,7 +16,7 @@ public class MenuLayer extends Layer {
     private final Mesh rectangleMesh;
     private final Rectangle2D background;
 
-    protected MenuLayer(Engine engine) {
+    public MenuLayer(Engine engine) {
         super(engine);
         staticShader = new StaticShader();
         rectangleMesh = MeshFactory.createRectangle();
@@ -23,33 +26,33 @@ public class MenuLayer extends Layer {
     }
 
     @Override
-    String name() {
+    public String name() {
         return "Menu Layer";
     }
 
     @Override
-    void onAttach() {
+    public void onAttach() {
 
     }
 
     @Override
-    void onUpdate(double deltaTime) {
+    public void onUpdate(double deltaTime) {
 
     }
 
     @Override
-    void onRender() {
+    public void onRender() {
         engine.getRenderer().renderModel(background);
     }
 
     @Override
-    void onDetach() {
+    public void onDetach() {
         rectangleMesh.destroy();
         staticShader.destroy();
     }
 
     @Override
-    boolean onEvent(Event event) {
+    public boolean onEvent(Event event) {
         if (event.key() == GLFW_KEY_TAB && event.action() == GLFW_PRESS) {
             engine.pushLayer(new GameLayer(engine));
             return true;

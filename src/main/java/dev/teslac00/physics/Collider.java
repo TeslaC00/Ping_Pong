@@ -1,4 +1,6 @@
-package dev.teslac00;
+package dev.teslac00.physics;
+
+import dev.teslac00.graphics.RenderableObject;
 
 public abstract class Collider {
     protected RenderableObject owner;

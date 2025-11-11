@@ -1,4 +1,6 @@
-package dev.teslac00;
+package dev.teslac00.graphics;
+
+import dev.teslac00.core.FileUtils;
 
 import static org.lwjgl.opengl.GL20C.*;
 

@@ -1,4 +1,4 @@
-package dev.teslac00;
+package dev.teslac00.graphics;
 
 import org.joml.Math;
 

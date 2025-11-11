@@ -1,4 +1,6 @@
-package dev.teslac00;
+package dev.teslac00.physics;
+
+import dev.teslac00.graphics.RenderableObject;
 
 /**
  * An axis-aligned box collider (AABB) for basic 2D collision detection.
@@ -26,16 +28,16 @@ public class BoxCollider extends Collider {
 
     @Override
     public boolean intersectsBoxCollider(BoxCollider other) {
-        boolean overlapX = Math.abs(owner.position.x - other.owner.position.x) < (width + other.width) / 2;
-        boolean overlapY = Math.abs(owner.position.y - other.owner.position.y) < (height + other.height) / 2;
+        boolean overlapX = Math.abs(owner.getPosition().x - other.owner.getPosition().x) < (width + other.width) / 2;
+        boolean overlapY = Math.abs(owner.getPosition().y - other.owner.getPosition().y) < (height + other.height) / 2;
 
         return overlapX && overlapY;
     }
 
     @Override
     public boolean intersectsCircleCollider(CircleCollider other) {
-        boolean overlapX = Math.abs(owner.position.x - other.owner.position.x) < width / 2 + other.getRadius();
-        boolean overlapY = Math.abs(owner.position.y - other.owner.position.y) < height / 2 + other.getRadius();
+        boolean overlapX = Math.abs(owner.getPosition().x - other.owner.getPosition().x) < width / 2 + other.getRadius();
+        boolean overlapY = Math.abs(owner.getPosition().y - other.owner.getPosition().y) < height / 2 + other.getRadius();
 
         return overlapX && overlapY;
     }

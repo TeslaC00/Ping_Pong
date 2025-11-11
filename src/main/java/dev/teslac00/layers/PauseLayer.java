@@ -1,9 +1,13 @@
-package dev.teslac00;
+package dev.teslac00.layers;
 
+import dev.teslac00.core.Engine;
+import dev.teslac00.core.Renderer;
+import dev.teslac00.graphics.*;
+import dev.teslac00.input.Event;
 import org.joml.Vector4f;
 
-import static dev.teslac00.Constants.VIEWPORT_HEIGHT;
-import static dev.teslac00.Constants.VIEWPORT_WIDTH;
+import static dev.teslac00.core.Constants.VIEWPORT_HEIGHT;
+import static dev.teslac00.core.Constants.VIEWPORT_WIDTH;
 import static org.lwjgl.glfw.GLFW.*;
 
 /**
@@ -39,7 +43,7 @@ public class PauseLayer extends Layer {
      *
      * @param engine The engine providing access to the renderer and layer stack.
      */
-    protected PauseLayer(Engine engine) {
+    public PauseLayer(Engine engine) {
         super(engine);
 
         staticShader = new StaticShader();
@@ -53,7 +57,7 @@ public class PauseLayer extends Layer {
      * @return The display name of this layer.
      */
     @Override
-    String name() {
+    public String name() {
         return "Pause Layer";
     }
 
@@ -61,7 +65,7 @@ public class PauseLayer extends Layer {
      * Called when this layer is added to the layer stack.
      */
     @Override
-    void onAttach() {
+    public void onAttach() {
 
     }
 
@@ -69,7 +73,7 @@ public class PauseLayer extends Layer {
      * Called every frame; this layer does not perform updates.
      */
     @Override
-    void onUpdate(double deltaTime) {
+    public void onUpdate(double deltaTime) {
 
     }
 
@@ -77,7 +81,7 @@ public class PauseLayer extends Layer {
      * Renders the semi-transparent background overlay.
      */
     @Override
-    void onRender() {
+    public void onRender() {
         engine.getRenderer().renderModel(background);
     }
 
@@ -88,7 +92,7 @@ public class PauseLayer extends Layer {
      * </p>
      */
     @Override
-    void onDetach() {
+    public void onDetach() {
         rectangleMesh.destroy();
         staticShader.destroy();
     }
@@ -103,7 +107,7 @@ public class PauseLayer extends Layer {
      * @return {@code true} if the event was consumed, otherwise {@code false}.
      */
     @Override
-    boolean onEvent(Event event) {
+    public boolean onEvent(Event event) {
         if (event.key() == GLFW_KEY_P && event.action() == GLFW_PRESS) {
             engine.popLayer();
             return true;

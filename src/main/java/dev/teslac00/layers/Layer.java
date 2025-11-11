@@ -1,4 +1,7 @@
-package dev.teslac00;
+package dev.teslac00.layers;
+
+import dev.teslac00.core.Engine;
+import dev.teslac00.input.Event;
 
 /**
  * Base abstract class for all engine layers.
@@ -37,7 +40,7 @@ public abstract class Layer {
      *
      * @param engine The engine instance this layer interacts with.
      */
-    protected Layer(Engine engine) {
+    public Layer(Engine engine) {
         this.engine = engine;
     }
 
@@ -46,7 +49,7 @@ public abstract class Layer {
      *
      * @return The layer’s name.
      */
-    abstract String name();
+    public abstract String name();
 
     /**
      * Called once when the layer is added to the engine’s layer stack.
@@ -55,14 +58,14 @@ public abstract class Layer {
      * or initializing UI elements.
      * </p>
      */
-    abstract void onAttach();
+    public abstract void onAttach();
 
     /**
      * Called once per frame to update the layer’s logic.
      *
      * @param deltaTime Time elapsed since the last frame, in seconds.
      */
-    abstract void onUpdate(double deltaTime);
+    public abstract void onUpdate(double deltaTime);
 
     /**
      * Called once per frame to render the layer’s visuals.
@@ -70,7 +73,7 @@ public abstract class Layer {
      * Typically invoked in draw order for all active layers.
      * </p>
      */
-    abstract void onRender();
+    public abstract void onRender();
 
     /**
      * Called when the layer is removed from the stack.
@@ -79,7 +82,7 @@ public abstract class Layer {
      * or unregistering colliders.
      * </p>
      */
-    abstract void onDetach();
+    public abstract void onDetach();
 
     /**
      * Handles input or system events directed to this layer.
@@ -87,6 +90,6 @@ public abstract class Layer {
      * @param event The event to process.
      * @return {@code true} if the event was handled (and should not propagate further).
      */
-    abstract boolean onEvent(Event event);
+    public abstract boolean onEvent(Event event);
 
 }

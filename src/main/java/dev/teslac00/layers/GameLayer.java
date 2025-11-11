@@ -1,9 +1,18 @@
-package dev.teslac00;
+package dev.teslac00.layers;
 
-import static dev.teslac00.Colors.*;
-import static dev.teslac00.Constants.*;
-import static dev.teslac00.Constants.VIEWPORT_HEIGHT;
-import static dev.teslac00.Constants.VIEWPORT_WIDTH;
+import dev.teslac00.core.Engine;
+import dev.teslac00.core.Renderer;
+import dev.teslac00.graphics.*;
+import dev.teslac00.input.Event;
+import dev.teslac00.input.InputManager;
+import dev.teslac00.physics.BoxCollider;
+import dev.teslac00.physics.CircleCollider;
+import dev.teslac00.physics.PhysicsEngine;
+
+import static dev.teslac00.core.Colors.*;
+import static dev.teslac00.core.Constants.*;
+import static dev.teslac00.core.Constants.VIEWPORT_HEIGHT;
+import static dev.teslac00.core.Constants.VIEWPORT_WIDTH;
 import static org.lwjgl.glfw.GLFW.*;
 
 /**
@@ -74,7 +83,7 @@ public class GameLayer extends Layer {
      * @return The display name of this layer.
      */
     @Override
-    String name() {
+    public String name() {
         return "Game Layer";
     }
 
@@ -85,7 +94,7 @@ public class GameLayer extends Layer {
      * </p>
      */
     @Override
-    void onAttach() {
+    public void onAttach() {
         engine.getPhysicsEngine().add(new BoxCollider(greenRect, rectWidth, rectHeight));
         engine.getPhysicsEngine().add(new BoxCollider(blueRect, rectWidth, rectHeight));
         engine.getPhysicsEngine().add(new CircleCollider(redCircle, radius));
@@ -97,7 +106,7 @@ public class GameLayer extends Layer {
      * @param deltaTime Time elapsed since the last frame, in seconds.
      */
     @Override
-    void onUpdate(double deltaTime) {
+    public void onUpdate(double deltaTime) {
         greenRect.update(deltaTime);
         blueRect.update(deltaTime);
         redCircle.update(deltaTime);
@@ -107,7 +116,7 @@ public class GameLayer extends Layer {
      * Called each frame to render all entities.
      */
     @Override
-    void onRender() {
+    public void onRender() {
         engine.getRenderer().renderModel(greenRect);
         engine.getRenderer().renderModel(blueRect);
         engine.getRenderer().renderModel(redCircle);
@@ -120,7 +129,7 @@ public class GameLayer extends Layer {
      * </p>
      */
     @Override
-    void onDetach() {
+    public void onDetach() {
         engine.getPhysicsEngine().clearColliders();
         rectangleMesh.destroy();
         circleMesh.destroy();
@@ -138,7 +147,7 @@ public class GameLayer extends Layer {
      * @return {@code true} if the event was handled; otherwise {@code false}.
      */
     @Override
-    boolean onEvent(Event event) {
+    public boolean onEvent(Event event) {
         if (event.key() == GLFW_KEY_TAB && event.action() == GLFW_PRESS) {
             engine.popLayer();
             return true;

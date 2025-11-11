@@ -1,4 +1,4 @@
-package dev.teslac00;
+package dev.teslac00.physics;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,8 +72,8 @@ public final class PhysicsEngine {
      * @param b The second collider.
      */
     private void resolveCollision(Collider a, Collider b) {
-        float dx = b.owner.position.x - a.owner.position.x;
-        float dy = b.owner.position.y - a.owner.position.y;
+        float dx = b.owner.getPosition().x - a.owner.getPosition().x;
+        float dy = b.owner.getPosition().y - a.owner.getPosition().y;
 
         if (a instanceof BoxCollider box && b instanceof CircleCollider circle) {
             separateObjects(box, circle, dx, dy);
@@ -103,15 +103,15 @@ public final class PhysicsEngine {
 //            Horizontal Collision
             float direction = Math.signum(dx);
 
-            circle.owner.position.x += direction * overlapX;
-            circle.owner.velocity.x *= -1;
+            circle.owner.getPosition().x += direction * overlapX;
+            circle.owner.getVelocity().x *= -1;
 
         } else {
 //            Vertical Collision
             float direction = Math.signum(dy);
 
-            circle.owner.position.y += direction * overlapY;
-            circle.owner.velocity.y *= -1;
+            circle.owner.getPosition().y += direction * overlapY;
+            circle.owner.getVelocity().y *= -1;
         }
     }
 

@@ -1,6 +1,8 @@
-package dev.teslac00;
+package dev.teslac00.graphics;
 
-import static dev.teslac00.Constants.VIEWPORT_HEIGHT;
+import dev.teslac00.input.InputManager;
+
+import static dev.teslac00.core.Constants.VIEWPORT_HEIGHT;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_S;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_W;
 

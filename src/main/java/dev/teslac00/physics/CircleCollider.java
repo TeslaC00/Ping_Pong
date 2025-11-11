@@ -1,5 +1,7 @@
 
-package dev.teslac00;
+package dev.teslac00.physics;
+
+import dev.teslac00.graphics.RenderableObject;
 
 public class CircleCollider extends Collider {
 
@@ -17,16 +19,18 @@ public class CircleCollider extends Collider {
 
     @Override
     public boolean intersectsBoxCollider(BoxCollider other) {
-        boolean overlapX = Math.abs(owner.position.x - other.owner.position.x) < radius + other.getWidth() / 2;
-        boolean overlapY = Math.abs(owner.position.y - other.owner.position.y) < radius + other.getHeight() / 2;
+        boolean overlapX = Math.abs(owner.getPosition().x - other.owner.getPosition().x) <
+                radius + other.getWidth() / 2;
+        boolean overlapY = Math.abs(owner.getPosition().y - other.owner.getPosition().y) <
+                radius + other.getHeight() / 2;
 
         return overlapX && overlapY;
     }
 
     @Override
     public boolean intersectsCircleCollider(CircleCollider other) {
-        float dx = owner.position.x - other.owner.position.x;
-        float dy = owner.position.y - other.owner.position.y;
+        float dx = owner.getPosition().x - other.owner.getPosition().x;
+        float dy = owner.getPosition().y - other.owner.getPosition().y;
         float dst = (float) Math.sqrt(dx * dx + dy * dy);
 
         return dst < radius + other.radius;
