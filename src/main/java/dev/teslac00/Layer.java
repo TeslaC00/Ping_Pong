@@ -16,4 +16,6 @@ public abstract class Layer {
 
     abstract void onDetach();
 
+    abstract boolean onEvent(Event event);
+
 }

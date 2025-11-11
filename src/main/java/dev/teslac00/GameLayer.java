@@ -4,6 +4,8 @@ import static dev.teslac00.Colors.*;
 import static dev.teslac00.Constants.*;
 import static dev.teslac00.Constants.VIEWPORT_HEIGHT;
 import static dev.teslac00.Constants.VIEWPORT_WIDTH;
+import static org.lwjgl.glfw.GLFW.GLFW_KEY_TAB;
+import static org.lwjgl.glfw.GLFW.GLFW_PRESS;
 
 public class GameLayer extends Layer {
 
@@ -60,8 +62,18 @@ public class GameLayer extends Layer {
 
     @Override
     void onDetach() {
-        staticShader.destroy();
+        engine.getPhysicsEngine().clearColliders();
         rectangleMesh.destroy();
         circleMesh.destroy();
+        staticShader.destroy();
+    }
+
+    @Override
+    boolean onEvent(Event event) {
+        if (event.key() == GLFW_KEY_TAB && event.action() == GLFW_PRESS) {
+            engine.popLayer();
+            return true;
+        }
+        return false;
     }
 }

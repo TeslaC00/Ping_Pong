@@ -57,4 +57,8 @@ public final class PhysicsEngine {
             circle.owner.velocity.y *= -1;
         }
     }
+
+    public void clearColliders() {
+        colliders.clear();
+    }
 }

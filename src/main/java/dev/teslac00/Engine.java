@@ -48,15 +48,21 @@ public class Engine {
 //            Delta time
         double deltaTime = timer.getDeltaTime();
 
+        for (Event event : InputManager.getEventQueue()) {
+            boolean consumed = layerStack.getLast().onEvent(event);
+            if (consumed) System.out.printf("Event: %s consumed %n", event);
+        }
+        InputManager.getEventQueue().clear();
+
 //            Physics
         physicsEngine.update(deltaTime);
         layerStack.getLast().onUpdate(deltaTime);
 
 //            Rendering
         renderer.prepare();
-        for (Layer layer : layerStack) {
+        for (Layer layer : layerStack)
             layer.onRender();
-        }
+
         renderer.render();
 
         displayManager.update();
@@ -92,6 +98,17 @@ public class Engine {
         renderer.destroy();
         inputManager.destroy();
         displayManager.destroy();
+    }
+
+    public void pushLayer(Layer layer) {
+        layerStack.add(layer);
+        layer.onAttach();
+    }
+
+    public void popLayer() {
+        if (layerStack.isEmpty()) return;
+        layerStack.getLast().onDetach();
+        layerStack.removeLast();
     }
 
     public Renderer getRenderer() {
