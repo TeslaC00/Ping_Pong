@@ -2,17 +2,16 @@ package dev.teslac00.layers;
 
 import dev.teslac00.core.Engine;
 import dev.teslac00.core.Renderer;
+import dev.teslac00.entities.AiPaddle;
+import dev.teslac00.entities.PlayerPaddle;
 import dev.teslac00.graphics.*;
 import dev.teslac00.input.Event;
 import dev.teslac00.input.InputManager;
-import dev.teslac00.physics.BoxCollider;
 import dev.teslac00.physics.CircleCollider;
 import dev.teslac00.physics.PhysicsEngine;
 
-import static dev.teslac00.core.Colors.*;
-import static dev.teslac00.core.Constants.*;
-import static dev.teslac00.core.Constants.VIEWPORT_HEIGHT;
-import static dev.teslac00.core.Constants.VIEWPORT_WIDTH;
+import static dev.teslac00.core.Colors.COLOR_RED;
+import static dev.teslac00.core.Constants.CIRCLE_MESH_DEFAULT_SEGMENTS;
 import static org.lwjgl.glfw.GLFW.*;
 
 /**
@@ -44,16 +43,13 @@ public class GameLayer extends Layer {
 
     //    Shader & Meshes
     private final StaticShader staticShader;
-    private final Mesh rectangleMesh;
     private final Mesh circleMesh;
 
     //    Entities
-    private final Rectangle2D greenRect;
-    private final Rectangle2D blueRect;
+    private final PlayerPaddle playerPaddle;
+    private final AiPaddle aiPaddle;
     private final Circle2D redCircle;
 
-    private final float rectWidth = 60.0f;
-    private final float rectHeight = VIEWPORT_HEIGHT / 5.0f;
     private final float radius = 30f;
 
     /**
@@ -64,18 +60,12 @@ public class GameLayer extends Layer {
     public GameLayer(Engine engine) {
         super(engine);
         staticShader = new StaticShader();
-        Material greenMaterial = new Material(staticShader.getProgramId(), COLOR_GREEN);
-        Material blueMaterial = new Material(staticShader.getProgramId(), COLOR_BLUE);
-        Material redMaterial = new Material(staticShader.getProgramId(), COLOR_RED);
 
-        rectangleMesh = MeshFactory.createRectangle();
+        Material redMaterial = new Material(staticShader.getProgramId(), COLOR_RED);
         circleMesh = MeshFactory.createCircle(CIRCLE_MESH_DEFAULT_SEGMENTS);
 
-        greenRect = new Rectangle2D(rectangleMesh, greenMaterial,
-                (-VIEWPORT_WIDTH + rectWidth) / 2, (VIEWPORT_HEIGHT - rectHeight) / 2, rectWidth, rectHeight);
-        blueRect = new Rectangle2D(rectangleMesh, blueMaterial,
-                (VIEWPORT_WIDTH - rectWidth) / 2, 0, rectWidth, rectHeight);
-
+        playerPaddle = new PlayerPaddle(staticShader.getProgramId());
+        aiPaddle = new AiPaddle(staticShader.getProgramId());
         redCircle = new Circle2D(circleMesh, redMaterial, 0, 0, radius);
     }
 
@@ -95,8 +85,8 @@ public class GameLayer extends Layer {
      */
     @Override
     public void onAttach() {
-        engine.getPhysicsEngine().add(new BoxCollider(greenRect, rectWidth, rectHeight));
-        engine.getPhysicsEngine().add(new BoxCollider(blueRect, rectWidth, rectHeight));
+        engine.getPhysicsEngine().add(playerPaddle.getCollider());
+        engine.getPhysicsEngine().add(aiPaddle.getCollider());
         engine.getPhysicsEngine().add(new CircleCollider(redCircle, radius));
     }
 
@@ -107,8 +97,8 @@ public class GameLayer extends Layer {
      */
     @Override
     public void onUpdate(double deltaTime) {
-        greenRect.update(deltaTime);
-        blueRect.update(deltaTime);
+        playerPaddle.update(deltaTime);
+        aiPaddle.update(deltaTime);
         redCircle.update(deltaTime);
     }
 
@@ -117,8 +107,8 @@ public class GameLayer extends Layer {
      */
     @Override
     public void onRender() {
-        engine.getRenderer().renderModel(greenRect);
-        engine.getRenderer().renderModel(blueRect);
+        engine.getRenderer().renderModel(playerPaddle.getRectangle2D());
+        engine.getRenderer().renderModel(aiPaddle.getRectangle2D());
         engine.getRenderer().renderModel(redCircle);
     }
 
@@ -130,10 +120,11 @@ public class GameLayer extends Layer {
      */
     @Override
     public void onDetach() {
-        engine.getPhysicsEngine().clearColliders();
-        rectangleMesh.destroy();
+        playerPaddle.destroy();
+        aiPaddle.destroy();
         circleMesh.destroy();
         staticShader.destroy();
+        engine.getPhysicsEngine().clearColliders();
     }
 
     /**

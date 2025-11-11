@@ -153,4 +153,18 @@ public abstract class RenderableObject {
     public Vector2f getVelocity() {
         return velocity;
     }
+
+    /**
+     * @return The scale of the object in x,y,z axis.
+     */
+    public Vector3f getScale() {
+        return scale;
+    }
+
+    /**
+     * @return The rotation of the object in z axis.
+     */
+    public float getRotation() {
+        return rotation;
+    }
 }
