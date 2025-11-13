@@ -62,10 +62,10 @@ public class GameLayer extends Layer {
         super(engine);
         staticShader = new StaticShader();
 
-        Material redMaterial = new Material(staticShader.getProgramId(), COLOR_RED);
+        Material redMaterial = new Material(staticShader, COLOR_RED);
 
-        playerPaddle = new PlayerPaddle(staticShader.getProgramId());
-        aiPaddle = new AiPaddle(staticShader.getProgramId());
+        playerPaddle = new PlayerPaddle(staticShader);
+        aiPaddle = new AiPaddle(staticShader);
         redCircle = new Circle2D(AssetManager.getCircularMesh(), redMaterial, 0, 0, radius);
     }
 

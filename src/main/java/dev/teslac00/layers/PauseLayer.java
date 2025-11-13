@@ -48,7 +48,7 @@ public class PauseLayer extends Layer {
 
         staticShader = new StaticShader();
         rectangleMesh = MeshFactory.createRectangle();
-        Material backgroundMaterial = new Material(staticShader.getProgramId(), new Vector4f(0, 0, 0, 0.5f));
+        Material backgroundMaterial = new Material(staticShader, new Vector4f(0, 0, 0, 0.5f));
 
         background = new Rectangle2D(rectangleMesh, backgroundMaterial, 0, 0, VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
     }

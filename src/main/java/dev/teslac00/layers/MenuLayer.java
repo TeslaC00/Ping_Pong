@@ -20,7 +20,7 @@ public class MenuLayer extends Layer {
         super(engine);
         staticShader = new StaticShader();
         rectangleMesh = MeshFactory.createRectangle();
-        Material backgroundMaterial = new Material(staticShader.getProgramId(), new Vector4f(0, 0, 0, 1));
+        Material backgroundMaterial = new Material(staticShader, new Vector4f(0, 0, 0, 1));
 
         background = new Rectangle2D(rectangleMesh, backgroundMaterial, 0, 0, VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
     }

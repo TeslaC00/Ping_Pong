@@ -23,10 +23,10 @@ public class PlayerPaddle {
     private final Rectangle2D rectangle2D;
     private final BoxCollider collider;
 
-    public PlayerPaddle(int shaderId) {
+    public PlayerPaddle(ShaderProgram shader) {
         float width = 60;
         float height = VIEWPORT_HEIGHT / 5f;
-        Material material = new Material(shaderId, Colors.COLOR_GREEN);
+        Material material = new Material(shader, Colors.COLOR_GREEN);
 
         rectangle2D = new Rectangle2D(AssetManager.getRectangleMesh(), material,
                 (-VIEWPORT_WIDTH + width) / 2,
@@ -47,7 +47,8 @@ public class PlayerPaddle {
         float nextY = rectangle2D.getPosition().y +
                 (float) (MOVE_SPEED * deltaTime * rectangle2D.getVelocity().y);
         float limitY = (VIEWPORT_HEIGHT - rectangle2D.getScale().y) / 2.0f;
-        float distance = Math.max(Math.min(nextY, limitY), -limitY) - rectangle2D.getPosition().y;   // Snap to limit and stop velocity
+        // Snap to limit and stop velocity
+        float distance = Math.max(Math.min(nextY, limitY), -limitY) - rectangle2D.getPosition().y;
 
         rectangle2D.translate(0, distance);
     }

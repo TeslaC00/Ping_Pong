@@ -1,8 +1,8 @@
 package dev.teslac00.core;
 
 import dev.teslac00.graphics.RenderableObject;
+import dev.teslac00.graphics.ShaderProgram;
 import org.joml.Matrix4f;
-import org.joml.Vector4f;
 import org.lwjgl.BufferUtils;
 
 import java.nio.FloatBuffer;
@@ -12,8 +12,7 @@ import static dev.teslac00.core.Constants.VIEWPORT_HEIGHT;
 import static dev.teslac00.core.Constants.VIEWPORT_WIDTH;
 import static org.lwjgl.opengl.GL11C.glClearColor;
 import static org.lwjgl.opengl.GL15C.*;
-import static org.lwjgl.opengl.GL20C.*;
-import static org.lwjgl.opengl.GL30C.*;
+import static org.lwjgl.opengl.GL30C.glBindVertexArray;
 
 /**
  * Handles all OpenGL rendering operations in the engine.
@@ -39,8 +38,7 @@ import static org.lwjgl.opengl.GL30C.*;
 public final class Renderer {
 
     private final ArrayList<RenderableObject> renderQueue = new ArrayList<>();
-    private final FloatBuffer transformBuffer = BufferUtils.createFloatBuffer(16);
-    private FloatBuffer projBuffer; // orthographic projection
+    private static FloatBuffer projBuffer; // orthographic projection
 
     // ---------------------------------------------------------------------
     // Initialization
@@ -57,11 +55,11 @@ public final class Renderer {
         projBuffer = BufferUtils.createFloatBuffer(16);
 
         // Orthographic projection covering the entire viewport
-        Matrix4f proj = new Matrix4f()
-                .ortho(-VIEWPORT_WIDTH / 2.0f, VIEWPORT_WIDTH / 2.0f,
-                        -VIEWPORT_HEIGHT / 2.0f, VIEWPORT_HEIGHT / 2.0f,
-                        -1, 1
-                );
+        Matrix4f proj = new Matrix4f().ortho(
+                -VIEWPORT_WIDTH / 2.0f, VIEWPORT_WIDTH / 2.0f,
+                -VIEWPORT_HEIGHT / 2.0f, VIEWPORT_HEIGHT / 2.0f,
+                -1, 1
+        );
         proj.get(projBuffer).rewind();
 
         glEnable(GL_BLEND);
@@ -103,19 +101,16 @@ public final class Renderer {
     public void render() {
 
         for (RenderableObject model : renderQueue) {
-            Vector4f color = model.getMaterial().color();
-            int shaderId = model.getMaterial().shaderId();
-            model.getTransform().get(transformBuffer).rewind();
+            ShaderProgram shader = model.getMaterial().shader();
 
-            bindShader(shaderId);   // bind and use the shader for current draw call
-            glUniform4f(getUniformLocation(shaderId, "u_color"), color.x, color.y, color.z, color.w);
-            glUniformMatrix4fv(getUniformLocation(shaderId, "u_proj"), false, projBuffer);
-            glUniformMatrix4fv(getUniformLocation(shaderId, "u_trans"), false, transformBuffer);
+            shader.start();
+            shader.loadUniforms(model);
+
             glBindVertexArray(model.getMesh().getVaoId());   // bind the VAO to use in this frame
             glDrawElements(GL_TRIANGLES, model.getMesh().getIndicesCount(), GL_UNSIGNED_INT, 0);   // draw elements using ibo
-
             glBindVertexArray(0);   // unbind the VAO for cleanup after draw call
-            unbindShader(); // unbind the shader program
+
+            shader.stop();
         }
 
         renderQueue.clear();
@@ -135,36 +130,7 @@ public final class Renderer {
         renderQueue.clear();
     }
 
-    // ---------------------------------------------------------------------
-    // Internal Utility Methods
-    // ---------------------------------------------------------------------
-
-    /**
-     * Retrieves the location of a uniform variable in the given shader.
-     *
-     * @param shaderId    The shader program ID.
-     * @param uniformName The name of the uniform variable.
-     * @return The uniform location, or throws if not found.
-     * @throws RuntimeException If the uniform is not active or missing.
-     */
-    private int getUniformLocation(int shaderId, String uniformName) {
-        int uniformLocation = glGetUniformLocation(shaderId, uniformName);
-        if (uniformLocation == -1)
-            throw new RuntimeException(String.format("Uniform '%s' not found in shader %d", uniformName, shaderId));
-        return uniformLocation;
-    }
-
-    /**
-     * Activates the given shader program.
-     */
-    private void bindShader(int shaderId) {
-        glUseProgram(shaderId);
-    }
-
-    /**
-     * Deactivates any currently bound shader program.
-     */
-    private void unbindShader() {
-        glUseProgram(0);
+    public static FloatBuffer getProjBuffer() {
+        return projBuffer;
     }
 }

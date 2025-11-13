@@ -21,11 +21,11 @@ public class AiPaddle {
     private final Rectangle2D rectangle2D;
     private final BoxCollider collider;
 
-    public AiPaddle(int shaderId) {
+    public AiPaddle(ShaderProgram shader) {
         float width = 60;
         float height = VIEWPORT_HEIGHT / 5f;
 
-        Material material = new Material(shaderId, Colors.COLOR_BLUE);
+        Material material = new Material(shader, Colors.COLOR_BLUE);
 
         rectangle2D = new Rectangle2D(AssetManager.getRectangleMesh(), material,
                 (VIEWPORT_WIDTH - width) / 2, 0, width, height);
