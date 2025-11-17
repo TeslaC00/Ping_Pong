@@ -10,6 +10,9 @@ import static org.lwjgl.opengl.GL20C.glEnableVertexAttribArray;
 import static org.lwjgl.opengl.GL20C.glVertexAttribPointer;
 import static org.lwjgl.opengl.GL30C.*;
 
+/**
+ * Defines the geometry or structure of the object. Does not know about the visual appearance
+ */
 public class Mesh {
 
     private final int vaoId;

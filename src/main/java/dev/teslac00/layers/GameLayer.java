@@ -62,7 +62,7 @@ public class GameLayer extends Layer {
         super(engine);
         staticShader = new StaticShader();
 
-        Material redMaterial = new Material(staticShader, COLOR_RED);
+        Material redMaterial = new Material(staticShader, COLOR_RED, AssetManager.getTexture("luigi.jpeg"));
 
         playerPaddle = new PlayerPaddle(staticShader);
         aiPaddle = new AiPaddle(staticShader);

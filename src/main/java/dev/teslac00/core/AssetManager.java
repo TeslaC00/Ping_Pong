@@ -2,7 +2,11 @@ package dev.teslac00.core;
 
 import dev.teslac00.graphics.Mesh;
 import dev.teslac00.graphics.MeshFactory;
+import dev.teslac00.graphics.Texture;
 import dev.teslac00.graphics.VertexLayout;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import static dev.teslac00.core.Constants.CIRCLE_MESH_DEFAULT_SEGMENTS;
 import static org.lwjgl.opengl.GL11C.GL_FLOAT;
@@ -18,22 +22,30 @@ import static org.lwjgl.opengl.GL11C.GL_FLOAT;
 public class AssetManager {
 
     //    Vertex Layouts
-    private static VertexLayout positionLayout;
+    private static VertexLayout layoutPosUv;
 
     //    Meshes
     private static Mesh rectangleMesh;
     private static Mesh circularMesh;
 
-    public void init() {
-        positionLayout = new VertexLayout();
-        positionLayout.addAttribute(2, GL_FLOAT, false);
+    private final static Map<String, Texture> textureMap = new HashMap<>();
 
-        rectangleMesh = MeshFactory.createRectangle();
+    public void init() {
+
+        layoutPosUv = new VertexLayout();
+        layoutPosUv.addAttribute(2, GL_FLOAT, false);   // position
+        layoutPosUv.addAttribute(2, GL_FLOAT, false);   // uv coordinates
+
+        rectangleMesh = MeshFactory.createQuad();
         circularMesh = MeshFactory.createCircle(CIRCLE_MESH_DEFAULT_SEGMENTS);
     }
 
-    public static VertexLayout getPositionLayout() {
-        return positionLayout;
+    public static Texture getTexture(String path) {
+        return textureMap.computeIfAbsent(path, Texture::new);
+    }
+
+    public static VertexLayout getLayoutPosUv() {
+        return layoutPosUv;
     }
 
     public static Mesh getRectangleMesh() {
@@ -47,5 +59,9 @@ public class AssetManager {
     public void destroy() {
         rectangleMesh.destroy();
         circularMesh.destroy();
+
+        for (Texture texture : textureMap.values())
+            texture.destroy();
+        textureMap.clear();
     }
 }

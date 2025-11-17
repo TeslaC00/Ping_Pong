@@ -25,7 +25,7 @@ public class AiPaddle {
         float width = 60;
         float height = VIEWPORT_HEIGHT / 5f;
 
-        Material material = new Material(shader, Colors.COLOR_BLUE);
+        Material material = new Material(shader, Colors.COLOR_BLUE, AssetManager.getTexture("knight.png"));
 
         rectangle2D = new Rectangle2D(AssetManager.getRectangleMesh(), material,
                 (VIEWPORT_WIDTH - width) / 2, 0, width, height);

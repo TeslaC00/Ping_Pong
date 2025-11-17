@@ -17,8 +17,19 @@ public class StaticShader extends ShaderProgram {
 
     @Override
     public void loadUniforms(RenderableObject model) {
-        setUniform("u_color", model.getMaterial().color());
+        Material material = model.getMaterial();
+
+        setUniform("u_color", material.color());
         setUniform("u_trans", model.getTransform());
         setUniform("u_proj", Renderer.getProjBuffer());
+
+        Texture texture = material.texture();
+        if (texture != null) {
+            texture.bind(0);    // bind texture to slot 0
+            setUniform("u_useTexture", 1);
+            setUniform("u_texture", 0); // sampler2D index
+        } else {
+            setUniform("u_useTexture", 0);
+        }
     }
 }

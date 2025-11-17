@@ -96,6 +96,11 @@ public abstract class ShaderProgram {
         glDeleteProgram(programId);
     }
 
+    public void setUniform(String name, int value) {
+        Uniform uniform = uniforms.get(name);
+        if (uniform != null) glUniform1i(uniform.location(), value);
+    }
+
     public void setUniform(String name, float value) {
         Uniform uniform = uniforms.get(name);
         if (uniform != null) glUniform1f(uniform.location(), value);
