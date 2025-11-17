@@ -1,5 +1,6 @@
 package dev.teslac00.graphics;
 
+import dev.teslac00.core.AssetManager;
 import org.joml.Math;
 
 public class MeshFactory {
@@ -18,7 +19,7 @@ public class MeshFactory {
                 2, 3, 0 // Bottom Right triangle
         };
 
-        return Mesh.loadMesh(vertices, indices);
+        return Mesh.loadMesh(vertices, indices, AssetManager.getPositionLayout());
     }
 
     public static Mesh createCircle(int segments) {
@@ -43,6 +44,6 @@ public class MeshFactory {
             indices[i * 3 + 2] = (i + 1) % segments + 1;
         }
 
-        return Mesh.loadMesh(vertices, indices);
+        return Mesh.loadMesh(vertices, indices, AssetManager.getPositionLayout());
     }
 }
