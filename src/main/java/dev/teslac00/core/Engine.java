@@ -110,9 +110,9 @@ public class Engine {
         layerStack.getLast().onUpdate(deltaTime);
 
 //            Rendering
-        renderer.prepare();
         for (Layer layer : layerStack)
             layer.onRender();
+        renderer.prepare();
         renderer.render();
 
         displayManager.update();
