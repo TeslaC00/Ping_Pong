@@ -26,7 +26,11 @@ public class PlayerPaddle {
     public PlayerPaddle(ShaderProgram shader) {
         float width = 60;
         float height = VIEWPORT_HEIGHT / 5f;
-        Material material = new Material(shader, Colors.COLOR_GREEN, AssetManager.getTexture("mario.png"));
+        Material material = new Material(
+                shader,
+                Colors.COLOR_GREEN,
+                AssetManager.getTexture(TEXTURE_MARIO)
+        );
 
         rectangle2D = new Rectangle2D(AssetManager.getRectangleMesh(), material,
                 (-VIEWPORT_WIDTH + width) / 2,

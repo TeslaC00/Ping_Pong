@@ -5,8 +5,7 @@ import dev.teslac00.core.Colors;
 import dev.teslac00.graphics.*;
 import dev.teslac00.physics.BoxCollider;
 
-import static dev.teslac00.core.Constants.VIEWPORT_HEIGHT;
-import static dev.teslac00.core.Constants.VIEWPORT_WIDTH;
+import static dev.teslac00.core.Constants.*;
 
 /**
  * ---------------------------------------------------------------
@@ -25,7 +24,11 @@ public class AiPaddle {
         float width = 60;
         float height = VIEWPORT_HEIGHT / 5f;
 
-        Material material = new Material(shader, Colors.COLOR_BLUE, AssetManager.getTexture("knight.png"));
+        Material material = new Material(
+                shader,
+                Colors.COLOR_BLUE,
+                AssetManager.getTexture(TEXTURE_KNIGHT)
+        );
 
         rectangle2D = new Rectangle2D(AssetManager.getRectangleMesh(), material,
                 (VIEWPORT_WIDTH - width) / 2, 0, width, height);

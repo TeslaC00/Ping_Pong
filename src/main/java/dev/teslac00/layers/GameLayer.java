@@ -14,6 +14,7 @@ import dev.teslac00.physics.CircleCollider;
 import dev.teslac00.physics.PhysicsEngine;
 
 import static dev.teslac00.core.Colors.COLOR_RED;
+import static dev.teslac00.core.Constants.TEXTURE_LUIGI;
 import static org.lwjgl.glfw.GLFW.*;
 
 /**
@@ -62,7 +63,11 @@ public class GameLayer extends Layer {
         super(engine);
         staticShader = new StaticShader();
 
-        Material redMaterial = new Material(staticShader, COLOR_RED, AssetManager.getTexture("luigi.jpeg"));
+        Material redMaterial = new Material(
+                staticShader,
+                COLOR_RED, AssetManager
+                .getTexture(TEXTURE_LUIGI)
+        );
 
         playerPaddle = new PlayerPaddle(staticShader);
         aiPaddle = new AiPaddle(staticShader);

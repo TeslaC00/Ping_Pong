@@ -2,13 +2,13 @@ package dev.teslac00.graphics;
 
 import dev.teslac00.core.Renderer;
 
+import static dev.teslac00.core.Constants.STATIC_FRAGMENT_SHADER;
+import static dev.teslac00.core.Constants.STATIC_VERTEX_SHADER;
+
 public class StaticShader extends ShaderProgram {
 
-    private static final String VERTEX_SHADER_FILE = "VertexShader.glsl";
-    private static final String FRAGMENT_SHADER_FILE = "FragmentShader.glsl";
-
     public StaticShader() {
-        super(VERTEX_SHADER_FILE, FRAGMENT_SHADER_FILE);
+        super(STATIC_VERTEX_SHADER, STATIC_FRAGMENT_SHADER);
     }
 
     @Override
