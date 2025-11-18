@@ -1,15 +1,15 @@
 package dev.teslac00.layers;
 
 import dev.teslac00.core.Engine;
+import dev.teslac00.core.Font;
 import dev.teslac00.core.Renderer;
+import dev.teslac00.core.Text2D;
 import dev.teslac00.graphics.*;
 import dev.teslac00.input.Event;
 import org.joml.Vector4f;
 
-import static dev.teslac00.core.Constants.VIEWPORT_HEIGHT;
-import static dev.teslac00.core.Constants.VIEWPORT_WIDTH;
-import static org.lwjgl.glfw.GLFW.GLFW_KEY_P;
-import static org.lwjgl.glfw.GLFW.GLFW_PRESS;
+import static dev.teslac00.core.Constants.*;
+import static org.lwjgl.glfw.GLFW.*;
 
 /**
  * Represents the pause menu overlay layer.
@@ -39,6 +39,9 @@ public class PauseLayer extends Layer {
     private final Mesh rectangleMesh;
     private final Rectangle2D background;
 
+    private final Font font;
+    private final Text2D pauseText;
+
     /**
      * Constructs a new {@code PauseLayer} instance.
      *
@@ -50,8 +53,10 @@ public class PauseLayer extends Layer {
         staticShader = new StaticShader();
         rectangleMesh = MeshFactory.createQuad();
         Material backgroundMaterial = new Material(staticShader, new Vector4f(0, 0, 0, 0.5f));
-
         background = new Rectangle2D(rectangleMesh, backgroundMaterial, 0, 0, VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
+
+        font = new Font(FONT_CHELA_ONE_ATLAS, FONT_CHELA_ONE_JSON);
+        pauseText = new Text2D("Pause", font, 0, 0, 2);
     }
 
     /**
@@ -75,7 +80,7 @@ public class PauseLayer extends Layer {
      */
     @Override
     public void onUpdate(double deltaTime) {
-
+        pauseText.update();
     }
 
     /**
@@ -84,6 +89,7 @@ public class PauseLayer extends Layer {
     @Override
     public void onRender() {
         engine.getRenderer().renderModel(background);
+        engine.getRenderer().renderModel(pauseText);
     }
 
     /**
@@ -96,6 +102,9 @@ public class PauseLayer extends Layer {
     public void onDetach() {
         rectangleMesh.destroy();
         staticShader.destroy();
+
+        pauseText.destroy();
+        font.destroy();
     }
 
     /**
@@ -111,6 +120,9 @@ public class PauseLayer extends Layer {
     public boolean onEvent(Event event) {
         if (event.key() == GLFW_KEY_P && event.action() == GLFW_PRESS) {
             engine.popLayer();
+            return true;
+        } else if (event.key() == GLFW_KEY_SPACE && event.action() == GLFW_RELEASE) {
+            pauseText.setText("Unpause");
             return true;
         }
         return false;

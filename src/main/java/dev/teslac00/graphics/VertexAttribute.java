@@ -1,5 +1,3 @@
-package dev.teslac00.graphics;
-
 /**
  * ---------------------------------------------------------------
  * Project : Ping_Pong
@@ -7,6 +5,17 @@ package dev.teslac00.graphics;
  * Author  : Vikas Kumar
  * Created : 17-11-2025
  * ---------------------------------------------------------------
+ */
+package dev.teslac00.graphics;
+
+/**
+ * Vertex Attribute
+ *
+ * @param index
+ * @param count
+ * @param type
+ * @param normalized
+ * @param offset
  */
 public record VertexAttribute(
         int index,  // index of the attribute in vertex

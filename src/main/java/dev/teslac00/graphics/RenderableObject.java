@@ -30,7 +30,7 @@ import org.joml.Vector3f;
  */
 public abstract class RenderableObject {
 
-    protected final Mesh mesh;
+    protected Mesh mesh;
     protected final Material material;
 
     protected Vector3f position;
