@@ -1,14 +1,11 @@
 package dev.teslac00.core;
 
-import dev.teslac00.graphics.Mesh;
-import dev.teslac00.graphics.MeshFactory;
-import dev.teslac00.graphics.Texture;
-import dev.teslac00.graphics.VertexLayout;
+import dev.teslac00.graphics.*;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static dev.teslac00.core.Constants.CIRCLE_MESH_DEFAULT_SEGMENTS;
+import static dev.teslac00.core.Constants.*;
 import static org.lwjgl.opengl.GL11C.GL_FLOAT;
 
 /**
@@ -25,6 +22,7 @@ public class AssetManager {
     private static VertexLayout layoutPosUv;
 
     //    Meshes
+//    TODO: maybe make each object own its mesh instead of asset manager, think of something else for instancing
     private static Mesh rectangleMesh;
     private static Mesh circularMesh;
 

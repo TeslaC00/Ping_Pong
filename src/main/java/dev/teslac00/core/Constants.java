@@ -9,8 +9,10 @@ public final class Constants {
     public static final int CIRCLE_MESH_DEFAULT_SEGMENTS = 32;
 
     //    Shaders
-    public static final String STATIC_VERTEX_SHADER = "VertexShader.glsl";
-    public static final String STATIC_FRAGMENT_SHADER = "FragmentShader.glsl";
+    public static final String SHADER_STATIC_VERTEX = "VertexShader.glsl";
+    public static final String SHADER_STATIC_FRAGMENT = "FragmentShader.glsl";
+    public static final String SHADER_MSDF_VERTEX = "msdf.vert";
+    public static final String SHADER_MSDF_FRAGMENT = "msdf.frag";
 
     //    Fonts
     public static final String FONT_CHELA_ONE_ATLAS = "fonts/ChelaOne-Regular.png";
