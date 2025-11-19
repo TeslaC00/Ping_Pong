@@ -1,6 +1,6 @@
 package dev.teslac00.graphics;
 
-import dev.teslac00.core.FileUtils;
+import dev.teslac00.util.FileUtils;
 import org.joml.Matrix4f;
 import org.joml.Vector4f;
 import org.lwjgl.BufferUtils;

@@ -2,8 +2,8 @@ package dev.teslac00.graphics;
 
 import dev.teslac00.core.Renderer;
 
-import static dev.teslac00.core.Constants.SHADER_STATIC_FRAGMENT;
-import static dev.teslac00.core.Constants.SHADER_STATIC_VERTEX;
+import static dev.teslac00.util.Constants.SHADER_STATIC_FRAGMENT;
+import static dev.teslac00.util.Constants.SHADER_STATIC_VERTEX;
 
 public class StaticShader extends ShaderProgram {
 

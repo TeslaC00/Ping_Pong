@@ -1,7 +1,6 @@
 package dev.teslac00.graphics;
 
 import dev.teslac00.core.AssetManager;
-import dev.teslac00.core.Font;
 import org.joml.Math;
 
 import java.util.ArrayList;

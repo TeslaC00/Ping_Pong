@@ -1,4 +1,4 @@
-package dev.teslac00.core;
+package dev.teslac00.util;
 
 public final class Constants {
 
@@ -9,10 +9,10 @@ public final class Constants {
     public static final int CIRCLE_MESH_DEFAULT_SEGMENTS = 32;
 
     //    Shaders
-    public static final String SHADER_STATIC_VERTEX = "VertexShader.glsl";
-    public static final String SHADER_STATIC_FRAGMENT = "FragmentShader.glsl";
-    public static final String SHADER_MSDF_VERTEX = "msdf.vert";
-    public static final String SHADER_MSDF_FRAGMENT = "msdf.frag";
+    public static final String SHADER_STATIC_VERTEX = "shaders/VertexShader.glsl";
+    public static final String SHADER_STATIC_FRAGMENT = "shaders/FragmentShader.glsl";
+    public static final String SHADER_MSDF_VERTEX = "shaders/msdf.vert";
+    public static final String SHADER_MSDF_FRAGMENT = "shaders/msdf.frag";
 
     //    Fonts
     public static final String FONT_CHELA_ONE_ATLAS = "fonts/ChelaOne-Regular.png";
@@ -20,7 +20,7 @@ public final class Constants {
     public static final String FONT_PATRICK_HAND_ATLAS = "fonts/PatrickHand-Regular.png";
     public static final String FONT_PATRICK_HAND_JSON = "fonts/PatrickHand-Regular-msdf.json";
 
-    public static final String TEXTURE_LUIGI = "luigi.jpeg";
-    public static final String TEXTURE_MARIO = "mario.png";
-    public static final String TEXTURE_KNIGHT = "knight.png";
+    public static final String TEXTURE_LUIGI = "textures/luigi.jpeg";
+    public static final String TEXTURE_MARIO = "textures/mario.png";
+    public static final String TEXTURE_KNIGHT = "textures/knight.png";
 }

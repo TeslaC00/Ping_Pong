@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Supplier;
 
-import static dev.teslac00.core.Constants.CIRCLE_MESH_DEFAULT_SEGMENTS;
+import static dev.teslac00.util.Constants.CIRCLE_MESH_DEFAULT_SEGMENTS;
 import static org.lwjgl.opengl.GL11C.GL_FLOAT;
 
 public class AssetManager {

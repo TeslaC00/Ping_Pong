@@ -13,8 +13,8 @@ import dev.teslac00.input.InputManager;
 import dev.teslac00.physics.CircleCollider;
 import dev.teslac00.physics.PhysicsEngine;
 
-import static dev.teslac00.core.Colors.COLOR_RED;
-import static dev.teslac00.core.Constants.TEXTURE_LUIGI;
+import static dev.teslac00.util.Colors.COLOR_RED;
+import static dev.teslac00.util.Constants.TEXTURE_LUIGI;
 import static org.lwjgl.glfw.GLFW.*;
 
 /**

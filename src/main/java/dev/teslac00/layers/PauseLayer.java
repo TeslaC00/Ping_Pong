@@ -1,11 +1,12 @@
 package dev.teslac00.layers;
 
 import dev.teslac00.core.*;
+import dev.teslac00.entities.Text2D;
 import dev.teslac00.graphics.*;
 import dev.teslac00.input.Event;
 import org.joml.Vector4f;
 
-import static dev.teslac00.core.Constants.*;
+import static dev.teslac00.util.Constants.*;
 import static org.lwjgl.glfw.GLFW.*;
 
 /**

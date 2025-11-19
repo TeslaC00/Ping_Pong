@@ -9,8 +9,8 @@ import org.lwjgl.Version;
 
 import java.util.ArrayList;
 
-import static dev.teslac00.core.Constants.VIEWPORT_HEIGHT;
-import static dev.teslac00.core.Constants.VIEWPORT_WIDTH;
+import static dev.teslac00.util.Constants.VIEWPORT_HEIGHT;
+import static dev.teslac00.util.Constants.VIEWPORT_WIDTH;
 import static org.lwjgl.glfw.GLFW.glfwWindowShouldClose;
 
 /**

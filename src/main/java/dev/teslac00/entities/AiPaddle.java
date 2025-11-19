@@ -9,11 +9,11 @@
 package dev.teslac00.entities;
 
 import dev.teslac00.core.AssetManager;
-import dev.teslac00.core.Colors;
+import dev.teslac00.util.Colors;
 import dev.teslac00.graphics.*;
 import dev.teslac00.physics.BoxCollider;
 
-import static dev.teslac00.core.Constants.*;
+import static dev.teslac00.util.Constants.*;
 
 public class AiPaddle extends RenderableEntity {
 

@@ -6,8 +6,8 @@ import dev.teslac00.graphics.*;
 import dev.teslac00.input.Event;
 import org.joml.Vector4f;
 
-import static dev.teslac00.core.Constants.VIEWPORT_HEIGHT;
-import static dev.teslac00.core.Constants.VIEWPORT_WIDTH;
+import static dev.teslac00.util.Constants.VIEWPORT_HEIGHT;
+import static dev.teslac00.util.Constants.VIEWPORT_WIDTH;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_TAB;
 import static org.lwjgl.glfw.GLFW.GLFW_PRESS;
 

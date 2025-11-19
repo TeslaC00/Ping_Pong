@@ -1,4 +1,4 @@
-package dev.teslac00.core;
+package dev.teslac00.util;
 
 import org.joml.Vector4f;
 

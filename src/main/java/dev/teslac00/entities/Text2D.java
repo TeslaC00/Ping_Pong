@@ -6,12 +6,12 @@
  * Created : 18-11-2025
  * ---------------------------------------------------------------
  */
-package dev.teslac00.core;
+package dev.teslac00.entities;
 
-import dev.teslac00.entities.RenderableEntity;
-import dev.teslac00.graphics.Material;
-import dev.teslac00.graphics.MeshFactory;
-import dev.teslac00.graphics.TextMesh;
+import dev.teslac00.core.AssetManager;
+import dev.teslac00.graphics.Font;
+import dev.teslac00.graphics.*;
+import dev.teslac00.util.Colors;
 import org.joml.Vector4f;
 
 public class Text2D extends RenderableEntity {

@@ -2,14 +2,15 @@ package dev.teslac00.core;
 
 import dev.teslac00.graphics.RenderableObject;
 import dev.teslac00.graphics.ShaderProgram;
+import dev.teslac00.util.Constants;
 import org.joml.Matrix4f;
 import org.lwjgl.BufferUtils;
 
 import java.nio.FloatBuffer;
 import java.util.ArrayList;
 
-import static dev.teslac00.core.Constants.VIEWPORT_HEIGHT;
-import static dev.teslac00.core.Constants.VIEWPORT_WIDTH;
+import static dev.teslac00.util.Constants.VIEWPORT_HEIGHT;
+import static dev.teslac00.util.Constants.VIEWPORT_WIDTH;
 import static org.lwjgl.opengl.GL11C.glClearColor;
 import static org.lwjgl.opengl.GL15C.*;
 import static org.lwjgl.opengl.GL30C.glBindVertexArray;

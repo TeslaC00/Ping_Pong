@@ -6,11 +6,7 @@
  * Created : 19-11-2025
  * ---------------------------------------------------------------
  */
-package dev.teslac00.core;
-
-import dev.teslac00.graphics.Material;
-import dev.teslac00.graphics.Mesh;
-import dev.teslac00.graphics.RenderableObject;
+package dev.teslac00.graphics;
 
 public class BasicRenderable extends RenderableObject {
 

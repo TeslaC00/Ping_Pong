@@ -6,12 +6,10 @@
  * Created : 18-11-2025
  * ---------------------------------------------------------------
  */
-package dev.teslac00.core;
+package dev.teslac00.graphics;
 
-import dev.teslac00.graphics.Material;
-import dev.teslac00.graphics.RenderableObject;
-import dev.teslac00.graphics.ShaderProgram;
-import dev.teslac00.graphics.Texture;
+import dev.teslac00.core.Renderer;
+import dev.teslac00.util.Constants;
 
 public class MSDFShader extends ShaderProgram {
 

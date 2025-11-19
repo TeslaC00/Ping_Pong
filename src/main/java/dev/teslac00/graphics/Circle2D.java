@@ -1,7 +1,7 @@
 package dev.teslac00.graphics;
 
-import static dev.teslac00.core.Constants.VIEWPORT_HEIGHT;
-import static dev.teslac00.core.Constants.VIEWPORT_WIDTH;
+import static dev.teslac00.util.Constants.VIEWPORT_HEIGHT;
+import static dev.teslac00.util.Constants.VIEWPORT_WIDTH;
 
 /**
  * Represents a 2D circle renderable that can move and bounce within the viewport bounds.

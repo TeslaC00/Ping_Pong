@@ -1,6 +1,6 @@
 package dev.teslac00.graphics;
 
-import dev.teslac00.core.FileUtils;
+import dev.teslac00.util.FileUtils;
 import org.lwjgl.system.MemoryStack;
 
 import java.nio.ByteBuffer;

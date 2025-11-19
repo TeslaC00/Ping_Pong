@@ -6,13 +6,12 @@
  * Created : 18-11-2025
  * ---------------------------------------------------------------
  */
-package dev.teslac00.core;
+package dev.teslac00.graphics;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import dev.teslac00.graphics.Glyph;
-import dev.teslac00.graphics.Texture;
+import dev.teslac00.util.FileUtils;
 
 import java.util.HashMap;
 import java.util.Map;
