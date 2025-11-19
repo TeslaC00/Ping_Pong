@@ -62,8 +62,12 @@ public class MeshFactory {
         return Mesh.loadMesh(vertices, indices, AssetManager.getLayoutPosUv());
     }
 
-    public static Mesh createTextMesh(String text, Font font) {
-        if (text == null || text.isBlank()) return new Mesh(0, 0, 0, 0);
+    public static TextMesh createTextMesh(String text, Font font) {
+        if (text == null || text.isBlank())
+            return new TextMesh(
+                    new Mesh(0, 0, 0, 0),
+                    0, 0
+            );
 
 //        Generate Vertices with Offsets
         List<Float> vertices = new ArrayList<>();
@@ -135,10 +139,14 @@ public class MeshFactory {
             indexOffset += 4;
         }
 
-        return Mesh.loadMesh(
-                toFloatArray(vertices),
-                indices.stream().mapToInt(i -> i).toArray(),
-                AssetManager.getLayoutPosUv()
+        return new TextMesh(
+                Mesh.loadMesh(
+                        toFloatArray(vertices),
+                        indices.stream().mapToInt(i -> i).toArray(),
+                        AssetManager.getLayoutPosUv()
+                ),
+                maxX - minX,
+                maxY - minX
         );
     }
 
