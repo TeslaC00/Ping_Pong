@@ -1,9 +1,6 @@
 package dev.teslac00.layers;
 
-import dev.teslac00.core.Engine;
-import dev.teslac00.core.Font;
-import dev.teslac00.core.Renderer;
-import dev.teslac00.core.Text2D;
+import dev.teslac00.core.*;
 import dev.teslac00.graphics.*;
 import dev.teslac00.input.Event;
 import org.joml.Vector4f;
@@ -35,7 +32,6 @@ import static org.lwjgl.glfw.GLFW.*;
  */
 public class PauseLayer extends Layer {
 
-    private final StaticShader staticShader;
     private final Mesh rectangleMesh;
     private final Rectangle2D background;
 
@@ -50,9 +46,11 @@ public class PauseLayer extends Layer {
     public PauseLayer(Engine engine) {
         super(engine);
 
-        staticShader = new StaticShader();
         rectangleMesh = MeshFactory.createQuad();
-        Material backgroundMaterial = new Material(staticShader, new Vector4f(0, 0, 0, 0.5f));
+        Material backgroundMaterial = new Material(
+                AssetManager.getShader(StaticShader.class),
+                new Vector4f(0, 0, 0, 0.5f)
+        );
         background = new Rectangle2D(rectangleMesh, backgroundMaterial, 0, 0, VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
 
         font = new Font(FONT_CHELA_ONE_ATLAS, FONT_CHELA_ONE_JSON);
@@ -101,7 +99,6 @@ public class PauseLayer extends Layer {
     @Override
     public void onDetach() {
         rectangleMesh.destroy();
-        staticShader.destroy();
 
         pauseText.destroy();
         font.destroy();

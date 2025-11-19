@@ -26,7 +26,7 @@ public class Text2D extends RenderableEntity {
         TextMesh textMesh = MeshFactory.createTextMesh(text, font);
         this.renderable = new BasicRenderable(
                 textMesh.mesh(),
-                new Material(new MSDFShader(), Colors.COLOR_WHITE, font.getTexture()),
+                new Material(AssetManager.getShader(MSDFShader.class), Colors.COLOR_WHITE, font.getTexture()),
                 x, y, scale, scale
         );
         this.text = text;

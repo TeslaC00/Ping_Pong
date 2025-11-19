@@ -19,12 +19,12 @@ public class AiPaddle extends RenderableEntity {
 
     private final BoxCollider collider;
 
-    public AiPaddle(ShaderProgram shader) {
+    public AiPaddle() {
         float width = 60;
         float height = VIEWPORT_HEIGHT / 5f;
 
         Material material = new Material(
-                shader,
+                AssetManager.getShader(StaticShader.class),
                 Colors.COLOR_BLUE,
                 AssetManager.getTexture(TEXTURE_KNIGHT)
         );

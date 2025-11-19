@@ -22,11 +22,11 @@ public class PlayerPaddle extends RenderableEntity {
 
     private final BoxCollider collider;
 
-    public PlayerPaddle(ShaderProgram shader) {
+    public PlayerPaddle() {
         float width = 60;
         float height = VIEWPORT_HEIGHT / 5f;
         Material material = new Material(
-                shader,
+                AssetManager.getShader(StaticShader.class),
                 Colors.COLOR_GREEN,
                 AssetManager.getTexture(TEXTURE_MARIO)
         );

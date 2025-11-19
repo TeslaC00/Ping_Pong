@@ -44,9 +44,6 @@ import static org.lwjgl.glfw.GLFW.*;
  */
 public class GameLayer extends Layer {
 
-    //    Shaders
-    private final StaticShader staticShader;
-
     //    Entities
     private final PlayerPaddle playerPaddle;
     private final AiPaddle aiPaddle;
@@ -61,16 +58,15 @@ public class GameLayer extends Layer {
      */
     public GameLayer(Engine engine) {
         super(engine);
-        staticShader = new StaticShader();
 
         Material redMaterial = new Material(
-                staticShader,
+                AssetManager.getShader(StaticShader.class),
                 COLOR_RED, AssetManager
                 .getTexture(TEXTURE_LUIGI)
         );
 
-        playerPaddle = new PlayerPaddle(staticShader);
-        aiPaddle = new AiPaddle(staticShader);
+        playerPaddle = new PlayerPaddle();
+        aiPaddle = new AiPaddle();
         redCircle = new Circle2D(AssetManager.getCircularMesh(), redMaterial, 0, 0, radius);
     }
 
@@ -125,7 +121,6 @@ public class GameLayer extends Layer {
      */
     @Override
     public void onDetach() {
-        staticShader.destroy();
         engine.getPhysicsEngine().clearColliders();
     }
 

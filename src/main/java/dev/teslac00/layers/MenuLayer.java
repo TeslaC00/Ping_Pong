@@ -1,5 +1,6 @@
 package dev.teslac00.layers;
 
+import dev.teslac00.core.AssetManager;
 import dev.teslac00.core.Engine;
 import dev.teslac00.graphics.*;
 import dev.teslac00.input.Event;
@@ -12,15 +13,16 @@ import static org.lwjgl.glfw.GLFW.GLFW_PRESS;
 
 public class MenuLayer extends Layer {
 
-    private final StaticShader staticShader;
     private final Mesh rectangleMesh;
     private final Rectangle2D background;
 
     public MenuLayer(Engine engine) {
         super(engine);
-        staticShader = new StaticShader();
         rectangleMesh = MeshFactory.createQuad();
-        Material backgroundMaterial = new Material(staticShader, new Vector4f(0, 0, 0, 1));
+        Material backgroundMaterial = new Material(
+                AssetManager.getShader(StaticShader.class),
+                new Vector4f(0, 0, 0, 1)
+        );
 
         background = new Rectangle2D(rectangleMesh, backgroundMaterial, 0, 0, VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
     }
@@ -48,7 +50,6 @@ public class MenuLayer extends Layer {
     @Override
     public void onDetach() {
         rectangleMesh.destroy();
-        staticShader.destroy();
     }
 
     @Override
