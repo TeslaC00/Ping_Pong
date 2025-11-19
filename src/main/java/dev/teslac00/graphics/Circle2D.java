@@ -31,6 +31,7 @@ public class Circle2D extends RenderableObject {
         this.velocity.set(1, 1).mul(speed);
     }
 
+    @Override
     public void update(double deltaTime) {
         float dx = (float) (velocity.x * deltaTime);
         float dy = (float) (velocity.y * deltaTime);
@@ -58,5 +59,10 @@ public class Circle2D extends RenderableObject {
             position.x = -limitX;
             velocity.x *= -1;
         }
+    }
+
+    @Override
+    public void destroy() {
+
     }
 }

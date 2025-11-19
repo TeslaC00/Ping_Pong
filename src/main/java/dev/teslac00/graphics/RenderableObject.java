@@ -77,6 +77,10 @@ public abstract class RenderableObject {
         updateTransform();
     }
 
+    public abstract void update(double deltaTime);
+
+    public abstract void destroy();
+
     /**
      * Updates the internal transformation matrix using current position, rotation, and scale.
      * <p>
@@ -166,5 +170,10 @@ public abstract class RenderableObject {
      */
     public float getRotation() {
         return rotation;
+    }
+
+    public void setMesh(Mesh mesh) {
+        if (this.mesh != null) this.mesh.destroy();
+        this.mesh = mesh;
     }
 }

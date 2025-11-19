@@ -1,3 +1,11 @@
+/**
+ * ---------------------------------------------------------------
+ * Project : Ping_Pong
+ * File    : AiPaddle
+ * Author  : Vikas Kumar
+ * Created : 12-11-2025
+ * ---------------------------------------------------------------
+ */
 package dev.teslac00.entities;
 
 import dev.teslac00.core.AssetManager;
@@ -7,17 +15,8 @@ import dev.teslac00.physics.BoxCollider;
 
 import static dev.teslac00.core.Constants.*;
 
-/**
- * ---------------------------------------------------------------
- * Project : Ping_Pong
- * File    : AiPaddle
- * Author  : Vikas Kumar
- * Created : 12-11-2025
- * ---------------------------------------------------------------
- */
-public class AiPaddle {
+public class AiPaddle extends RenderableEntity {
 
-    private final Rectangle2D rectangle2D;
     private final BoxCollider collider;
 
     public AiPaddle(ShaderProgram shader) {
@@ -30,21 +29,23 @@ public class AiPaddle {
                 AssetManager.getTexture(TEXTURE_KNIGHT)
         );
 
-        rectangle2D = new Rectangle2D(AssetManager.getRectangleMesh(), material,
+        renderable = new Rectangle2D(AssetManager.getRectangleMesh(), material,
                 (VIEWPORT_WIDTH - width) / 2, 0, width, height);
 
-        collider = new BoxCollider(rectangle2D, width, height);
+        collider = new BoxCollider(renderable, width, height);
     }
 
+    @Override
     public void update(double deltaTime) {
 
     }
 
-    public Rectangle2D getRectangle2D() {
-        return rectangle2D;
-    }
-
     public BoxCollider getCollider() {
         return collider;
+    }
+
+    @Override
+    public void destroy() {
+
     }
 }

@@ -6,8 +6,13 @@ public class Rectangle2D extends RenderableObject {
         super(mesh, material, x, y, scaleX, scaleY);
     }
 
+    @Override
     public void update(double deltaTime) {
 
     }
 
+    @Override
+    public void destroy() {
+
+    }
 }

@@ -112,8 +112,8 @@ public class GameLayer extends Layer {
      */
     @Override
     public void onRender() {
-        engine.getRenderer().renderModel(playerPaddle.getRectangle2D());
-        engine.getRenderer().renderModel(aiPaddle.getRectangle2D());
+        engine.getRenderer().renderModel(playerPaddle.getRenderable());
+        engine.getRenderer().renderModel(aiPaddle.getRenderable());
         engine.getRenderer().renderModel(redCircle);
     }
 

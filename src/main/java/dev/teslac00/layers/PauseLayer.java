@@ -80,7 +80,7 @@ public class PauseLayer extends Layer {
      */
     @Override
     public void onUpdate(double deltaTime) {
-        pauseText.update();
+        pauseText.update(deltaTime);
     }
 
     /**
@@ -89,7 +89,7 @@ public class PauseLayer extends Layer {
     @Override
     public void onRender() {
         engine.getRenderer().renderModel(background);
-        engine.getRenderer().renderModel(pauseText);
+        engine.getRenderer().renderModel(pauseText.getRenderable());
     }
 
     /**
