@@ -10,6 +10,7 @@ public final class Main {
         engine.init();
         while (engine.shouldRun())
             engine.run();
+//        TODO: don't exit engine immediately when close is requested
         engine.destroy();
     }
 }

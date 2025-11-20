@@ -3,6 +3,7 @@ package dev.teslac00.physics;
 import dev.teslac00.graphics.RenderableObject;
 
 public abstract class Collider {
+    //    TODO: remove physics properties from renderable object
     protected RenderableObject owner;
 
     public Collider(RenderableObject owner) {

@@ -20,6 +20,7 @@ public abstract class ShaderProgram {
 
     private static final FloatBuffer buffer = BufferUtils.createFloatBuffer(16);
 
+    //    TODO: Modify to read both shader from single file
     public ShaderProgram(String vertexShaderFile, String fragmentShaderFile) {
         int vertexShaderId = compileShader(vertexShaderFile, GL_VERTEX_SHADER);
         int fragmentShaderId = compileShader(fragmentShaderFile, GL_FRAGMENT_SHADER);
