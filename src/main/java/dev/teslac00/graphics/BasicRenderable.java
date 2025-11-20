@@ -8,10 +8,10 @@
  */
 package dev.teslac00.graphics;
 
-public class BasicRenderable extends RenderableObject {
+public class BasicRenderable extends Renderable {
 
-    public BasicRenderable(Mesh mesh, Material material, float x, float y, float scaleX, float scaleY) {
-        super(mesh, material, x, y, scaleX, scaleY);
+    public BasicRenderable(Mesh mesh, Material material) {
+        super(mesh, material);
     }
 
     @Override

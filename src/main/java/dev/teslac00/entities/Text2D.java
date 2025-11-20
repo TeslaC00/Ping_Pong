@@ -14,7 +14,7 @@ import dev.teslac00.graphics.*;
 import dev.teslac00.util.Colors;
 import org.joml.Vector4f;
 
-public class Text2D extends RenderableEntity {
+public class Text2D extends Entity {
 
     private String text;
     private final Font font;
@@ -24,11 +24,14 @@ public class Text2D extends RenderableEntity {
     public Text2D(String text, Font font, float x, float y, float scale) {
 //        Note: can use private constructor with static create function
         TextMesh textMesh = MeshFactory.createTextMesh(text, font);
-        this.renderable = new BasicRenderable(
+        renderable = new BasicRenderable(
                 textMesh.mesh(),
-                new Material(AssetManager.getShader(MSDFShader.class), Colors.COLOR_WHITE, font.getTexture()),
-                x, y, scale, scale
+                new Material(AssetManager.getShader(MSDFShader.class), Colors.WHITE, font.getTexture())
         );
+
+        transform.position.set(x, y, 0);
+        transform.scale.set(scale);
+
         this.text = text;
         this.font = font;
         this.width = textMesh.width();

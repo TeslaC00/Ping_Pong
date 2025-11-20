@@ -1,5 +1,6 @@
 package dev.teslac00.graphics;
 
+import dev.teslac00.entities.Entity;
 import dev.teslac00.util.FileUtils;
 import org.joml.Matrix4f;
 import org.joml.Vector4f;
@@ -52,7 +53,7 @@ public abstract class ShaderProgram {
         glBindAttribLocation(programId, attributeIndex, variableName);
     }
 
-    public abstract void loadUniforms(RenderableObject model);
+    public abstract void loadUniforms(Entity entity);
 
     private static int compileShader(String shaderPath, int type) {
         String shaderSrc = FileUtils.readFile(shaderPath);

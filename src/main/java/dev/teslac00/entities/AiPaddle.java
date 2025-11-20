@@ -9,15 +9,17 @@
 package dev.teslac00.entities;
 
 import dev.teslac00.core.AssetManager;
-import dev.teslac00.util.Colors;
-import dev.teslac00.graphics.*;
+import dev.teslac00.graphics.Material;
+import dev.teslac00.graphics.Rectangle2D;
+import dev.teslac00.graphics.StaticShader;
 import dev.teslac00.physics.BoxCollider;
+import dev.teslac00.physics.PhysicsBody;
+import dev.teslac00.util.Colors;
 
 import static dev.teslac00.util.Constants.*;
 
-public class AiPaddle extends RenderableEntity {
+public class AiPaddle extends Entity {
 
-    private final BoxCollider collider;
     private final Ball ball;
 
     private final float speed = 350f;   // AI paddle movement speed
@@ -27,25 +29,23 @@ public class AiPaddle extends RenderableEntity {
     private double reactionTimer = 0;
 
     public AiPaddle(Ball ball) {
-        this.ball = ball;
-
         float width = 60;
         float height = VIEWPORT_HEIGHT / 5f;
 
+        transform.position.set((VIEWPORT_WIDTH - width) / 2, 0, 0);
+        transform.scale.set(width, height, 1);
+
+        this.ball = ball;
+
         Material material = new Material(
                 AssetManager.getShader(StaticShader.class),
-                Colors.COLOR_BLUE,
+                Colors.BLUE,
                 AssetManager.getTexture(TEXTURE_KNIGHT)
         );
+        renderable = new Rectangle2D(material);
 
-        renderable = new Rectangle2D(
-                material,
-                (VIEWPORT_WIDTH - width) / 2,
-                0,
-                width, height
-        );
-
-        collider = new BoxCollider(renderable, width, height);
+        BoxCollider collider = new BoxCollider(this, width, height);
+        physicsBody = new PhysicsBody(collider);
     }
 
     @Override
@@ -54,29 +54,25 @@ public class AiPaddle extends RenderableEntity {
         if (reactionTimer < reactionDelay) return;
         reactionTimer = 0;
 
-        float ballY = ball.renderable.getPosition().y;
+        float ballY = ball.transform.position.y;
         float targetY = ballY + (float) (Math.random() * jitterAmount - jitterAmount / 2);
 
-        float paddleY = renderable.getPosition().y;
+        float paddleY = transform.position.y;
         float dy = targetY - paddleY;
 
         if (Math.abs(dy) > 3) {
             float direction = Math.signum(dy);
-            renderable.translate(0, (float) (direction * speed * deltaTime));
+            transform.translate(0, (float) (direction * speed * deltaTime));
         }
 
         clampToBounds();
     }
 
     private void clampToBounds() {
-        float limitY = (VIEWPORT_HEIGHT - renderable.getScale().y) / 2f;
-        float y = Math.max(-limitY, Math.min(renderable.getPosition().y, limitY));
+        float limitY = (VIEWPORT_HEIGHT - transform.scale.y) / 2f;
+        float y = Math.max(-limitY, Math.min(transform.position.y, limitY));
 
-        renderable.setPosition(renderable.getPosition().x, y);
-    }
-
-    public BoxCollider getCollider() {
-        return collider;
+        transform.position.set(transform.position.x, y, 0);
     }
 
     @Override

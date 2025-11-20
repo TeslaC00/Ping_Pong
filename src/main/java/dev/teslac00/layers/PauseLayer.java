@@ -1,13 +1,20 @@
 package dev.teslac00.layers;
 
-import dev.teslac00.core.*;
+import dev.teslac00.core.AssetManager;
+import dev.teslac00.core.Engine;
+import dev.teslac00.core.Renderer;
+import dev.teslac00.entities.Entity;
 import dev.teslac00.entities.Text2D;
-import dev.teslac00.graphics.*;
+import dev.teslac00.graphics.Font;
+import dev.teslac00.graphics.Material;
+import dev.teslac00.graphics.Rectangle2D;
+import dev.teslac00.graphics.StaticShader;
 import dev.teslac00.input.Event;
-import org.joml.Vector4f;
+import dev.teslac00.util.Colors;
 
 import static dev.teslac00.util.Constants.*;
-import static org.lwjgl.glfw.GLFW.*;
+import static org.lwjgl.glfw.GLFW.GLFW_KEY_P;
+import static org.lwjgl.glfw.GLFW.GLFW_PRESS;
 
 /**
  * Represents the pause menu overlay layer.
@@ -33,7 +40,7 @@ import static org.lwjgl.glfw.GLFW.*;
  */
 public class PauseLayer extends Layer {
 
-    private final Rectangle2D background;
+    private final Entity background;
 
     private final Font font;
     private final Text2D pauseText;
@@ -46,11 +53,19 @@ public class PauseLayer extends Layer {
     public PauseLayer(Engine engine) {
         super(engine);
 
-        Material backgroundMaterial = new Material(
-                AssetManager.getShader(StaticShader.class),
-                new Vector4f(0, 0, 0, 0.5f)
-        );
-        background = new Rectangle2D(backgroundMaterial, 0, 0, VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
+        //        TODO: use UI entities to render this
+        background = new Entity(0, 0, VIEWPORT_WIDTH, VIEWPORT_HEIGHT) {
+            @Override
+            public void update(double deltaTime) {
+            }
+
+            @Override
+            public void destroy() {
+            }
+        };
+
+        Material backgroundMaterial = new Material(AssetManager.getShader(StaticShader.class), Colors.LIGHT_BLACK);
+        background.renderable = new Rectangle2D(backgroundMaterial);
 
         font = new Font(FONT_CHELA_ONE_ATLAS, FONT_CHELA_ONE_JSON);
         pauseText = new Text2D("Pause", font, 0, 0, 2);
@@ -85,8 +100,8 @@ public class PauseLayer extends Layer {
      */
     @Override
     public void onRender() {
-        engine.getRenderer().renderModel(background);
-        engine.getRenderer().renderModel(pauseText.getRenderable());
+        engine.getRenderer().submit(background);
+        engine.getRenderer().submit(pauseText);
     }
 
     /**

@@ -13,7 +13,7 @@ import dev.teslac00.core.AssetManager;
  * <p>This class is primarily used for dynamic objects (like balls in Pong)
  * that require simple boundary-based motion without physics forces.</p>
  */
-public class Circle2D extends RenderableObject {
+public class Circle2D extends Renderable {
 
 //    TODO: use shader to create a circle mathematically with quad instead of circle mesh
 
@@ -21,12 +21,9 @@ public class Circle2D extends RenderableObject {
      * Constructs a new {@code Circle2D} renderable object.
      *
      * @param material The material (shader and color) used to render this circle.
-     * @param x        The initial X position in world space.
-     * @param y        The initial Y position in world space.
-     * @param radius   The circle radius in world units.
      */
-    public Circle2D(Material material, float x, float y, float radius) {
-        super(AssetManager.getCircularMesh(), material, x, y, radius, radius);
+    public Circle2D(Material material) {
+        super(AssetManager.getCircularMesh(), material);
     }
 
     @Override

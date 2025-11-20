@@ -72,9 +72,9 @@ public class GameLayer extends Layer {
      */
     @Override
     public void onAttach() {
-        engine.getPhysicsEngine().add(playerPaddle.getCollider());
-        engine.getPhysicsEngine().add(aiPaddle.getCollider());
-        engine.getPhysicsEngine().add(ball.getCollider());
+        engine.getPhysicsEngine().add(playerPaddle);
+        engine.getPhysicsEngine().add(aiPaddle);
+        engine.getPhysicsEngine().add(ball);
     }
 
     /**
@@ -94,9 +94,9 @@ public class GameLayer extends Layer {
      */
     @Override
     public void onRender() {
-        engine.getRenderer().renderModel(playerPaddle.getRenderable());
-        engine.getRenderer().renderModel(aiPaddle.getRenderable());
-        engine.getRenderer().renderModel(ball.getRenderable());
+        engine.getRenderer().submit(playerPaddle);
+        engine.getRenderer().submit(aiPaddle);
+        engine.getRenderer().submit(ball);
     }
 
     /**

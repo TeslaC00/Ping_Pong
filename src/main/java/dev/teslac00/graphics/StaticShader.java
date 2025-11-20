@@ -1,6 +1,7 @@
 package dev.teslac00.graphics;
 
 import dev.teslac00.core.Renderer;
+import dev.teslac00.entities.Entity;
 
 import static dev.teslac00.util.Constants.SHADER_STATIC_FRAGMENT;
 import static dev.teslac00.util.Constants.SHADER_STATIC_VERTEX;
@@ -16,11 +17,11 @@ public class StaticShader extends ShaderProgram {
     }
 
     @Override
-    public void loadUniforms(RenderableObject model) {
-        Material material = model.getMaterial();
+    public void loadUniforms(Entity entity) {
+        Material material = entity.renderable.material;
 
         setUniform("u_color", material.color());
-        setUniform("u_trans", model.getTransform());
+        setUniform("u_trans", entity.getTransform());
         setUniform("u_proj", Renderer.getProjBuffer());
 
         Texture texture = material.texture();

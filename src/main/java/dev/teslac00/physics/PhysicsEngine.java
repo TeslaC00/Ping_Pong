@@ -1,5 +1,7 @@
 package dev.teslac00.physics;
 
+import dev.teslac00.entities.Entity;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,10 +32,11 @@ public final class PhysicsEngine {
     /**
      * Adds a collider to the physics simulation.
      *
-     * @param collider The collider to be tracked by the physics engine.
+     * @param entity The collider to be tracked by the physics engine.
      */
-    public void add(Collider collider) {
-        colliders.add(collider);
+    public void add(Entity entity) {
+        if (entity.physicsBody != null)
+            colliders.add(entity.physicsBody.collider);
     }
 
     /**
@@ -72,8 +75,8 @@ public final class PhysicsEngine {
      * @param b The second collider.
      */
     private void resolveCollision(Collider a, Collider b) {
-        float dx = b.owner.getPosition().x - a.owner.getPosition().x;
-        float dy = b.owner.getPosition().y - a.owner.getPosition().y;
+        float dx = b.owner.transform.position.x - a.owner.transform.position.x;
+        float dy = b.owner.transform.position.y - a.owner.transform.position.y;
 
         if (a instanceof BoxCollider box && b instanceof CircleCollider circle) {
             separateObjects(box, circle, dx, dy);
@@ -86,7 +89,7 @@ public final class PhysicsEngine {
     /**
      * Separates a circle from a box collider upon intersection and reflects its velocity.
      * <p>
-     * The separation is determined along the axis of least overlap (horizontal or vertical).
+     * The separation is determined along the axis of the least overlap (horizontal or vertical).
      * The circle’s velocity component on that axis is inverted to simulate a simple bounce.
      * </p>
      *
@@ -103,15 +106,15 @@ public final class PhysicsEngine {
 //            Horizontal Collision
             float direction = Math.signum(dx);
 
-            circle.owner.getPosition().x += direction * overlapX;
-            circle.owner.getVelocity().x *= -1;
+            circle.owner.transform.position.x += direction * overlapX;
+            circle.owner.physicsBody.velocity.x *= -1;
 
         } else {
 //            Vertical Collision
             float direction = Math.signum(dy);
 
-            circle.owner.getPosition().y += direction * overlapY;
-            circle.owner.getVelocity().y *= -1;
+            circle.owner.transform.position.y += direction * overlapY;
+            circle.owner.physicsBody.velocity.y *= -1;
         }
     }
 

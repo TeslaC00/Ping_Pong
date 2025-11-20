@@ -1,6 +1,7 @@
 package dev.teslac00.core;
 
-import dev.teslac00.graphics.RenderableObject;
+import dev.teslac00.entities.Entity;
+import dev.teslac00.graphics.Renderable;
 import dev.teslac00.graphics.ShaderProgram;
 import dev.teslac00.util.Constants;
 import org.joml.Matrix4f;
@@ -18,7 +19,7 @@ import static org.lwjgl.opengl.GL30C.glBindVertexArray;
 /**
  * Handles all OpenGL rendering operations in the engine.
  * <p>
- * The {@code Renderer} maintains a queue of {@link RenderableObject}s and
+ * The {@code Renderer} maintains a queue of {@link Renderable}s and
  * draws them each frame using their associated meshes, materials, and shaders.
  * It also manages a 2D orthographic projection and basic OpenGL state setup.
  * </p>
@@ -33,12 +34,12 @@ import static org.lwjgl.opengl.GL30C.glBindVertexArray;
  *
  * <p>
  * This renderer uses a simple immediate-mode batching style — all renderables
- * submitted via {@link #renderModel(RenderableObject)} are drawn in the same frame.
+ * submitted via {@link #submit(Entity)} are drawn in the same frame.
  * </p>
  */
 public final class Renderer {
 
-    private final ArrayList<RenderableObject> renderQueue = new ArrayList<>();
+    private final ArrayList<Entity> renderQueue = new ArrayList<>();
     private static FloatBuffer projBuffer; // orthographic projection
 
     // ---------------------------------------------------------------------
@@ -75,10 +76,11 @@ public final class Renderer {
     /**
      * Queues a renderable object to be drawn in the next frame.
      *
-     * @param object The renderable object to add to the draw queue.
+     * @param entity The renderable object to add to the draw queue.
      */
-    public void renderModel(RenderableObject object) {
-        renderQueue.add(object);
+    public void submit(Entity entity) {
+        if (entity.renderable != null)
+            renderQueue.add(entity);
     }
 
     /**
@@ -95,20 +97,20 @@ public final class Renderer {
     /**
      * Executes all queued draw calls for the current frame.
      * <p>
-     * Each {@link RenderableObject} is drawn using its material’s shader, color,
+     * Each {@link Renderable} is drawn using its material’s shader, color,
      * and transform. The render queue is cleared automatically at the end of the frame.
      * </p>
      */
     public void render() {
 
-        for (RenderableObject model : renderQueue) {
-            ShaderProgram shader = model.getMaterial().shader();
+        for (Entity entity : renderQueue) {
+            ShaderProgram shader = entity.renderable.material.shader();
 
             shader.start();
-            shader.loadUniforms(model);
+            shader.loadUniforms(entity);
 
-            glBindVertexArray(model.getMesh().getVaoId());   // bind the VAO to use in this frame
-            glDrawElements(GL_TRIANGLES, model.getMesh().getIndicesCount(), GL_UNSIGNED_INT, 0);   // draw elements using ibo
+            glBindVertexArray(entity.renderable.mesh.getVaoId());   // bind the VAO to use in this frame
+            glDrawElements(GL_TRIANGLES, entity.renderable.mesh.getIndicesCount(), GL_UNSIGNED_INT, 0);   // draw elements using ibo
             glBindVertexArray(0);   // unbind the VAO for cleanup after draw call
 
             shader.stop();
