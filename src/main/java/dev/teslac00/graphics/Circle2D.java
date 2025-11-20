@@ -1,5 +1,7 @@
 package dev.teslac00.graphics;
 
+import dev.teslac00.core.AssetManager;
+
 /**
  * Represents a 2D circle renderable that can move and bounce within the viewport bounds.
  * <p>
@@ -18,14 +20,13 @@ public class Circle2D extends RenderableObject {
     /**
      * Constructs a new {@code Circle2D} renderable object.
      *
-     * @param mesh     The mesh representing the circle geometry.
      * @param material The material (shader and color) used to render this circle.
      * @param x        The initial X position in world space.
      * @param y        The initial Y position in world space.
      * @param radius   The circle radius in world units.
      */
-    public Circle2D(Mesh mesh, Material material, float x, float y, float radius) {
-        super(mesh, material, x, y, radius, radius);
+    public Circle2D(Material material, float x, float y, float radius) {
+        super(AssetManager.getCircularMesh(), material, x, y, radius, radius);
     }
 
     @Override

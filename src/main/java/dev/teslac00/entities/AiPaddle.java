@@ -29,8 +29,12 @@ public class AiPaddle extends RenderableEntity {
                 AssetManager.getTexture(TEXTURE_KNIGHT)
         );
 
-        renderable = new Rectangle2D(AssetManager.getRectangleMesh(), material,
-                (VIEWPORT_WIDTH - width) / 2, 0, width, height);
+        renderable = new Rectangle2D(
+                material,
+                (VIEWPORT_WIDTH - width) / 2,
+                0,
+                width, height
+        );
 
         collider = new BoxCollider(renderable, width, height);
     }

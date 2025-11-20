@@ -31,9 +31,12 @@ public class PlayerPaddle extends RenderableEntity {
                 AssetManager.getTexture(TEXTURE_MARIO)
         );
 
-        renderable = new Rectangle2D(AssetManager.getRectangleMesh(), material,
+        renderable = new Rectangle2D(
+                material,
                 (-VIEWPORT_WIDTH + width) / 2,
-                (VIEWPORT_HEIGHT - height) / 2, width, height);
+                (VIEWPORT_HEIGHT - height) / 2,
+                width, height
+        );
 
         collider = new BoxCollider(renderable, width, height);
     }

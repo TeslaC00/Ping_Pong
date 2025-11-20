@@ -33,7 +33,6 @@ import static org.lwjgl.glfw.GLFW.*;
  */
 public class PauseLayer extends Layer {
 
-    private final Mesh rectangleMesh;
     private final Rectangle2D background;
 
     private final Font font;
@@ -47,12 +46,11 @@ public class PauseLayer extends Layer {
     public PauseLayer(Engine engine) {
         super(engine);
 
-        rectangleMesh = MeshFactory.createQuad();
         Material backgroundMaterial = new Material(
                 AssetManager.getShader(StaticShader.class),
                 new Vector4f(0, 0, 0, 0.5f)
         );
-        background = new Rectangle2D(rectangleMesh, backgroundMaterial, 0, 0, VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
+        background = new Rectangle2D(backgroundMaterial, 0, 0, VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
 
         font = new Font(FONT_CHELA_ONE_ATLAS, FONT_CHELA_ONE_JSON);
         pauseText = new Text2D("Pause", font, 0, 0, 2);
@@ -99,8 +97,6 @@ public class PauseLayer extends Layer {
      */
     @Override
     public void onDetach() {
-        rectangleMesh.destroy();
-
         pauseText.destroy();
         font.destroy();
     }

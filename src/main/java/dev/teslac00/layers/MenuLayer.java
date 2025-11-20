@@ -13,18 +13,16 @@ import static org.lwjgl.glfw.GLFW.GLFW_PRESS;
 
 public class MenuLayer extends Layer {
 
-    private final Mesh rectangleMesh;
     private final Rectangle2D background;
 
     public MenuLayer(Engine engine) {
         super(engine);
-        rectangleMesh = MeshFactory.createQuad();
         Material backgroundMaterial = new Material(
                 AssetManager.getShader(StaticShader.class),
                 new Vector4f(0, 0, 0, 1)
         );
 
-        background = new Rectangle2D(rectangleMesh, backgroundMaterial, 0, 0, VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
+        background = new Rectangle2D(backgroundMaterial, 0, 0, VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
     }
 
     @Override
@@ -49,7 +47,6 @@ public class MenuLayer extends Layer {
 
     @Override
     public void onDetach() {
-        rectangleMesh.destroy();
     }
 
     @Override

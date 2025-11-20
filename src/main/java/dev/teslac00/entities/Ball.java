@@ -32,7 +32,7 @@ public class Ball extends RenderableEntity {
 
         float radius = 30.0f;
         float speed = 200.0f;
-        renderable = new Circle2D(AssetManager.getCircularMesh(), material, 0, 0, radius);
+        renderable = new Circle2D(material, 0, 0, radius);
         renderable.getVelocity().set(1).mul(speed);
 
         collider = new CircleCollider(renderable, radius);
