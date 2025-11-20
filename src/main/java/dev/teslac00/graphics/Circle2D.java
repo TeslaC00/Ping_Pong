@@ -1,8 +1,5 @@
 package dev.teslac00.graphics;
 
-import static dev.teslac00.util.Constants.VIEWPORT_HEIGHT;
-import static dev.teslac00.util.Constants.VIEWPORT_WIDTH;
-
 /**
  * Represents a 2D circle renderable that can move and bounce within the viewport bounds.
  * <p>
@@ -16,6 +13,8 @@ import static dev.teslac00.util.Constants.VIEWPORT_WIDTH;
  */
 public class Circle2D extends RenderableObject {
 
+//    TODO: use shader to create a circle mathematically with quad instead of circle mesh
+
     /**
      * Constructs a new {@code Circle2D} renderable object.
      *
@@ -27,38 +26,11 @@ public class Circle2D extends RenderableObject {
      */
     public Circle2D(Mesh mesh, Material material, float x, float y, float radius) {
         super(mesh, material, x, y, radius, radius);
-        float speed = 200.0f;
-        this.velocity.set(1, 1).mul(speed);
     }
 
     @Override
     public void update(double deltaTime) {
-        float dx = (float) (velocity.x * deltaTime);
-        float dy = (float) (velocity.y * deltaTime);
 
-        translate(dx, dy);
-        handleViewportCollision();
-    }
-
-    private void handleViewportCollision() {
-        float limitX = (VIEWPORT_WIDTH / 2.0f) - scale.x;
-        float limitY = (VIEWPORT_HEIGHT / 2.0f) - scale.y;
-
-        if (position.y > limitY) {   // check top screen collision
-            position.y = limitY;
-            velocity.y *= -1;
-        } else if (position.y < -limitY) {    // check bottom screen collision
-            position.y = -limitY;
-            velocity.y *= -1;
-        }
-
-        if (position.x > limitX) {    // check right screen collision
-            position.x = limitX;
-            velocity.x *= -1;
-        } else if (position.x < -limitX) {  // check left screen collision
-            position.x = -limitX;
-            velocity.x *= -1;
-        }
     }
 
     @Override

@@ -1,20 +1,14 @@
 package dev.teslac00.layers;
 
-import dev.teslac00.core.AssetManager;
 import dev.teslac00.core.Engine;
 import dev.teslac00.core.Renderer;
 import dev.teslac00.entities.AiPaddle;
+import dev.teslac00.entities.Ball;
 import dev.teslac00.entities.PlayerPaddle;
-import dev.teslac00.graphics.Circle2D;
-import dev.teslac00.graphics.Material;
-import dev.teslac00.graphics.StaticShader;
 import dev.teslac00.input.Event;
 import dev.teslac00.input.InputManager;
-import dev.teslac00.physics.CircleCollider;
 import dev.teslac00.physics.PhysicsEngine;
 
-import static dev.teslac00.util.Colors.COLOR_RED;
-import static dev.teslac00.util.Constants.TEXTURE_LUIGI;
 import static org.lwjgl.glfw.GLFW.*;
 
 /**
@@ -47,9 +41,7 @@ public class GameLayer extends Layer {
     //    Entities
     private final PlayerPaddle playerPaddle;
     private final AiPaddle aiPaddle;
-    private final Circle2D redCircle;
-
-    private final float radius = 30f;
+    private final Ball ball;
 
     /**
      * Constructs a new {@code GameLayer} and initializes all game entities.
@@ -59,15 +51,9 @@ public class GameLayer extends Layer {
     public GameLayer(Engine engine) {
         super(engine);
 
-        Material redMaterial = new Material(
-                AssetManager.getShader(StaticShader.class),
-                COLOR_RED, AssetManager
-                .getTexture(TEXTURE_LUIGI)
-        );
-
         playerPaddle = new PlayerPaddle();
         aiPaddle = new AiPaddle();
-        redCircle = new Circle2D(AssetManager.getCircularMesh(), redMaterial, 0, 0, radius);
+        ball = new Ball();
     }
 
     /**
@@ -88,7 +74,7 @@ public class GameLayer extends Layer {
     public void onAttach() {
         engine.getPhysicsEngine().add(playerPaddle.getCollider());
         engine.getPhysicsEngine().add(aiPaddle.getCollider());
-        engine.getPhysicsEngine().add(new CircleCollider(redCircle, radius));
+        engine.getPhysicsEngine().add(ball.getCollider());
     }
 
     /**
@@ -100,7 +86,7 @@ public class GameLayer extends Layer {
     public void onUpdate(double deltaTime) {
         playerPaddle.update(deltaTime);
         aiPaddle.update(deltaTime);
-        redCircle.update(deltaTime);
+        ball.update(deltaTime);
     }
 
     /**
@@ -110,7 +96,7 @@ public class GameLayer extends Layer {
     public void onRender() {
         engine.getRenderer().renderModel(playerPaddle.getRenderable());
         engine.getRenderer().renderModel(aiPaddle.getRenderable());
-        engine.getRenderer().renderModel(redCircle);
+        engine.getRenderer().renderModel(ball.getRenderable());
     }
 
     /**
