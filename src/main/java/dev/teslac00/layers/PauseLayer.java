@@ -115,9 +115,6 @@ public class PauseLayer extends Layer {
         if (event.key() == GLFW_KEY_P && event.action() == GLFW_PRESS) {
             engine.popLayer();
             return true;
-        } else if (event.key() == GLFW_KEY_SPACE && event.action() == GLFW_RELEASE) {
-            pauseText.setText("Unpause");
-            return true;
         }
         return false;
     }

@@ -51,9 +51,9 @@ public class GameLayer extends Layer {
     public GameLayer(Engine engine) {
         super(engine);
 
-        playerPaddle = new PlayerPaddle();
-        aiPaddle = new AiPaddle();
         ball = new Ball();
+        playerPaddle = new PlayerPaddle();
+        aiPaddle = new AiPaddle(ball);
     }
 
     /**
