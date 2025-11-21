@@ -4,6 +4,7 @@ import dev.teslac00.core.Engine;
 import dev.teslac00.core.Renderer;
 import dev.teslac00.entities.AiPaddle;
 import dev.teslac00.entities.Ball;
+import dev.teslac00.entities.GameState;
 import dev.teslac00.entities.PlayerPaddle;
 import dev.teslac00.input.Event;
 import dev.teslac00.input.InputManager;
@@ -42,6 +43,7 @@ public class GameLayer extends Layer {
     private final PlayerPaddle playerPaddle;
     private final AiPaddle aiPaddle;
     private final Ball ball;
+    private final GameState gameState;
 
     /**
      * Constructs a new {@code GameLayer} and initializes all game entities.
@@ -54,6 +56,7 @@ public class GameLayer extends Layer {
         ball = new Ball();
         playerPaddle = new PlayerPaddle();
         aiPaddle = new AiPaddle(ball);
+        gameState = new GameState(ball);
     }
 
     /**
@@ -87,6 +90,11 @@ public class GameLayer extends Layer {
         playerPaddle.update(deltaTime);
         aiPaddle.update(deltaTime);
         ball.update(deltaTime);
+        gameState.update(deltaTime);
+        if (gameState.isGameOver()) {
+            String gameOverText = gameState.isPlayerWon() ? "You Win" : "You Loose";
+            engine.pushLayer(new GameOverLayer(engine, gameOverText));
+        }
     }
 
     /**
