@@ -9,6 +9,8 @@ import dev.teslac00.entities.PlayerPaddle;
 import dev.teslac00.input.Event;
 import dev.teslac00.input.InputManager;
 import dev.teslac00.physics.PhysicsEngine;
+import dev.teslac00.ui.Background;
+import dev.teslac00.util.Colors;
 
 import static org.lwjgl.glfw.GLFW.*;
 
@@ -40,9 +42,12 @@ import static org.lwjgl.glfw.GLFW.*;
 public class GameLayer extends Layer {
 
     //    Entities
+    private final Background background;
+
     private final PlayerPaddle playerPaddle;
     private final AiPaddle aiPaddle;
     private final Ball ball;
+
     private final GameState gameState;
 
     /**
@@ -52,6 +57,7 @@ public class GameLayer extends Layer {
      */
     public GameLayer(Engine engine) {
         super(engine);
+        background = new Background(Colors.BLACK);
 
         ball = new Ball();
         playerPaddle = new PlayerPaddle();
@@ -90,6 +96,7 @@ public class GameLayer extends Layer {
         playerPaddle.update(deltaTime);
         aiPaddle.update(deltaTime);
         ball.update(deltaTime);
+
         gameState.update(deltaTime);
         if (gameState.isGameOver()) {
             String gameOverText = gameState.isPlayerWon() ? "You Win" : "You Loose";
@@ -102,6 +109,8 @@ public class GameLayer extends Layer {
      */
     @Override
     public void onRender() {
+        engine.getRenderer().submit(background);
+
         engine.getRenderer().submit(playerPaddle);
         engine.getRenderer().submit(aiPaddle);
         engine.getRenderer().submit(ball);
@@ -116,6 +125,7 @@ public class GameLayer extends Layer {
     @Override
     public void onDetach() {
         engine.getPhysicsEngine().clearColliders();
+        background.destroy();
     }
 
     /**

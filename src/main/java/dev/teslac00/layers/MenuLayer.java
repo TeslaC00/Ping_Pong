@@ -3,36 +3,31 @@ package dev.teslac00.layers;
 import dev.teslac00.core.AssetManager;
 import dev.teslac00.core.Engine;
 import dev.teslac00.entities.Entity;
-import dev.teslac00.graphics.Material;
-import dev.teslac00.graphics.Rectangle2D;
-import dev.teslac00.graphics.StaticShader;
+import dev.teslac00.entities.Text2D;
 import dev.teslac00.input.Event;
+import dev.teslac00.input.InputManager;
+import dev.teslac00.ui.Background;
+import dev.teslac00.ui.Button;
 import dev.teslac00.util.Colors;
-
-import static dev.teslac00.util.Constants.VIEWPORT_HEIGHT;
-import static dev.teslac00.util.Constants.VIEWPORT_WIDTH;
-import static org.lwjgl.glfw.GLFW.GLFW_KEY_TAB;
-import static org.lwjgl.glfw.GLFW.GLFW_PRESS;
 
 public class MenuLayer extends Layer {
 
-    private final Entity background;
+    private final Background background;
+    private final Button button;
+    private final Text2D mousePosition;
 
     public MenuLayer(Engine engine) {
         super(engine);
-//        TODO: use UI entities to render this
-        background = new Entity(0, 0, VIEWPORT_WIDTH, VIEWPORT_HEIGHT) {
-            @Override
-            public void update(double deltaTime) {
-            }
-
-            @Override
-            public void destroy() {
-            }
-        };
-
-        Material backgroundMaterial = new Material(AssetManager.getShader(StaticShader.class), Colors.BLACK);
-        background.renderable = new Rectangle2D(backgroundMaterial);
+        background = new Background(Colors.BLACK);
+        button = new Button(
+                "Start", AssetManager.getFontChela(), Colors.GREEN,
+                0, 60, 100, 70, 1
+//                TODO: fix text centering in button
+        );
+        mousePosition = new Text2D(
+                "100, 200", AssetManager.getFontChela(),
+                300, 200, 0.5f
+        );
     }
 
     @Override
@@ -47,12 +42,23 @@ public class MenuLayer extends Layer {
 
     @Override
     public void onUpdate(double deltaTime) {
-
+        mousePosition.setText("%f, %f".formatted(
+                InputManager.getMousePosition().x,
+                InputManager.getMousePosition().y
+        ));
+        mousePosition.update(deltaTime);
+        button.update(deltaTime);
+        if (button.isClicked()) {
+            engine.pushLayer(new GameLayer(engine));
+        }
     }
 
     @Override
     public void onRender() {
         engine.getRenderer().submit(background);
+        for (Entity entity : button.getEntities())
+            engine.getRenderer().submit(entity);
+        engine.getRenderer().submit(mousePosition);
     }
 
     @Override
@@ -62,10 +68,6 @@ public class MenuLayer extends Layer {
 
     @Override
     public boolean onEvent(Event event) {
-        if (event.key() == GLFW_KEY_TAB && event.action() == GLFW_PRESS) {
-            engine.pushLayer(new GameLayer(engine));
-            return true;
-        }
         return false;
     }
 }

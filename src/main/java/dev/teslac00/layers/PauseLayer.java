@@ -3,16 +3,11 @@ package dev.teslac00.layers;
 import dev.teslac00.core.AssetManager;
 import dev.teslac00.core.Engine;
 import dev.teslac00.core.Renderer;
-import dev.teslac00.entities.Entity;
 import dev.teslac00.entities.Text2D;
-import dev.teslac00.graphics.Material;
-import dev.teslac00.graphics.Rectangle2D;
-import dev.teslac00.graphics.StaticShader;
 import dev.teslac00.input.Event;
+import dev.teslac00.ui.Background;
 import dev.teslac00.util.Colors;
 
-import static dev.teslac00.util.Constants.VIEWPORT_HEIGHT;
-import static dev.teslac00.util.Constants.VIEWPORT_WIDTH;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_P;
 import static org.lwjgl.glfw.GLFW.GLFW_PRESS;
 
@@ -40,7 +35,7 @@ import static org.lwjgl.glfw.GLFW.GLFW_PRESS;
  */
 public class PauseLayer extends Layer {
 
-    private final Entity background;
+    private final Background background;
     private final Text2D pauseText;
 
     /**
@@ -50,21 +45,7 @@ public class PauseLayer extends Layer {
      */
     public PauseLayer(Engine engine) {
         super(engine);
-
-        //        TODO: use UI entities to render this
-        background = new Entity(0, 0, VIEWPORT_WIDTH, VIEWPORT_HEIGHT) {
-            @Override
-            public void update(double deltaTime) {
-            }
-
-            @Override
-            public void destroy() {
-            }
-        };
-
-        Material backgroundMaterial = new Material(AssetManager.getShader(StaticShader.class), Colors.LIGHT_BLACK);
-        background.renderable = new Rectangle2D(backgroundMaterial);
-
+        background = new Background(Colors.LIGHT_BLACK);
         pauseText = new Text2D("Pause", AssetManager.getFontChela(), 0, 0, 2);
     }
 

@@ -51,8 +51,6 @@ public class Button {
 
     public void update(double deltaTime) {
         isClicked = isHover() && InputManager.getMouseButtonPressed(GLFW_MOUSE_BUTTON_LEFT);
-        if (isClicked)
-            text2D.setText("Clicked");
         text2D.update(deltaTime);
     }
 
