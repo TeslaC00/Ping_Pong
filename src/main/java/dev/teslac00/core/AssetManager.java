@@ -9,12 +9,14 @@
 package dev.teslac00.core;
 
 import dev.teslac00.graphics.*;
+import dev.teslac00.util.Constants;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Supplier;
 
 import static dev.teslac00.util.Constants.CIRCLE_MESH_DEFAULT_SEGMENTS;
+import static dev.teslac00.util.Constants.FONT_CHELA_ONE_JSON;
 import static org.lwjgl.opengl.GL11C.GL_FLOAT;
 
 public class AssetManager {
@@ -31,6 +33,9 @@ public class AssetManager {
     private final static Map<Class<? extends ShaderProgram>, Supplier<? extends ShaderProgram>> shaderFactories = new HashMap<>();
     private final static Map<Class<? extends ShaderProgram>, ShaderProgram> shaderInstances = new HashMap<>();
 
+    private static Font fontChela;
+    private static Font fontPatrick;
+
     public void init() {
 
         layoutPosUv = new VertexLayout();
@@ -43,6 +48,9 @@ public class AssetManager {
 //        Register shader factories
         shaderFactories.put(StaticShader.class, StaticShader::new);
         shaderFactories.put(MSDFShader.class, MSDFShader::new);
+
+        fontChela = new Font(Constants.FONT_CHELA_ONE_ATLAS, FONT_CHELA_ONE_JSON);
+        fontPatrick = new Font(Constants.FONT_PATRICK_HAND_ATLAS, Constants.FONT_PATRICK_HAND_JSON);
     }
 
     public static Texture getTexture(String path) {
@@ -70,6 +78,14 @@ public class AssetManager {
         return circularMesh;
     }
 
+    public static Font getFontChela() {
+        return fontChela;
+    }
+
+    public static Font getFontPatrick() {
+        return fontPatrick;
+    }
+
     public void destroy() {
         rectangleMesh.destroy();
         circularMesh.destroy();
@@ -82,5 +98,7 @@ public class AssetManager {
             shaderProgram.destroy();
         shaderFactories.clear();
         shaderInstances.clear();
+
+        fontChela.destroy();
     }
 }
