@@ -21,13 +21,11 @@ public class Text extends UIComponent {
     private float width, height;
 
     public Text(String text, Font font, float x, float y, float size, Vector4f color) {
-        super(x, y);
+        super(x, y, size, size);
         this.text = text;
         this.font = font;
 
-//        TODO: change font mesh to accept size and resize using unit size
-        TextMesh textMesh = MeshFactory.createTextMesh(text, font, true);
-        setDimension(1, 1);
+        TextMesh textMesh = MeshFactory.createTextMesh(text, font);
         width = textMesh.width();
         height = textMesh.height();
         mesh = textMesh.mesh();
@@ -37,11 +35,10 @@ public class Text extends UIComponent {
     @Override
     public void update(double deltaTime) {
         if (isDirty) {
-            TextMesh textMesh = MeshFactory.createTextMesh(text, font, true);
-            mesh = textMesh.mesh();
+            TextMesh textMesh = MeshFactory.createTextMesh(text, font);
             width = textMesh.width();
             height = textMesh.height();
-            setDimension(getWidth(), getHeight());
+            mesh = textMesh.mesh();
             isDirty = false;
         }
 
@@ -54,12 +51,12 @@ public class Text extends UIComponent {
 
     @Override
     public float getWidth() {
-        return width;
+        return width * transform.scale.x;
     }
 
     @Override
     public float getHeight() {
-        return height;
+        return height * transform.scale.y;
     }
 
     public void setText(String text) {
@@ -71,6 +68,6 @@ public class Text extends UIComponent {
 
     @Override
     public void destroy() {
-
+        mesh.destroy();
     }
 }

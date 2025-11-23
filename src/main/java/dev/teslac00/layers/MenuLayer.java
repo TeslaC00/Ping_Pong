@@ -2,14 +2,15 @@ package dev.teslac00.layers;
 
 import dev.teslac00.core.AssetManager;
 import dev.teslac00.core.Engine;
-import dev.teslac00.entities.Entity;
 import dev.teslac00.input.Event;
 import dev.teslac00.input.InputManager;
 import dev.teslac00.ui.Background;
 import dev.teslac00.ui.Button;
 import dev.teslac00.ui.Text;
-import dev.teslac00.ui.UIBackground;
 import dev.teslac00.util.Colors;
+
+import static dev.teslac00.util.Constants.VIEWPORT_HEIGHT;
+import static dev.teslac00.util.Constants.VIEWPORT_WIDTH;
 
 public class MenuLayer extends Layer {
 
@@ -18,21 +19,21 @@ public class MenuLayer extends Layer {
     private final Text text;
     private final Text mousePosition;
 
-    private final UIBackground uiBackground;
-
     public MenuLayer(Engine engine) {
         super(engine);
         background = new Background(Colors.BLACK);
+        float buttonWidth = 100, buttonHeight = 70;
         button = new Button(
                 "Start", AssetManager.getFontChela(), Colors.GREEN,
-                0, 60, 100, 70, 1
-//                TODO: fix text centering in button
+                (VIEWPORT_WIDTH - buttonWidth) / 2f,
+                (VIEWPORT_HEIGHT - buttonHeight) / 2f,
+                buttonWidth, buttonHeight, 42
+//                TODO: fix text centering in button and implement pivot
         );
 
-        text = new Text("Menu", AssetManager.getFontChela(), 100, 50, 1, Colors.WHITE);
-        mousePosition = new Text("100, 200", AssetManager.getFontChela(), 300, 200, 0.5f, Colors.WHITE);
-
-        uiBackground = new UIBackground(20, 10, 50, 10, Colors.BLUE);
+        text = new Text("Menu", AssetManager.getFontChela(), 0, 0, 42, Colors.WHITE);
+        text.setPosition((VIEWPORT_WIDTH - text.getWidth()) / 2, 0);
+        mousePosition = new Text("", AssetManager.getFontChela(), 0, 0, 21, Colors.WHITE);
     }
 
     @Override
@@ -52,6 +53,8 @@ public class MenuLayer extends Layer {
                 InputManager.getMousePosition().y
         ));
         mousePosition.update(deltaTime);
+        mousePosition.setPosition(VIEWPORT_WIDTH - mousePosition.getWidth(), 0);
+
         text.update(deltaTime);
         button.update(deltaTime);
         if (button.isClicked()) {
@@ -62,11 +65,9 @@ public class MenuLayer extends Layer {
     @Override
     public void onRender() {
         engine.getRenderer().submit(background);
-        for (Entity entity : button.getEntities())
-            engine.getRenderer().submit(entity);
-        engine.getRenderer().submit(mousePosition);
-        uiBackground.render(engine.getRenderer());
+        mousePosition.render(engine.getRenderer());
         text.render(engine.getRenderer());
+        button.render(engine.getRenderer());
     }
 
     @Override

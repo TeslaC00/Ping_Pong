@@ -8,64 +8,70 @@
  */
 package dev.teslac00.ui;
 
-import dev.teslac00.entities.Entity;
-import dev.teslac00.entities.Text2D;
-import dev.teslac00.entities.Transform;
+import dev.teslac00.core.Renderer;
 import dev.teslac00.graphics.Font;
 import dev.teslac00.input.InputManager;
+import dev.teslac00.util.Colors;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_LEFT;
 
-public class Button {
+public class Button extends UIComponent {
 
-    private final Background background;
-    private final Text2D text2D;
+    private final UIBackground background;
+    private final Text text;
+
     private boolean isClicked = false;
-
-    private final List<Entity> entities;
 
     public Button(String label, Font font, Vector4f backgroundColor,
                   float x, float y, float scaleX, float scaleY, float fontSize
     ) {
-        background = new Background(x, y, scaleX, scaleY, backgroundColor);
-        text2D = new Text2D(label, font, x, y, fontSize);
-
-        entities = new ArrayList<>();
-        entities.add(background);
-        entities.add(text2D);
+        super(x, y);
+//        TODO: Add hover color
+        background = new UIBackground(x, y, scaleX, scaleY, backgroundColor);
+        System.out.printf("Button X:%f, Y:%f, Width:%f, Height:%f%n", x, y, scaleX, scaleY);
+//        NOTE: button is at top right corner of the screen
+        text = new Text(label, font, x, y, fontSize, Colors.WHITE);
     }
 
     public boolean isHover() {
-        Vector2f mousePosition = InputManager.getMouseWorldPosition();
-        Transform transform = background.transform;
-        return mousePosition.x >= transform.position.x - (transform.scale.x / 2f) &&
-                mousePosition.x <= transform.position.x + (transform.scale.x / 2f) &&
-                mousePosition.y >= transform.position.y - (transform.scale.y / 2f) &&
-                mousePosition.y <= transform.position.y + (transform.scale.y / 2f);
+        Vector2f mousePosition = InputManager.getMousePosition();
+        return mousePosition.x >= background.getX() &&
+                mousePosition.x <= background.getX() + background.getWidth() &&
+                mousePosition.y >= background.getY() &&
+                mousePosition.y <= background.getY() + background.getHeight();
     }
 
     public void update(double deltaTime) {
+        text.update(deltaTime);
+
+        float bx = background.getX(), by = background.getY();
+        float bw = background.getWidth(), bh = background.getHeight();
+        float tw = text.getWidth(), th = text.getHeight();
+
+        text.setPosition(
+                bx + (bw - tw) / 2f,
+                by + (bh - th) / 2f
+        );
+
         isClicked = isHover() && InputManager.getMouseButtonPressed(GLFW_MOUSE_BUTTON_LEFT);
-        text2D.update(deltaTime);
+        if (isHover())
+            System.out.println("Button hovering");
+    }
+
+    @Override
+    public void render(Renderer renderer) {
+        background.render(renderer);
+        text.render(renderer);
     }
 
     public boolean isClicked() {
         return isClicked;
     }
 
-    public List<Entity> getEntities() {
-        return entities;
-    }
-
-    //    @Override
+    @Override
     public void destroy() {
-        background.destroy();
-        text2D.destroy();
-        entities.clear();
+        mesh.destroy();
     }
 }

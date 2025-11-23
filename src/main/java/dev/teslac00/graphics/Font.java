@@ -39,7 +39,6 @@ public class Font {
         int atlasHeight = jsonObject.getAsJsonObject("common").get("scaleH").getAsInt();
         fontBase = jsonObject.getAsJsonObject("common").get("base").getAsInt();
         fontSize = jsonObject.getAsJsonObject("info").get("size").getAsFloat();
-//        TODO: use size to convert to unit size
 
         JsonArray chars = jsonObject.getAsJsonArray("chars");
         for (int index = 0; index < chars.size(); index++) {

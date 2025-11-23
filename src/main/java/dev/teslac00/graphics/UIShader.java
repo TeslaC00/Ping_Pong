@@ -14,6 +14,7 @@ import dev.teslac00.ui.UIComponent;
 import dev.teslac00.util.Constants;
 
 public class UIShader extends ShaderProgram {
+//    TODO: refactor and use same shader for UI and text
 
     public UIShader() {
         super(Constants.SHADER_UI_VERTEX, Constants.SHADER_UI_FRAGMENT);
