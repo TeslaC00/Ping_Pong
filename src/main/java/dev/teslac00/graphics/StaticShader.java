@@ -2,6 +2,7 @@ package dev.teslac00.graphics;
 
 import dev.teslac00.core.Renderer;
 import dev.teslac00.entities.Entity;
+import dev.teslac00.ui.UIComponent;
 
 import static dev.teslac00.util.Constants.SHADER_STATIC_FRAGMENT;
 import static dev.teslac00.util.Constants.SHADER_STATIC_VERTEX;
@@ -32,5 +33,10 @@ public class StaticShader extends ShaderProgram {
         } else {
             setUniform("u_useTexture", 0);
         }
+    }
+
+    @Override
+    public void loadUniforms(UIComponent uiComponent) {
+
     }
 }

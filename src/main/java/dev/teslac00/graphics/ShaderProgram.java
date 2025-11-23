@@ -1,8 +1,10 @@
 package dev.teslac00.graphics;
 
 import dev.teslac00.entities.Entity;
+import dev.teslac00.ui.UIComponent;
 import dev.teslac00.util.FileUtils;
 import org.joml.Matrix4f;
+import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.system.MemoryStack;
@@ -55,6 +57,8 @@ public abstract class ShaderProgram {
 
     public abstract void loadUniforms(Entity entity);
 
+    public abstract void loadUniforms(UIComponent uiComponent);
+
     private static int compileShader(String shaderPath, int type) {
         String shaderSrc = FileUtils.readFile(shaderPath);
 
@@ -106,6 +110,11 @@ public abstract class ShaderProgram {
     public void setUniform(String name, float value) {
         Uniform uniform = uniforms.get(name);
         if (uniform != null) glUniform1f(uniform.location(), value);
+    }
+
+    public void setUniform(String name, Vector2f v) {
+        Uniform uniform = uniforms.get(name);
+        if (uniform != null) glUniform2f(uniform.location(), v.x, v.y);
     }
 
     public void setUniform(String name, Vector4f v) {

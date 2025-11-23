@@ -13,6 +13,8 @@ public final class Constants {
     public static final String SHADER_STATIC_FRAGMENT = "shaders/FragmentShader.glsl";
     public static final String SHADER_MSDF_VERTEX = "shaders/msdf.vert";
     public static final String SHADER_MSDF_FRAGMENT = "shaders/msdf.frag";
+    public static final String SHADER_UI_VERTEX = "shaders/ui.vert";
+    public static final String SHADER_UI_FRAGMENT = "shaders/ui.frag";
 
     //    Fonts
     public static final String FONT_CHELA_ONE_ATLAS = "fonts/ChelaOne-Regular.png";

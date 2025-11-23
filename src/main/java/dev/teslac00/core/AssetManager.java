@@ -48,6 +48,7 @@ public class AssetManager {
 //        Register shader factories
         shaderFactories.put(StaticShader.class, StaticShader::new);
         shaderFactories.put(MSDFShader.class, MSDFShader::new);
+        shaderFactories.put(UIShader.class, UIShader::new);
 
         fontChela = new Font(Constants.FONT_CHELA_ONE_ATLAS, FONT_CHELA_ONE_JSON);
         fontPatrick = new Font(Constants.FONT_PATRICK_HAND_ATLAS, Constants.FONT_PATRICK_HAND_JSON);

@@ -10,6 +10,7 @@ package dev.teslac00.graphics;
 
 import dev.teslac00.core.Renderer;
 import dev.teslac00.entities.Entity;
+import dev.teslac00.ui.UIComponent;
 import dev.teslac00.util.Constants;
 
 public class MSDFShader extends ShaderProgram {
@@ -39,5 +40,10 @@ public class MSDFShader extends ShaderProgram {
         setUniform("u_font_atlas", 0); // sampler2D index
 //        TODO: apply smoothing or remove
         setUniform("u_smoothing", 1.0f);    // smoothing
+    }
+
+    @Override
+    public void loadUniforms(UIComponent uiComponent) {
+
     }
 }
