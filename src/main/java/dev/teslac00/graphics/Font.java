@@ -22,6 +22,7 @@ import java.util.Map;
  */
 public class Font {
     private int fontBase = 0;
+    private float fontSize;
     private final Texture texture;
     private final Map<Character, Glyph> glyphMap = new HashMap<>();
 
@@ -37,7 +38,7 @@ public class Font {
         int atlasWidth = jsonObject.getAsJsonObject("common").get("scaleW").getAsInt();
         int atlasHeight = jsonObject.getAsJsonObject("common").get("scaleH").getAsInt();
         fontBase = jsonObject.getAsJsonObject("common").get("base").getAsInt();
-//        float fontSize = jsonObject.getAsJsonObject("info").get("size").getAsFloat();
+        fontSize = jsonObject.getAsJsonObject("info").get("size").getAsFloat();
 //        TODO: use size to convert to unit size
 
         JsonArray chars = jsonObject.getAsJsonArray("chars");
@@ -77,6 +78,10 @@ public class Font {
 
     public int getFontBase() {
         return fontBase;
+    }
+
+    public float getFontSize() {
+        return fontSize;
     }
 
     public Glyph getGlyph(char c) {

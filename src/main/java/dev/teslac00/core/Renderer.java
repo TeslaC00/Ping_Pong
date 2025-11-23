@@ -3,6 +3,7 @@ package dev.teslac00.core;
 import dev.teslac00.entities.Entity;
 import dev.teslac00.graphics.Renderable;
 import dev.teslac00.graphics.ShaderProgram;
+import dev.teslac00.ui.UIComponent;
 import dev.teslac00.util.Constants;
 import org.joml.Matrix4f;
 import org.lwjgl.BufferUtils;
@@ -40,7 +41,9 @@ import static org.lwjgl.opengl.GL30C.glBindVertexArray;
 public final class Renderer {
 
     private final ArrayList<Entity> renderQueue = new ArrayList<>();
+    private final ArrayList<UIComponent> uiRenderQueue = new ArrayList<>();
     private static FloatBuffer projBuffer; // orthographic projection
+    private static Matrix4f uiProjection;
 
     // ---------------------------------------------------------------------
     // Initialization
@@ -64,6 +67,12 @@ public final class Renderer {
         );
         proj.get(projBuffer).rewind();
 
+        uiProjection = new Matrix4f().ortho(
+                0, VIEWPORT_WIDTH,
+                VIEWPORT_HEIGHT, 0,
+                -1, 1
+        );
+
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);   // Set the clear color
@@ -81,6 +90,11 @@ public final class Renderer {
     public void submit(Entity entity) {
         if (entity.renderable != null)
             renderQueue.add(entity);
+    }
+
+    public void submit(UIComponent uiComponent) {
+        if (uiComponent.isVisible())
+            uiRenderQueue.add(uiComponent);
     }
 
     /**
@@ -117,6 +131,22 @@ public final class Renderer {
         }
 
         renderQueue.clear();
+
+//        https://learnopengl.com/In-Practice/2D-Game/Rendering-Sprites
+        for (UIComponent uiComponent : uiRenderQueue) {
+            ShaderProgram shader = uiComponent.getMaterial().shader();
+//            TODO: call shader explicitly outside this and render everything using it
+            shader.start();
+            shader.loadUniforms(uiComponent);
+
+            glBindVertexArray(uiComponent.getMesh().getVaoId());   // bind the VAO to use in this frame
+            glDrawElements(GL_TRIANGLES, uiComponent.getMesh().getIndicesCount(), GL_UNSIGNED_INT, 0);   // draw elements using ibo
+            glBindVertexArray(0);   // unbind the VAO for cleanup after draw call
+
+            shader.stop();
+        }
+
+        uiRenderQueue.clear();
     }
 
     // ---------------------------------------------------------------------
@@ -131,9 +161,14 @@ public final class Renderer {
      */
     public void destroy() {
         renderQueue.clear();
+        uiRenderQueue.clear();
     }
 
     public static FloatBuffer getProjBuffer() {
         return projBuffer;
+    }
+
+    public static Matrix4f getUiProjection() {
+        return uiProjection;
     }
 }

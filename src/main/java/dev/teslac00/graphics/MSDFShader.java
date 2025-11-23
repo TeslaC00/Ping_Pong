@@ -44,6 +44,17 @@ public class MSDFShader extends ShaderProgram {
 
     @Override
     public void loadUniforms(UIComponent uiComponent) {
+        setUniform("u_trans", uiComponent.getTransform());    // model
+        setUniform("u_proj", Renderer.getUiProjection()); // projection
+        setUniform("u_color", uiComponent.getMaterial().color());
 
+        Texture texture = uiComponent.getMaterial().texture();
+        if (texture == null)
+            throw new RuntimeException("Unable to load MSDF Shader Font texture from material");
+
+        texture.bind(0);    // bind texture to slot 0
+        setUniform("u_font_atlas", 0); // sampler2D index
+//        TODO: apply smoothing or remove
+        setUniform("u_smoothing", 1.0f);    // smoothing
     }
 }

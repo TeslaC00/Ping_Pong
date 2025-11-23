@@ -10,12 +10,13 @@ package dev.teslac00.layers;
 
 import dev.teslac00.core.AssetManager;
 import dev.teslac00.core.Engine;
-import dev.teslac00.entities.Text2D;
 import dev.teslac00.input.Event;
+import dev.teslac00.ui.Text;
+import dev.teslac00.util.Colors;
 
 public class GameOverLayer extends Layer {
 
-    private final Text2D gameOverText;
+    private final Text gameOverText;
 
     /**
      * Constructs a new {@code Layer} associated with the given engine.
@@ -24,7 +25,7 @@ public class GameOverLayer extends Layer {
      */
     public GameOverLayer(Engine engine, String text) {
         super(engine);
-        gameOverText = new Text2D(text, AssetManager.getFontPatrick(), 0, 0, 2);
+        gameOverText = new Text(text, AssetManager.getFontPatrick(), 0, 0, 2, Colors.WHITE);
     }
 
     @Override

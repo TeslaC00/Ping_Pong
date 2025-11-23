@@ -3,9 +3,9 @@ package dev.teslac00.layers;
 import dev.teslac00.core.AssetManager;
 import dev.teslac00.core.Engine;
 import dev.teslac00.core.Renderer;
-import dev.teslac00.entities.Text2D;
 import dev.teslac00.input.Event;
 import dev.teslac00.ui.Background;
+import dev.teslac00.ui.Text;
 import dev.teslac00.util.Colors;
 
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_P;
@@ -36,7 +36,7 @@ import static org.lwjgl.glfw.GLFW.GLFW_PRESS;
 public class PauseLayer extends Layer {
 
     private final Background background;
-    private final Text2D pauseText;
+    private final Text pauseText;
 
     /**
      * Constructs a new {@code PauseLayer} instance.
@@ -46,7 +46,7 @@ public class PauseLayer extends Layer {
     public PauseLayer(Engine engine) {
         super(engine);
         background = new Background(Colors.LIGHT_BLACK);
-        pauseText = new Text2D("Pause", AssetManager.getFontChela(), 0, 0, 2);
+        pauseText = new Text("Pause", AssetManager.getFontChela(), 0, 0, 2, Colors.WHITE);
     }
 
     /**
