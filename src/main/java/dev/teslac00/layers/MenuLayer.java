@@ -28,7 +28,6 @@ public class MenuLayer extends Layer {
                 "Start", AssetManager.getFontChela(), Colors.GREEN,
                 VIEWPORT_WIDTH / 2f, VIEWPORT_HEIGHT / 2f,
                 buttonWidth, buttonHeight, 42
-//                TODO: fix text centering in button and implement pivot
         );
 
         quitButton = new Button(

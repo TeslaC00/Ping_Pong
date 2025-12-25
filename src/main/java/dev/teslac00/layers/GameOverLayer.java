@@ -65,7 +65,6 @@ public class GameOverLayer extends Layer {
     public void onRender() {
         engine.getRenderer().submit(gameOverText);
         menuButton.render(engine.getRenderer());
-//        TODO: show button to go to menu layer or exit game
     }
 
     @Override

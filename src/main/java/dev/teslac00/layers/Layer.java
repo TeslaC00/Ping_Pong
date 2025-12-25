@@ -98,17 +98,12 @@ public abstract class Layer {
      */
     public abstract boolean onEvent(Event event);
 
-    //    TODO: implement transition
     public void transitionTo(Layer layer) {
         engine.queueTransition(layer);
     }
 
     public boolean isSuspended() {
         return isSuspended;
-    }
-
-    public void suspend() {
-        isSuspended = true;
     }
 
     public void unSuspend() {

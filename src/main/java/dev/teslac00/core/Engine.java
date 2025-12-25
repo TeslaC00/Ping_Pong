@@ -206,11 +206,6 @@ public class Engine {
         layerStack.removeLast();
     }
 
-    public void suspendLayer() {
-        if (layerStack.isEmpty()) return;
-        layerStack.getLast().suspend();
-    }
-
     public void unSuspendLayer() {
         if (layerStack.isEmpty()) return;
         layerStack.getLast().unSuspend();
