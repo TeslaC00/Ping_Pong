@@ -52,6 +52,7 @@ public class Engine {
      * Just pauses physics but allows rendering
      */
     private boolean isPaused;
+    private boolean shouldClose;
     private Layer transitionLayer;
 
     // ---------------------------------------------------------------------
@@ -142,7 +143,7 @@ public class Engine {
      * @return {@code true} if the window is open and the layer stack is not empty.
      */
     public boolean shouldRun() {
-        return !glfwWindowShouldClose(window) && !layerStack.isEmpty();
+        return !glfwWindowShouldClose(window) && !layerStack.isEmpty() && !shouldClose;
     }
 
     /**
@@ -243,5 +244,9 @@ public class Engine {
 
     public void unPause() {
         isPaused = false;
+    }
+
+    public void close() {
+        shouldClose = true;
     }
 }

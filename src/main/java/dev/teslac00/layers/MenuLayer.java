@@ -16,6 +16,7 @@ public class MenuLayer extends Layer {
 
     private final Background background;
     private final Button button;
+    private final Button quitButton;
     private final Text text;
     private final Text mousePosition;
 
@@ -30,8 +31,14 @@ public class MenuLayer extends Layer {
 //                TODO: fix text centering in button and implement pivot
         );
 
+        quitButton = new Button(
+                "Quit", AssetManager.getFontChela(), Colors.RED,
+                VIEWPORT_WIDTH / 2f, VIEWPORT_HEIGHT / 2f + 100,
+                buttonWidth, buttonHeight, 42
+        );
+
         text = new Text("Menu", AssetManager.getFontChela(), 0, 0, 42, Colors.WHITE);
-        text.setPosition((VIEWPORT_WIDTH - text.getWidth()) / 2, 0);
+        text.setPosition((VIEWPORT_WIDTH - text.getWidth()) / 2, 200);
         mousePosition = new Text("", AssetManager.getFontChela(), 0, 0, 21, Colors.WHITE);
     }
 
@@ -61,6 +68,12 @@ public class MenuLayer extends Layer {
             engine.unPause();
             engine.pushLayer(new GameLayer(engine));
         }
+
+        quitButton.update(deltaTime);
+        if (quitButton.isClicked()) {
+            System.out.println("Quitting game now");
+            engine.close();
+        }
     }
 
     @Override
@@ -69,12 +82,14 @@ public class MenuLayer extends Layer {
         mousePosition.render(engine.getRenderer());
         text.render(engine.getRenderer());
         button.render(engine.getRenderer());
+        quitButton.render(engine.getRenderer());
     }
 
     @Override
     public void onDetach() {
         background.destroy();
         button.destroy();
+        quitButton.destroy();
     }
 
     @Override
