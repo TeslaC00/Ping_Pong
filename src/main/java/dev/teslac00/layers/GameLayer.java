@@ -100,6 +100,7 @@ public class GameLayer extends Layer {
         gameState.update(deltaTime);
         if (gameState.isGameOver()) {
             String gameOverText = gameState.isPlayerWon() ? "You Win" : "You Loose";
+            engine.pause();
             engine.pushLayer(new GameOverLayer(engine, gameOverText));
         }
     }
@@ -124,6 +125,8 @@ public class GameLayer extends Layer {
      */
     @Override
     public void onDetach() {
+//        TODO: Don't destroy physics engine per layer
+//         (maybe clear entities each loop and add them at each loop?)
         engine.getPhysicsEngine().destroy();
         background.destroy();
     }

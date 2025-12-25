@@ -100,6 +100,7 @@ public abstract class Layer {
 
     //    TODO: implement transition
     public void transitionTo(Layer layer) {
+        engine.queueTransition(layer);
     }
 
     public boolean isSuspended() {

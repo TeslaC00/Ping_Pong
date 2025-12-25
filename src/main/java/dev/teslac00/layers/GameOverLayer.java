@@ -11,12 +11,16 @@ package dev.teslac00.layers;
 import dev.teslac00.core.AssetManager;
 import dev.teslac00.core.Engine;
 import dev.teslac00.input.Event;
+import dev.teslac00.ui.Button;
 import dev.teslac00.ui.Text;
 import dev.teslac00.util.Colors;
+import dev.teslac00.util.Constants;
 
 public class GameOverLayer extends Layer {
 
     private final Text gameOverText;
+
+    private final Button menuButton;
 
     /**
      * Constructs a new {@code Layer} associated with the given engine.
@@ -25,7 +29,18 @@ public class GameOverLayer extends Layer {
      */
     public GameOverLayer(Engine engine, String text) {
         super(engine);
-        gameOverText = new Text(text, AssetManager.getFontPatrick(), 0, 0, 2, Colors.WHITE);
+        gameOverText = new Text(text, AssetManager.getFontPatrick(), 0, 0, 42, Colors.WHITE);
+        gameOverText.setPosition(
+                (Constants.VIEWPORT_WIDTH - gameOverText.getWidth()) / 2,
+                (Constants.VIEWPORT_HEIGHT - gameOverText.getHeight()) / 2
+        );
+
+        float buttonWidth = 200, buttonHeight = 70;
+        menuButton = new Button(
+                "Go To Menu", AssetManager.getFontPatrick(), Colors.BLUE,
+                gameOverText.getX(), gameOverText.getY() + buttonHeight + 50,
+                buttonWidth, buttonHeight, 42
+        );
     }
 
     @Override
@@ -40,17 +55,23 @@ public class GameOverLayer extends Layer {
 
     @Override
     public void onUpdate(double deltaTime) {
+        menuButton.update(deltaTime);
 
+        if (menuButton.isClicked())
+            transitionTo(new MenuLayer(engine));
     }
 
     @Override
     public void onRender() {
         engine.getRenderer().submit(gameOverText);
+        menuButton.render(engine.getRenderer());
+//        TODO: show button to go to menu layer or exit game
     }
 
     @Override
     public void onDetach() {
         gameOverText.destroy();
+        menuButton.destroy();
     }
 
     @Override

@@ -48,7 +48,11 @@ public class Engine {
     private PhysicsEngine physicsEngine;
     private final Timer timer = new Timer();
 
+    /**
+     * Just pauses physics but allows rendering
+     */
     private boolean isPaused;
+    private Layer transitionLayer;
 
     // ---------------------------------------------------------------------
     // Layers and Frame Data
@@ -123,6 +127,13 @@ public class Engine {
 
 //            FPS Counter
         updateFPS(deltaTime);
+
+        if (transitionLayer != null) {
+            layerStack.clear();
+            physicsEngine.destroy();
+            pushLayer(transitionLayer);
+            transitionLayer = null;
+        }
     }
 
     /**
@@ -202,6 +213,10 @@ public class Engine {
     public void unSuspendLayer() {
         if (layerStack.isEmpty()) return;
         layerStack.getLast().unSuspend();
+    }
+
+    public void queueTransition(Layer layer) {
+        transitionLayer = layer;
     }
 
     // ---------------------------------------------------------------------

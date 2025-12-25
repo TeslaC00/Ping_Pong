@@ -59,6 +59,7 @@ public class MenuLayer extends Layer {
         button.update(deltaTime);
         if (button.isClicked()) {
             isSuspended = true;
+            engine.unPause();
             engine.pushLayer(new GameLayer(engine));
         }
     }
@@ -74,6 +75,7 @@ public class MenuLayer extends Layer {
     @Override
     public void onDetach() {
         background.destroy();
+        button.destroy();
     }
 
     @Override
