@@ -20,6 +20,7 @@ public class Text extends UIComponent {
     private boolean isDirty = false;
     private float width, height;
 
+//    NOTE: Text is rendered from the top-left
     public Text(String text, Font font, float x, float y, float size, Vector4f color) {
         super(x, y, size, size);
         this.text = text;

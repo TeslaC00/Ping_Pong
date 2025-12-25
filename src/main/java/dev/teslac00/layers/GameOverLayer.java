@@ -35,10 +35,10 @@ public class GameOverLayer extends Layer {
                 (Constants.VIEWPORT_HEIGHT - gameOverText.getHeight()) / 2
         );
 
-        float buttonWidth = 200, buttonHeight = 70;
+        float buttonWidth = 250, buttonHeight = 60;
         menuButton = new Button(
                 "Go To Menu", AssetManager.getFontPatrick(), Colors.BLUE,
-                gameOverText.getX(), gameOverText.getY() + buttonHeight + 50,
+                Constants.VIEWPORT_WIDTH / 2f, Constants.VIEWPORT_HEIGHT / 2f + 70,
                 buttonWidth, buttonHeight, 42
         );
     }

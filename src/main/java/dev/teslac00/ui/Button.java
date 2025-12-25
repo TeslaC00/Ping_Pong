@@ -24,6 +24,8 @@ public class Button extends UIComponent {
 
     private boolean isClicked = false;
 
+    //    NOTE: Button origin is in the center with pivot at the top left
+    //    Text origin is in the top left
     public Button(String label, Font font, Vector4f backgroundColor,
                   float x, float y, float scaleX, float scaleY, float fontSize
     ) {
@@ -31,28 +33,23 @@ public class Button extends UIComponent {
 //        TODO: Add hover color
         background = new UIBackground(x, y, scaleX, scaleY, backgroundColor);
         System.out.printf("Button X:%f, Y:%f, Width:%f, Height:%f%n", x, y, scaleX, scaleY);
-//        NOTE: button is at top right corner of the screen
-        text = new Text(label, font, x, y, fontSize, Colors.WHITE);
+        text = new Text(label, font, 0, 0, fontSize, Colors.WHITE);
     }
 
     public boolean isHover() {
         Vector2f mousePosition = InputManager.getMousePosition();
-        return mousePosition.x >= background.getX() &&
-                mousePosition.x <= background.getX() + background.getWidth() &&
-                mousePosition.y >= background.getY() &&
-                mousePosition.y <= background.getY() + background.getHeight();
+        return mousePosition.x >= background.getX() - background.getWidth() / 2f &&
+                mousePosition.x <= background.getX() + background.getWidth() / 2f &&
+                mousePosition.y >= background.getY() - background.getHeight() / 2f &&
+                mousePosition.y <= background.getY() + background.getHeight() / 2f;
     }
 
     public void update(double deltaTime) {
         text.update(deltaTime);
 
-        float bx = background.getX(), by = background.getY();
-        float bw = background.getWidth(), bh = background.getHeight();
-        float tw = text.getWidth(), th = text.getHeight();
-
         text.setPosition(
-                bx + (bw - tw) / 2f,
-                by + (bh - th) / 2f
+                background.getX() - text.getWidth() / 2f,
+                background.getY() - text.getHeight() / 2f
         );
 
         isClicked = isHover() && InputManager.getMouseButtonPressed(GLFW_MOUSE_BUTTON_LEFT);
