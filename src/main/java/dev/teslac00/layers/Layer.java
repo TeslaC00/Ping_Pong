@@ -30,6 +30,12 @@ import dev.teslac00.input.Event;
  * @see PauseLayer
  */
 public abstract class Layer {
+
+    /**
+     * Stops rendering if the layer is Suspended
+     */
+    protected boolean isSuspended;
+
     /**
      * Reference to the engine that owns this layer.
      */
@@ -92,4 +98,19 @@ public abstract class Layer {
      */
     public abstract boolean onEvent(Event event);
 
+    //    TODO: implement transition
+    public void transitionTo(Layer layer) {
+    }
+
+    public boolean isSuspended() {
+        return isSuspended;
+    }
+
+    public void suspend() {
+        isSuspended = true;
+    }
+
+    public void unSuspend() {
+        isSuspended = false;
+    }
 }

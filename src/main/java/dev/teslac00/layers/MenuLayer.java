@@ -58,6 +58,7 @@ public class MenuLayer extends Layer {
         text.update(deltaTime);
         button.update(deltaTime);
         if (button.isClicked()) {
+            isSuspended = true;
             engine.pushLayer(new GameLayer(engine));
         }
     }

@@ -111,7 +111,8 @@ public class Engine {
 
 //            Rendering
         for (Layer layer : layerStack)
-            layer.onRender();
+            if (!layer.isSuspended()) layer.onRender();
+
         renderer.prepare();
         renderer.render();
 
@@ -188,6 +189,16 @@ public class Engine {
         layerStack.getLast().onDetach();
         System.out.printf("Popped %s", layerStack.getLast().name());
         layerStack.removeLast();
+    }
+
+    public void suspendLayer(){
+        if (layerStack.isEmpty()) return;
+        layerStack.getLast().suspend();
+    }
+
+    public void unSuspendLayer(){
+        if (layerStack.isEmpty()) return;
+        layerStack.getLast().unSuspend();
     }
 
     // ---------------------------------------------------------------------

@@ -124,7 +124,7 @@ public class GameLayer extends Layer {
      */
     @Override
     public void onDetach() {
-        engine.getPhysicsEngine().clearColliders();
+        engine.getPhysicsEngine().destroy();
         background.destroy();
     }
 
@@ -142,6 +142,7 @@ public class GameLayer extends Layer {
     public boolean onEvent(Event event) {
         if (event.key() == GLFW_KEY_TAB && event.action() == GLFW_PRESS) {
             engine.popLayer();
+            engine.unSuspendLayer();
             return true;
         }
 
