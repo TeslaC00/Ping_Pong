@@ -1,6 +1,8 @@
 package dev.teslac00.physics;
 
 import dev.teslac00.entities.Entity;
+import dev.teslac00.entities.Transform;
+import org.joml.Vector2f;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,16 +29,16 @@ import java.util.List;
  */
 public final class PhysicsEngine {
 
-    private final List<Collider> colliders = new ArrayList<>();
+    private final List<PhysicsBody> bodies = new ArrayList<>();
 
     /**
-     * Adds a collider to the physics simulation.
+     * Adds a Entity with Physics Body to the physics simulation.
      *
-     * @param entity The collider to be tracked by the physics engine.
+     * @param entity The Entity with physics body to be tracked by the physics engine.
      */
     public void add(Entity entity) {
         if (entity.physicsBody != null)
-            colliders.add(entity.physicsBody.collider);
+            bodies.add(entity.physicsBody);
     }
 
     /**
@@ -50,10 +52,26 @@ public final class PhysicsEngine {
      * @param deltaTime The time elapsed since the last frame, in seconds.
      */
     public void update(double deltaTime) {
-        for (int i = 0; i < colliders.size(); i++) {
-            for (int j = i + 1; j < colliders.size(); j++) {
-                Collider a = colliders.get(i);
-                Collider b = colliders.get(j);
+        integrate(deltaTime);
+        checkCollisions();
+    }
+
+    private void integrate(double deltaTime) {
+        for (PhysicsBody body : bodies) {
+            Vector2f velocity = body.velocity;
+            double dx = velocity.x * deltaTime;
+            double dy = velocity.y * deltaTime;
+            Transform transform = body.collider.owner.transform;
+            transform.translate((float) dx, (float) dy);
+//            TODO: remove physics update from entities
+        }
+    }
+
+    private void checkCollisions() {
+        for (int i = 0; i < bodies.size(); i++) {
+            for (int j = i + 1; j < bodies.size(); j++) {
+                Collider a = bodies.get(i).collider;
+                Collider b = bodies.get(j).collider;
 
                 if (a.intersects(b)) {
                     System.out.printf("Collision between %s and %s%n",
@@ -125,7 +143,7 @@ public final class PhysicsEngine {
      * does not carry over.
      * </p>
      */
-    public void clearColliders() {
-        colliders.clear();
+    public void destroy() {
+        bodies.clear();
     }
 }

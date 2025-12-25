@@ -12,7 +12,7 @@ import org.joml.Matrix4f;
 import org.joml.Vector3f;
 
 /**
- * Transform based on center. Defaults to center coordinates (0,0), Scale 1 and Rotation 0.
+ * Transform based on a center. Defaults to center coordinates (0,0), Scale 1 and Rotation 0.
  */
 public class Transform {
 
