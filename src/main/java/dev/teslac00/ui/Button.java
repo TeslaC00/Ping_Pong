@@ -69,6 +69,6 @@ public class Button extends UIComponent {
 
     @Override
     public void destroy() {
-        mesh.destroy();
+        text.destroy();
     }
 }
