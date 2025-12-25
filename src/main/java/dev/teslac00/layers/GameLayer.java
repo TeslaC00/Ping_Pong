@@ -147,6 +147,7 @@ public class GameLayer extends Layer {
         }
 
         if (event.key() == GLFW_KEY_P && event.action() == GLFW_PRESS) {
+            engine.pause();
             engine.pushLayer(new PauseLayer(engine));
             return true;
         }

@@ -48,6 +48,8 @@ public class Engine {
     private PhysicsEngine physicsEngine;
     private final Timer timer = new Timer();
 
+    private boolean isPaused;
+
     // ---------------------------------------------------------------------
     // Layers and Frame Data
     // ---------------------------------------------------------------------
@@ -105,7 +107,8 @@ public class Engine {
         InputManager.getEventQueue().clear();
 
 //        Physics step
-        physicsEngine.update(deltaTime);
+        if (!isPaused)
+            physicsEngine.update(deltaTime);
 //        Update top-most active layer
         layerStack.getLast().onUpdate(deltaTime);
 
@@ -191,12 +194,12 @@ public class Engine {
         layerStack.removeLast();
     }
 
-    public void suspendLayer(){
+    public void suspendLayer() {
         if (layerStack.isEmpty()) return;
         layerStack.getLast().suspend();
     }
 
-    public void unSuspendLayer(){
+    public void unSuspendLayer() {
         if (layerStack.isEmpty()) return;
         layerStack.getLast().unSuspend();
     }
@@ -217,5 +220,13 @@ public class Engine {
      */
     public PhysicsEngine getPhysicsEngine() {
         return physicsEngine;
+    }
+
+    public void pause() {
+        isPaused = true;
+    }
+
+    public void unPause() {
+        isPaused = false;
     }
 }

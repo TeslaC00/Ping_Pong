@@ -7,6 +7,7 @@ import dev.teslac00.input.Event;
 import dev.teslac00.ui.Background;
 import dev.teslac00.ui.Text;
 import dev.teslac00.util.Colors;
+import dev.teslac00.util.Constants;
 
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_P;
 import static org.lwjgl.glfw.GLFW.GLFW_PRESS;
@@ -46,7 +47,11 @@ public class PauseLayer extends Layer {
     public PauseLayer(Engine engine) {
         super(engine);
         background = new Background(Colors.LIGHT_BLACK);
-        pauseText = new Text("Pause", AssetManager.getFontChela(), 0, 0, 2, Colors.WHITE);
+        pauseText = new Text("Pause", AssetManager.getFontChela(), 0, 0, 42, Colors.WHITE);
+        pauseText.setPosition(
+                (Constants.VIEWPORT_WIDTH - pauseText.getWidth()) / 2,
+                (Constants.VIEWPORT_HEIGHT - pauseText.getHeight()) / 2
+        );
     }
 
     /**
@@ -106,6 +111,7 @@ public class PauseLayer extends Layer {
     public boolean onEvent(Event event) {
         if (event.key() == GLFW_KEY_P && event.action() == GLFW_PRESS) {
             engine.popLayer();
+            engine.unPause();
             return true;
         }
         return false;
